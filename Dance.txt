@@ -1,0 +1,98 @@
+//Lead CrossStep
+  2500,fx_transition_timed_wipe_pos,
+  2500,fx_palette_blue,
+//Follow CrossStep
+  4800,fx_transition_timed_wipe_neg,
+  4800,fx_palette_red,  
+//Lead CrossStep
+  7300,fx_transition_timed_wipe_pos,
+  7300,fx_palette_blue,
+//Follow CrossStep
+  9700,fx_transition_timed_fade,
+  9700,fx_palette_rb,
+
+TC 2.5 : Lead CrossStep
+4&5 - cross, 5678
+TC 4.8 : Follow CrossStep
+1&23, 4&5 - Follow
+TC 7.3 : Both CrossStep
+123 4&5 - Both
+
+TC 10
+12 34 - side together
+56,78 - arms, walk
+1234 - walk
+56,78 - pull in, out
+1234 - walk
+56,78 - pull in, out
+1234 - walk
+56,78 - pull in, out
+
+TC 19 : Coast2
+1234 - walk
+5 & 6 & 7 & 8 - sidestomp
+&1 - side
+1234 - lower
+5678 - rises
+12,34 - meet up
+78 - .. spins
+
+TC 38.7 : Paso spins
+123&456&781&
+2,3 - step
+45678 - twirl
+
+1234567 - round
+8 - together, stomp
+12 - forward right
+&3 - right foot side left front
+4 & 5 & 6 & 7 & 8
+12 - step side, turn close
+34 - arm
+1234 - down LIFT up
+56 - side face crowd
+78 - turn on right foot
+12 - arm wind
+34 - step around
+5678 - step fwd
+
+TC 73 : Kick sequences
+1234 - side back together, open
+5 - kick, 678
+1 - kick, 234
+5 - kick, 678
+1234 - turning
+56 - spin
+78 - Ready up
+
+TC 81.87 : Bwaaaah
+QQS QQS QQS QQS
+SSSS - 8 count step together, chest flex
+QQS QQS
+
+TC 98? : HandTwirl
+1234, 5678 - around
+2 8's for spin
+
+TC 108 : Bwaaah2
+12345678 - circle arm up to center
+21 - backstep, side, turn
+23 - cross to front chachacha
+23 - crossover break
+chachachaback
+23 - break
+&4 & 1 - wiggle
+2,3 - point
+4,1 - point
+2 - turn
+3,4 - close
+5 - slam
+
+
+
+
+
+
+
+
+

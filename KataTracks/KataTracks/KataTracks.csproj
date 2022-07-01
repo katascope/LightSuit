@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TronGame.png" />
+    <None Remove="TronGameCropped.png" />
+    <None Remove="TronGameCroppedCyan.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="InTheHand.BluetoothLE" Version="4.0.22" />
+    <PackageReference Include="InTheHand.Net.Bluetooth" Version="4.0.29" />
+    <PackageReference Include="NAudio" Version="2.0.1" />
+    <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Runtime.WindowsRuntime">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TronGame.png" />
+    <Resource Include="TronGameCropped.png" />
+    <Resource Include="TronGameCroppedCyan.png" />
+  </ItemGroup>
+
+</Project>
