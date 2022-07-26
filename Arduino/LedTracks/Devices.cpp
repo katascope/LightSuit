@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #if ENABLE_NEOPIXEL
 #include <Adafruit_NeoPixel.h>
-static Adafruit_NeoPixel strip0 = Adafruit_NeoPixel(NUM_LEDS_0, LED_PIN+0, NEO_BGR + NEO_KHZ800);
+static Adafruit_NeoPixel strip0 = Adafruit_NeoPixel(NUM_LEDS_0, LED_PIN+0, NEO_GRB + NEO_KHZ800);
 #if ENABLE_MULTISTRIP
 static Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(NUM_LEDS_1, LED_PIN+1, NEO_GRB + NEO_KHZ800);
 static Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(NUM_LEDS_2, LED_PIN+2, NEO_GRB + NEO_KHZ800);
