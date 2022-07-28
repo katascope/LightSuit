@@ -84,3 +84,16 @@ void trackStop(FxController &fxc)
   fxc.stripMask = 0xFF;
   //Serial.println(F("Stopping Track"));
 }
+
+bool trackHasLinearTime()
+{
+  int lasttc = 0;
+  for (int i=0;i<numSongTracks;i++) 
+  {
+    unsigned long tc = SongTrack_timecode(i);
+    //unsigned long evt = SongTrack_time(i);
+    if (tc < lasttc)
+       return false;
+  }
+  return true;
+}

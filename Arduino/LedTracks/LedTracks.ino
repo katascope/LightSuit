@@ -32,6 +32,15 @@ void setup() {
   Serial.println(F("System: UNKNOWN"));
 #endif
 
+#if ENABLE_TRACK_CHECK
+  if (trackHasLinearTime())
+    Serial.println(F("Track Linear Check = OK"));
+  else {
+    Serial.println(F("Track Linear Check = FAILED"));
+    return;
+  }
+#endif
+
 #if ENABLE_MEMORYUSAGE
   Serial.println(F("MemoryUsage"));
   MEMORY_PRINT_STACKSIZE

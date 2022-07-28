@@ -392,6 +392,7 @@ int GetPreviousTimeCodeMatch(unsigned long timecode);
 
 void trackStart(FxController &fxc, unsigned long tc, unsigned long tcOffset, FxTrackEndAction tae);
 void trackStop(FxController &fxc);
+bool trackHasLinearTime();
 void FxTrackSay(unsigned long timecode, unsigned long matchedTimecode, unsigned long nextMatchedTimecode);
 
 #endif
