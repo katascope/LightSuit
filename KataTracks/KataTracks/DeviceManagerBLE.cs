@@ -53,10 +53,10 @@ namespace KataTracks
         static BluetoothUuid mainPlayUuid = BluetoothUuid.FromGuid(new Guid("3B140EF5-0A72-4891-AD38-83B5A2595622"));
         static BluetoothUuid mainStatusUuid = BluetoothUuid.FromGuid(new Guid("D01C9106-91BD-4998-9554-85264D33ACB2"));
 
-        static List<string> connectionList = new List<string>() {
-                "91CDE3A4B695", //LightSuitAngelA
-                "B872B08E0D8E", //LightSuitAngelB
-                "F6426025BEE",  //LightSuitAngelJ
+        public static List<string> connectionList = new List<string>() {
+                //"91CDE3A4B695", //LightSuitAngelA
+                //"B872B08E0D8E", //LightSuitAngelB
+                //"F6426025BEE",  //LightSuitAngelJ
                 //"2198D30EA040", //LightSuitAngelD
 
 /*

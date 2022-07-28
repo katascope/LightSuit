@@ -8,12 +8,11 @@
         Title="KataTracks - The Game Has Changed" Height="864" Width="1536" WindowStyle="None" Background="Black" Foreground="#FF01457E" ResizeMode="NoResize" WindowStartupLocation="Manual" WindowState="Maximized" HorizontalAlignment="Left" VerticalAlignment="Top">
     <Canvas MouseDown="OnMouseDown" MouseUp="OnMouseUp" MouseMove="OnMouseMove" HorizontalAlignment="Left" Height="864" VerticalAlignment="Top" Width="1536" x:Name="MainCanvas">
         <Rectangle Height="60" Canvas.Left="1021" Stroke="#FF1668A7" Canvas.Top="598" Width="243" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Image x:Name="tronimage" Height="450" Margin="0,59,0,0" Width="1300" Source="/TronGameCroppedCyan.png" Stretch="Fill" Canvas.Left="1" Canvas.Top="66"/>
+        <Image x:Name="tronimage" Height="450" Margin="0,59,0,0" Width="1300" Source="/TronGame.png" Stretch="Fill" Canvas.Left="1" Canvas.Top="66"/>
         <Rectangle Height="47" Canvas.Left="1021" Stroke="#FF1668A7" Canvas.Top="663" Width="243" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Rectangle Height="80" Canvas.Left="1021" Stroke="#FF1668A7" Canvas.Top="714" Width="243" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Rectangle Height="80" Canvas.Left="685" Stroke="#FF1668A7" Canvas.Top="714" Width="331" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle Height="80" Canvas.Left="200" Stroke="#FF1668A7" Canvas.Top="714" Width="479" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Image x:Name="image" Height="8" Margin="0,59,0,0" Width="1300" Source="/TronGameCroppedCyan.png" Stretch="Uniform" Canvas.Left="1" Canvas.Top="66"/>
         <Rectangle x:Name="TrackIndex" Height="450" Margin="0,0,0,0" Stroke="#FF066693" Width="1" Canvas.Left="0" Canvas.Top="125"/>
         <Rectangle x:Name="TrackIndexPlay" Height="450" Margin="0,0,0,0" Stroke="#BFBFBFBF" Width="1" Canvas.Left="0" Canvas.Top="125"/>
         <Button Click="Exit" Content="Exit" Canvas.Left="1227" Canvas.Top="667" Width="22" Height="20" Background="#FF012461" Foreground="#FF00807D" RenderTransformOrigin="0.029,-2.831" BorderBrush="#FF120351" HorizontalAlignment="Center" VerticalAlignment="Top"/>

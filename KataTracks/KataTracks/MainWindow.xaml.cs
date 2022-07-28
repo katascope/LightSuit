@@ -22,7 +22,9 @@ namespace KataTracks
     /// </summary>
     public partial class MainWindow : Window
     {
-        static string filename = "..\\..\\..\\TronGame.m4a";
+        static string songFilename = "";//..\\..\\..\\TronGame.m4a";
+        static string imageFilename = "";//..\\..\\..\\TronGameCroppedCyan.png";
+        static string configFilename = "..\\..\\..\\..\\..\\TronGame.TrackConfig";
         static WaveOutEvent outputDevice = null;
         static DispatcherTimer animationTimer;
         static DispatcherTimer connectionTimer;
@@ -73,36 +75,40 @@ namespace KataTracks
             btTextTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             btTextTimer.Start();
 
+            LoadConfig(configFilename);
+        }
 
+        private void LoadImage(string filename)
+        {
+            // Create image element to set as icon on the menu element
+            BitmapImage bmImage = new BitmapImage();
+            bmImage.BeginInit();
+            bmImage.UriSource = new Uri(filename, UriKind.Absolute);
+            bmImage.EndInit();
+            tronimage.Source = bmImage;
+        }
 
-            WriteableBitmap writeableBitmap = new WriteableBitmap(
-                            (int)1300,
-                            (int)512,
-                            96,
-                            96,
-                            PixelFormats.Bgr32,
-                            null);
-
-            byte[] pixels = new byte[1300*8*4];
-
-            for (int y=0;y<8;y++)
+        private void LoadConfig(string filename)
+        {
+            foreach (string line in System.IO.File.ReadLines(filename))
             {
-                for (int x=0;x<1300;x++)
+                string[] splits = line.Split('=');
+                if (splits.Length > 1)
                 {
-                    pixels[y * 1300 * 4 + x * 4 + 0] = 0;
-                    pixels[y * 1300 * 4 + x * 4 + 1] = 255;
-                    pixels[y * 1300 * 4 + x * 4 + 2] = 0;
-                    pixels[y * 1300 * 4 + x * 4 + 3] = 255;
+                    string key = splits[0]; //get key name
+                    string value = splits[1].Split('#')[0];//remove comments
+
+                    if (key == "SongFile")
+                        songFilename = value;
+                    if (key == "ImageFile")
+                    {
+                        imageFilename = value;
+                        LoadImage(imageFilename);
+                    }
+                    if (key == "DeviceId")
+                        DeviceManagerBLE.connectionList.Add(value);
                 }
             }
-            TrackDecoder.Decode(pixels);
-            Int32Rect rect = new Int32Rect(0, 0, 1300, 8);
-            writeableBitmap.WritePixels(rect, pixels, 1300*4, 0);
-
-            image.Source = writeableBitmap;
-            image.Stretch = Stretch.None;
-            image.HorizontalAlignment = HorizontalAlignment.Left;
-            image.VerticalAlignment = VerticalAlignment.Top;
         }
 
         private void PlayTrack(int seconds)
@@ -112,7 +118,7 @@ namespace KataTracks
 
             MainLog.Text += "Playing Track @" + seconds + " seconds\n";
 
-            var audioFile = new AudioFileReader(filename);
+            var audioFile = new AudioFileReader(songFilename);
 
             audioFile.Skip((int)(seconds));
             outputDevice.Init(audioFile);
