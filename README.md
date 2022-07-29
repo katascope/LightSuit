@@ -50,6 +50,8 @@ In combination, the KataTracks system allows for multiple time-synchronized led 
 
 ![Image](https://github.com/katascope/KataTracks/blob/main/Images/TronPasoDoble.png)
 
+[Show Usage](https://www.youtube.com/watch?v=vVwiPTvP0F0)
+
 Abandoned ideas:
 * Using EL wire, too monochrome of effects.
 * Using IMU for colors, too unpredictable during dance.
