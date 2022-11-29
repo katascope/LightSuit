@@ -113,30 +113,7 @@
         <Button Click="SendBoth" Tag="R" Content="RedBlue" Canvas.Left="680" Canvas.Top="711" Background="#FF012461" Foreground="#FFE0E0E0" BorderBrush="Black" Width="72" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
         <Button Click="SendBoth" Tag="E" Content="CyanMagenta" Canvas.Left="762" Canvas.Top="711" Background="#FF012461" Foreground="#FFE0E0E0" BorderBrush="Black" Width="93" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
         <Label x:Name="StatusLabel" Content="KataTracks" Canvas.Top="631" Foreground="#FF066693" FontWeight="Bold" Height="33" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Width="100" Canvas.Left="-5"/>
-        <Label Content="Kicks........." Canvas.Left="726" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Twirls" Canvas.Left="1012" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Pasos" Canvas.Left="405" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="March" Canvas.Left="194" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="March" Canvas.Left="98" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="FollowCircle" Canvas.Left="462" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="L .... F .... T" Canvas.Left="20" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="March" Canvas.Left="292" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Chop" Canvas.Left="150" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Sling" Canvas.Left="248" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Spins" Canvas.Left="345" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="done" Canvas.Left="1258" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="Climax" Canvas.Left="1208" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Bwaa" Canvas.Left="804" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="SSSSqqsqqsqqsqqs" Canvas.Left="852" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Stomps" Canvas.Left="957" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Join" Canvas.Left="1051" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="PresentArms" Canvas.Left="1081" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="ChaCha" Canvas.Left="1163" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="SideSteps" Canvas.Left="534" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="BackLift" Canvas.Left="590" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Arm" Canvas.Left="639" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Approach" Canvas.Left="671" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="Spin" Canvas.Left="778" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label x:Name="SongName" Content="SongName" Canvas.Left="20" Canvas.Top="125" Foreground="#FFACC0EC" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button Click="SendBoth" Tag="p" Content="All" Canvas.Left="1019" Canvas.Top="759" Background="#FF012461" Foreground="#FFE0E0E0" BorderBrush="Black" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button Click="SendBoth" Tag="q" Content="0" Canvas.Left="1055" Canvas.Top="759" Background="#FF012461" Foreground="#FFE0E0E0" BorderBrush="Black" Width="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button Click="SendBoth" Tag="w" Content="1" Canvas.Left="1079" Canvas.Top="759" Background="#FF012461" Foreground="#FFE0E0E0" BorderBrush="Black" Width="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>

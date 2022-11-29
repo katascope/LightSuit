@@ -27,8 +27,7 @@ void InstantEvent(FxController &fxc, int event, FxPaletteUpdateType paletteUpdat
     }    
   }
 
-  if (event != fx_nothing)
-    PrintFxEventName(event);
+  //if (event != fx_nothing) PrintFxEventName(event);
   FxEventProcess(fxc, event);
   UpdatePalette();
 }
@@ -72,6 +71,11 @@ void UserCommandExecute(FxController &fxc, int cmd)
     case Cmd_SpeedDec:      InstantEvent(fxc, fx_speed_dec, FxPaletteUpdateType::Once); break;
     case Cmd_SpeedInc:      InstantEvent(fxc, fx_speed_inc, FxPaletteUpdateType::Once); break;
     case Cmd_SpeedRst:      InstantEvent(fxc, fx_speed_0,   FxPaletteUpdateType::Once); break;
+
+    case Cmd_Speed1:        InstantEvent(fxc, fx_speed_1,   FxPaletteUpdateType::Once); break;
+    case Cmd_Speed2:        InstantEvent(fxc, fx_speed_2,   FxPaletteUpdateType::Once); break;
+    case Cmd_Speed3:        InstantEvent(fxc, fx_speed_3,   FxPaletteUpdateType::Once); break;
+    case Cmd_Speed4:        InstantEvent(fxc, fx_speed_4,   FxPaletteUpdateType::Once); break;
     
     case Cmd_ColorDark:     InstantEvent(fxc, fx_palette_dark,     FxPaletteUpdateType::Once); break;
     case Cmd_ColorWhite:    InstantEvent(fxc, fx_palette_white,    FxPaletteUpdateType::Once); break;

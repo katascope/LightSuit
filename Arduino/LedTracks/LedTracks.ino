@@ -12,6 +12,22 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "Devices.h"
 static FxController fxController;
 
+#if ENABLE_LCD
+#include "FoxenDisplay.h"
+static FoxenLcd lcd;
+#endif
+
+#if ENABLE_ULTRASOUND
+#include "FoxenUltrasound.h"
+static FoxenUltrasound ultrasound;
+#endif
+
+#if ENABLE_IMU
+#include "IMU.h"
+static FIMU fimu;
+#endif
+
+
 static unsigned long lastTimeDisplay = 0;
 
 void setup() {
@@ -96,6 +112,22 @@ void setup() {
   Serial.println(F(" }"));
 #endif
 
+#if ENABLE_LCD
+  lcd.Startup();
+#endif
+
+#if ENABLE_ULTRASOUND
+  ultrasound.Startup();
+#endif
+
+#if ENABLE_IMU
+  fimu.Startup();
+#endif
+
+
+UserCommandExecute(fxController, Cmd_Brightness_Half); 
+UserCommandExecute(fxController, Cmd_ColorDark); 
+
   Serial.println("Setup complete.");
 }
 
@@ -166,4 +198,31 @@ void loop()
       }
     }
   }
+
+#if ENABLE_IMU
+  fimu.Poll();
+  lcd.accelerationX = fimu.accelerationX;
+  lcd.accelerationY = fimu.accelerationY;
+  lcd.accelerationZ = fimu.accelerationZ;
+  lcd.gyroX = fimu.gyroX;
+  lcd.gyroY = fimu.gyroY;
+  lcd.gyroZ = fimu.gyroZ;
+#endif  
+
+#if ENABLE_ULTRASOUND
+  ultrasound.Update();
+  int distance = ultrasound.GetDistance();
+  if (distance == 0) { }
+  else if (distance < 10) { UserCommandExecute(fxController, Cmd_ColorRed); }
+  else if (distance < 19) {UserCommandExecute(fxController, Cmd_ColorOrange); }
+  else if (distance < 29) { UserCommandExecute(fxController, Cmd_ColorYellow); }
+  else if (distance < 39) { UserCommandExecute(fxController, Cmd_ColorGreen); }
+  else {UserCommandExecute(fxController, Cmd_ColorMagenta); } 
+#endif  
+
+#if ENABLE_LCD
+  lcd.ultraDistance = ultrasound.GetDistance();
+  lcd.Draw();
+#endif  
+  
 }

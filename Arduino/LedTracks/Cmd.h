@@ -77,6 +77,10 @@ enum UserCommand
   Cmd_SpeedDec,
   Cmd_SpeedInc,
   Cmd_SpeedRst,
+  Cmd_Speed1,
+  Cmd_Speed2,
+  Cmd_Speed3,
+  Cmd_Speed4,
 
   Cmd_Particles_On,
   Cmd_Particles_Off,

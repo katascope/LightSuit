@@ -22,6 +22,7 @@ namespace KataTracks
     /// </summary>
     public partial class MainWindow : Window
     {
+        static string songName = "Unknown";
         static string songFilename = "";//..\\..\\..\\TronGame.m4a";
         static string imageFilename = "";//..\\..\\..\\TronGameCroppedCyan.png";
         static string configFilename = "..\\..\\..\\..\\..\\TronGame.TrackConfig";
@@ -98,6 +99,8 @@ namespace KataTracks
                     string key = splits[0]; //get key name
                     string value = splits[1].Split('#')[0];//remove comments
 
+                    if (key == "SongName")
+                        songName = value;
                     if (key == "SongFile")
                         songFilename = value;
                     if (key == "ImageFile")
@@ -262,28 +265,21 @@ namespace KataTracks
                 PlayTrack(1);
             }
 
-            //MainLog.Text += "Update #" + textTickCount + " ";
-
             if (playing)
                 MainLog.Text += "Playing,";
             else MainLog.Text += "Stopped,";
             MainLog.Text += " Seek " + (timePick*100.0f)+ " ms\n";
-
             MainLog.Text += "SoundTrigger " + (useSoundTrigger ? "ON" : "off") + "\n";
-
             MainLog.Text += "SoundInput " + DeviceVolume.GetName() + "\n";
 
             if (DeviceVolume.IsActive())
                 MainLog.Text += "Input (" + (int)(DeviceVolume.GetBias()*100.0f) + "%) "+ (int)inputVolume + " of " + (int)VolumeThreshold + "\n";
             else MainLog.Text += "Input inactive\n";
 
-/*            if (outputDevice != null)
-                MainLog.Text += "Output (" + (int)volume + "%)\n";
-            else
-                MainLog.Text += "Output inactive\n";*/
-
             if (foundDevices != null)
                 MainLog.Text += "Devices " + foundDevices.Count + "\n";
+
+            SongName.Content = "" + songName + "";
 
             /* MainLog.Text += "Actives:\n";
              foreach (KeyValuePair<string, BleDevice> kvp in DeviceManagerBLE.bleDevices)

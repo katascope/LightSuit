@@ -13,16 +13,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #if SUIT_JACKET
 static const char *DeviceName = "LightSuitAngelJ";
 #elif LEAD
-static const char *DeviceName = "LightSuitAngelA";
+static const char *DeviceName = "Mree";
 #elif FOLLOW
 static const char *DeviceName = "LightSuitAngelB";
 #endif
 
 #define STARTUP_STATE       FxState_Default    //FxState_Default;//FxState_TestPattern;//FxState_PlayingTrack;//
 #define UPDATE_DELAY        30 //100 //Milliseconds to delay between palette updates, set to 100 for iot, 30 for ble
-#define NUM_STRIPS          8
+#define NUM_STRIPS          1
 #define BRIGHTNESS          50  //Default brightness
 #define BRIGHTNESS_LIMIT    100 //Maximum allowed brightness, //90 possible but runs too hot
+#define ENABLE_LCD          1 //OLED 1306 driver
+#define ENABLE_ULTRASOUND   1 //HC-SR04 ultrasound
+#define ENABLE_IMU          1 //builtin imu
 #define ENABLE_SAFETY       1
 #define ENABLE_TRACK_CHECK  1
 
@@ -64,7 +67,7 @@ static const char *DeviceName = "LightSuitAngelB";
 #define ENABLE_NEOPIXEL     1
 #define ENABLE_BLE          1
 #define DEBUG_BLE           1
-#define SERIAL_BAUD_RATE    9600
+#define SERIAL_BAUD_RATE    115200
 
 #if LAMP
 #undef STARTUP_STATE
