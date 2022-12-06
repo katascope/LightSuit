@@ -213,11 +213,11 @@ void loop()
   ultrasound.Update();
   int distance = ultrasound.GetDistance();
   if (distance == 0) { }
-  else if (distance < 10) { UserCommandExecute(fxController, Cmd_ColorRed); }
-  else if (distance < 19) {UserCommandExecute(fxController, Cmd_ColorOrange); }
-  else if (distance < 29) { UserCommandExecute(fxController, Cmd_ColorYellow); }
-  else if (distance < 39) { UserCommandExecute(fxController, Cmd_ColorGreen); }
-  else {UserCommandExecute(fxController, Cmd_ColorMagenta); } 
+  else if (distance < 10) { UserCommandExecute(fxController, Cmd_ColorRed); lcd.log="Freeze";}
+  else if (distance < 19) {UserCommandExecute(fxController, Cmd_ColorOrange); lcd.log="Danger";}
+  else if (distance < 29) { UserCommandExecute(fxController, Cmd_ColorYellow);lcd.log="Warning"; }
+  else if (distance < 39) { UserCommandExecute(fxController, Cmd_ColorGreen); lcd.log="Aware";}
+  else {UserCommandExecute(fxController, Cmd_ColorMagenta); lcd.log="Open";} 
 #endif  
 
 #if ENABLE_LCD

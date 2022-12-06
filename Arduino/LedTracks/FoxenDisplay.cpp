@@ -105,8 +105,10 @@ void FoxenLcd::Draw()
   if (ultraDistance < 100)
   {
    //float distScale = (float)(ultraDistance / 1000.0f)/4;
-   
+   display.print(F("Stress="));
+
    int barDistance = (15-ultraDistance / 4);
+   
    for (int i=0;i<barDistance;i++)
    {
      //DrawSpinner( ((tick) / 2) % 8);
@@ -115,24 +117,27 @@ void FoxenLcd::Draw()
   }
   display.println();
 
+  int rotX = accelerationX*90;
+  int rotY = accelerationY*90;
+  int rotZ = accelerationZ*90;
   display.print(F("A "));
-  display.print(accelerationX);
+  display.print(rotX);
   display.print(F(" "));
-  display.print(accelerationY);
+  display.print(rotY);
   display.print(F(" "));
-  display.print(accelerationZ);
+  display.print(rotZ);
   display.println();
-  display.print(F("G "));
+  /*display.print(F("G "));
   display.print(gyroX);
   display.print(F(" "));
   display.print(gyroY);
   display.print(F(" "));
   display.print(gyroZ);
-  display.println();
+  display.println();*/
   
   //DrawSpinner((tick / 2) % 8);
   //display.print(F(" "));  
-  //DrawLog();
+  DrawLog();
   display.display();
   tick++;
 }

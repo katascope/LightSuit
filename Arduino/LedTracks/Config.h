@@ -11,7 +11,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define LAMP           0
 
 #if SUIT_JACKET
-static const char *DeviceName = "LightSuitAngelJ";
+static const char *DeviceName = "LightSuitAngelTest";
 #elif LEAD
 static const char *DeviceName = "Mree";
 #elif FOLLOW
