@@ -90,7 +90,6 @@ std::vector<Emotion> emotions
     Emotion(LO,MX,MX, "curious",        "wait",     ""),
     Emotion(HI,MX,MX, "playful",        "play",     ""),
     Emotion(MX,MX,MX, "ecstastic",      "be",       ""),
-
 };
 
 
