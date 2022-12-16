@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleBLE", "ConsoleBLE\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundLevels", "SoundLevels\SoundLevels.csproj", "{598082B2-450F-4FF9-B41C-41D1A112FBC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KataTracker", "KataTracker\KataTracker.csproj", "{44EC428A-2C6B-4ACD-AFD2-55930CD3C59C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataTracker", "KataTracker\KataTracker.csproj", "{44EC428A-2C6B-4ACD-AFD2-55930CD3C59C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{426FAFB7-5695-41C8-8C83-F8AACE603848}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{426FAFB7-5695-41C8-8C83-F8AACE603848}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EmotionalSpace", "..\EmotionalSpace\EmotionalSpace.vcxproj", "{D4E3207D-54F1-48BA-A252-B407042F670E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,18 @@ Global
 		{426FAFB7-5695-41C8-8C83-F8AACE603848}.Release|x64.Build.0 = Release|Any CPU
 		{426FAFB7-5695-41C8-8C83-F8AACE603848}.Release|x86.ActiveCfg = Release|Any CPU
 		{426FAFB7-5695-41C8-8C83-F8AACE603848}.Release|x86.Build.0 = Release|Any CPU
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Debug|Any CPU.Build.0 = Debug|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Debug|x64.ActiveCfg = Debug|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Debug|x64.Build.0 = Debug|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Debug|x86.ActiveCfg = Debug|Win32
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Debug|x86.Build.0 = Debug|Win32
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Release|Any CPU.ActiveCfg = Release|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Release|Any CPU.Build.0 = Release|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Release|x64.ActiveCfg = Release|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Release|x64.Build.0 = Release|x64
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Release|x86.ActiveCfg = Release|Win32
+		{D4E3207D-54F1-48BA-A252-B407042F670E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
