@@ -13,6 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 static FxController fxController;
 
 #if ENABLE_LCD
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include "FoxenDisplay.h"
 static FoxenLcd lcd;
 #endif
@@ -46,6 +48,14 @@ void setup() {
   Serial.println(F("System: Arduino Nano"));
 #else
   Serial.println(F("System: UNKNOWN"));
+#endif
+
+#if ENABLE_LCD
+  lcd.Startup();
+  lcd.SetCursor(0,0);
+  lcd.Print(DeviceName);
+  lcd.SetCursor(1,0);
+  lcd.Print(F("Booting up"));
 #endif
 
 #if ENABLE_TRACK_CHECK
@@ -110,10 +120,6 @@ void setup() {
     Serial.print(F(" "));
   }
   Serial.println(F(" }"));
-#endif
-
-#if ENABLE_LCD
-  lcd.Startup();
 #endif
 
 #if ENABLE_ULTRASOUND

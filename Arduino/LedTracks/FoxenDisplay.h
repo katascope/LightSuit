@@ -5,6 +5,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #ifndef FDISPLAY_DEF
 #define FDISPLAY_DEF
 
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+
+
 class FoxenLcd
 {
   public:
@@ -30,8 +39,12 @@ class FoxenLcd
     void DrawState(int state, int tick);
     void DrawLog();
   public:
+    void Clear();
+    void SetCursor(int row, int col);
+    void Print(String str);
     void Startup();
     void Draw();
 };
+
 
 #endif
