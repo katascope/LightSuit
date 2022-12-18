@@ -1,4 +1,5 @@
 Devices, Bluetooth:
+Test
  AT+NAME=Lightsuit#
  AT+UART=9600,0,0
  AT+PSWD=...
