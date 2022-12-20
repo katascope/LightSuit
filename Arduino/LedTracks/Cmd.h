@@ -18,7 +18,7 @@ enum UserCommand
   Cmd_Help,
 
   Cmd_ServoMin,
-  Cmd_ServoZero,
+  Cmd_ServoCenter,
   Cmd_ServoMax,
 
   Cmd_Brightness_Max,

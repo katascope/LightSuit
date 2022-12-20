@@ -51,7 +51,7 @@ void UserCommandExecute(FxController &fxc, int cmd)
       Serial.println(F("? : Help Menu"));
       Serial.println(F("+ - : Rotate Pos/Neg"));
       Serial.println(F("( * ) : Track Start/StartFrom/Stop"));
-      Serial.println(F("{ \\ } : Servo Min/Zero/Max"));
+      Serial.println(F("{ \\ } : Servo Min/Center/Max"));
       Serial.println(F("@code : Time code"));
       Serial.println(F("[ b | n | v] : Brightness Full | Normal | Half"));
       Serial.println(F("z:default mode x:test"));
@@ -62,9 +62,9 @@ void UserCommandExecute(FxController &fxc, int cmd)
     case Cmd_State_Default: fxc.fxState = FxState_Default;break;
     case Cmd_State_Test:    fxc.fxState = FxState_TestPattern;break;
 
-    case Cmd_ServoMin:  ServoGo(0); Serial.println(F("ServoMin")); break;
-    case Cmd_ServoZero: ServoGo(50); Serial.println(F("ServoZero")); break;
-    case Cmd_ServoMax:  ServoGo(180); Serial.println(F("ServoMax")); break;
+    case Cmd_ServoMin:  ServoPose(POSE_ZERO); Serial.println(F("ServoMin")); break;
+    case Cmd_ServoCenter: ServoPose(POSE_CENTER); Serial.println(F("ServoCenter")); break;
+    case Cmd_ServoMax:  ServoPose(POSE_MAX); Serial.println(F("ServoMax")); break;
       
     case Cmd_PlayFromStart: trackStart(fxc, 0, (unsigned long)(millis() - (signed long)TRACK_START_DELAY), FxTrackEndAction::StopAtEnd); break;
     case Cmd_PlayFrom:      fxc.fxState = FxState_PlayingTrack;break;
@@ -241,7 +241,7 @@ void UserCommandInput(FxController &fxc, int data)
     case 'n': UserCommandExecute(fxc, Cmd_Brightness_Normal);break;
 
     case '{': UserCommandExecute(fxc, Cmd_ServoMin); break;
-    case '\\':UserCommandExecute(fxc, Cmd_ServoZero); break;
+    case '\\':UserCommandExecute(fxc, Cmd_ServoCenter); break;
     case '}': UserCommandExecute(fxc, Cmd_ServoMax); break;
         
     case ')': UserCommandExecute(fxc, Cmd_PlayFromStart); break;
