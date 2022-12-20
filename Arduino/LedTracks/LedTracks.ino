@@ -21,6 +21,7 @@ static FoxenLcd lcd;
 
 #if ENABLE_ULTRASOUND
 #include "FoxenUltrasound.h"
+
 static FoxenUltrasound ultrasound;
 #endif
 

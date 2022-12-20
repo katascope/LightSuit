@@ -51,6 +51,13 @@ void ServoSet(int servo, int degree)
   servoInfo[servo].degree = degree;
   pwm.setPWM(servo,0,pulse);
   Serial.print(F("Servo"));
+  Serial.print(servo);
+  Serial.print(F("="));
+  Serial.print(degree);
+
+  Serial.print(F(",wait 1 sec"));
+  Serial.println();
+  delay(1000);
 /*  Serial.print(servo);
   Serial.print(F(", deg="));
   Serial.print(degree);
