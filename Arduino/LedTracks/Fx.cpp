@@ -8,6 +8,63 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "Fx.h"
 #include "Track.h"
 
+void FxDisplayStatus(FxController &fxc)
+{
+  Serial.print(F("["));
+      Serial.print(DeviceName);
+      Serial.print(F(":"));
+      Serial.print(GetTime());
+      Serial.print(F(":"));
+      Serial.print(getTimecodeSongOffset());
+      Serial.print(F(":"));
+      Serial.print(getTimecodeTimeOffset());
+      Serial.print(F("[state="));
+      PrintFxStateName(fxc.fxState);
+      Serial.print(F(",strip&="));
+      Serial.print(fxc.stripMask);
+
+#if ENABLE_BLE      
+      Serial.print(F(",BLE on"));
+#else
+      Serial.print(F(",BLE off"));
+#endif
+
+      //Strip debugging
+#if ENABLE_NEOPIXEL  
+      for (int strip=0;strip<NUM_STRIPS;strip++)
+      {
+        Serial.print(F("["));
+        Serial.print(F("b="));
+        Serial.print(fxc.strip[strip]->brightness);
+        Serial.print(F(",ps="));
+        Serial.print(fxc.strip[strip]->paletteSpeed);
+        Serial.print(F(",pd="));
+        Serial.print(fxc.strip[strip]->paletteDirection);
+        Serial.print(F(",u="));
+        Serial.print(fxc.strip[strip]->fxPaletteUpdateType);
+        Serial.print(F("] "));
+      }
+#endif    
+      Serial.print(F(",endAction="));
+      PrintFxTrackEndAction(fxc.fxTrackEndAction);
+      Serial.print(F(",ftc="));
+      Serial.print(GetFinalTimeCodeEntry());      
+      Serial.print(F(",tclm="));
+      Serial.print(getTimecodeLastMatched());
+      Serial.print(F(")"));
+      /*
+      if (fxc.fxState == FxState_PlayingTrack)
+      {
+        int match = GetCurrentTimeCodeMatch(GetTime());
+        Serial.print(F("="));
+        PrintFxEventName(SongTrack_event(match));
+        Serial.print(F(" "));
+        Serial.print(SongTrack_timecode(match));
+      }*/
+
+      Serial.println();
+}
+
 void FxCreatePalette(FxController &fxController, int strip, uint32_t *pal16, unsigned int palSize)
 {
   int numleds = fxController.strip[strip]->numleds;
@@ -132,62 +189,6 @@ void CreateQuadPulseBand(FxController &fxc, uint8_t r, uint8_t g, uint8_t b) {
 }
 
 
-void FxDisplayStatus(FxController &fxc)
-{
-  Serial.print(F("["));
-      Serial.print(DeviceName);
-      Serial.print(F(":"));
-      Serial.print(GetTime());
-      Serial.print(F(":"));
-      Serial.print(getTimecodeSongOffset());
-      Serial.print(F(":"));
-      Serial.print(getTimecodeTimeOffset());
-      Serial.print(F("[state="));
-      PrintFxStateName(fxc.fxState);
-      Serial.print(F(",strip&="));
-      Serial.print(fxc.stripMask);
-
-#if ENABLE_BLE      
-      Serial.print(F(",BLE on"));
-#else
-      Serial.print(F(",BLE off"));
-#endif
-
-      //Strip debugging
-#if ENABLE_NEOPIXEL  
-      for (int strip=0;strip<NUM_STRIPS;strip++)
-      {
-        Serial.print(F("["));
-        Serial.print(F("b="));
-        Serial.print(fxc.strip[strip]->brightness);
-        Serial.print(F(",ps="));
-        Serial.print(fxc.strip[strip]->paletteSpeed);
-        Serial.print(F(",pd="));
-        Serial.print(fxc.strip[strip]->paletteDirection);
-        Serial.print(F(",u="));
-        Serial.print(fxc.strip[strip]->fxPaletteUpdateType);
-        Serial.print(F("] "));
-      }
-#endif    
-      Serial.print(F(",endAction="));
-      PrintFxTrackEndAction(fxc.fxTrackEndAction);
-      Serial.print(F(",ftc="));
-      Serial.print(GetFinalTimeCodeEntry());      
-      Serial.print(F(",tclm="));
-      Serial.print(getTimecodeLastMatched());
-      Serial.print(F(")"));
-      /*
-      if (fxc.fxState == FxState_PlayingTrack)
-      {
-        int match = GetCurrentTimeCodeMatch(GetTime());
-        Serial.print(F("="));
-        PrintFxEventName(SongTrack_event(match));
-        Serial.print(F(" "));
-        Serial.print(SongTrack_timecode(match));
-      }*/
-
-      Serial.println();
-}
 
 void sequence_linear(unsigned int arr[], int n)
 {

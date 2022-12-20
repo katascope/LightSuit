@@ -64,7 +64,7 @@ void UserCommandExecute(FxController &fxc, int cmd)
 
     case Cmd_ServoMin:  ServoGo(0); Serial.println(F("ServoMin")); break;
     case Cmd_ServoZero: ServoGo(50); Serial.println(F("ServoZero")); break;
-    case Cmd_ServoMax:  ServoGo(100); Serial.println(F("ServoMax")); break;
+    case Cmd_ServoMax:  ServoGo(180); Serial.println(F("ServoMax")); break;
       
     case Cmd_PlayFromStart: trackStart(fxc, 0, (unsigned long)(millis() - (signed long)TRACK_START_DELAY), FxTrackEndAction::StopAtEnd); break;
     case Cmd_PlayFrom:      fxc.fxState = FxState_PlayingTrack;break;

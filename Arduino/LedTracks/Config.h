@@ -23,10 +23,10 @@ static const char *DeviceName = "LightSuitAngelB";
 #define NUM_STRIPS          1
 #define BRIGHTNESS          50  //Default brightness
 #define BRIGHTNESS_LIMIT    100 //Maximum allowed brightness, //90 possible but runs too hot
-#define ENABLE_LCD          1 //OLED 1306 driver
+#define ENABLE_LCD          0 //OLED 1306 driver
 #define ENABLE_ULTRASOUND   1 //HC-SR04 ultrasound
 #define ENABLE_IMU          1 //builtin imu
-#define ENABLE_SERVOS       0 //PCA9685
+#define ENABLE_SERVOS       1 //PCA9685
 #define ENABLE_SAFETY       1
 #define ENABLE_TRACK_CHECK  1
 

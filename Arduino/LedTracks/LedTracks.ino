@@ -29,6 +29,9 @@ static FoxenUltrasound ultrasound;
 static FIMU fimu;
 #endif
 
+#if ENABLE_SERVOS
+#include "Servos.h"
+#endif
 
 static unsigned long lastTimeDisplay = 0;
 
@@ -170,11 +173,16 @@ void loop()
   if (t - lastTimeDisplay > 1000)//delay to let bluetooth get data
   {      
     if (fxController.fxState != FxState_PlayingTrack)
-      FxDisplayStatus(fxController);      
+    {
+      Serial.print(F("Ult="));
+      Serial.print(ultrasound.GetDistance());
+      Serial.print(F(" "));
+      FxDisplayStatus(fxController);            
+    }
     lastTimeDisplay = t;
   }
   
-  while (Serial.available())  
+  while (Serial.available())    
     UserCommandInput(fxController, Serial.read());
 
 #if ENABLE_BLE
@@ -211,6 +219,7 @@ void loop()
 
 #if ENABLE_IMU
   fimu.Poll();
+#if ENABLE_LCD
   lcd.accelerationX = fimu.accelerationX;
   lcd.accelerationY = fimu.accelerationY;
   lcd.accelerationZ = fimu.accelerationZ;
@@ -218,21 +227,28 @@ void loop()
   lcd.gyroY = fimu.gyroY;
   lcd.gyroZ = fimu.gyroZ;
 #endif  
+#endif  
 
 #if ENABLE_ULTRASOUND
   ultrasound.Update();
   int distance = ultrasound.GetDistance();
   if (distance == 0) { }
-  else if (distance < 10) { UserCommandExecute(fxController, Cmd_ColorRed); lcd.log="Freeze";}
-  else if (distance < 19) {UserCommandExecute(fxController, Cmd_ColorOrange); lcd.log="Danger";}
-  else if (distance < 29) { UserCommandExecute(fxController, Cmd_ColorYellow);lcd.log="Warning"; }
-  else if (distance < 39) { UserCommandExecute(fxController, Cmd_ColorGreen); lcd.log="Aware";}
-  else {UserCommandExecute(fxController, Cmd_ColorMagenta); lcd.log="Open";} 
+  else if (distance < 10) { UserCommandExecute(fxController, Cmd_ColorRed);}
+  else if (distance < 19) {UserCommandExecute(fxController, Cmd_ColorOrange);}
+  else if (distance < 29) { UserCommandExecute(fxController, Cmd_ColorYellow);}
+  else if (distance < 39) { UserCommandExecute(fxController, Cmd_ColorGreen);}
+  else {UserCommandExecute(fxController, Cmd_ColorMagenta);} 
 #endif  
 
 #if ENABLE_LCD
   lcd.ultraDistance = ultrasound.GetDistance();
+  int distance = ultrasound.GetDistance();
+  if (distance == 0) { }
+  else if (distance < 10) { lcd.log="Freeze";}
+  else if (distance < 19) { lcd.log="Danger";}
+  else if (distance < 29) { lcd.log="Warning"; }
+  else if (distance < 39) { lcd.log="Aware";}
+  else {lcd.log="Open";} 
   lcd.Draw();
 #endif  
-  
 }
