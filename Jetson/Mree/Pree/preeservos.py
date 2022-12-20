@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.7
 
 # SDA = pin.SDA_1
 # SCL = pin.SCL_1
