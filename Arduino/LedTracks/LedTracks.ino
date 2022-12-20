@@ -130,6 +130,10 @@ void setup() {
   fimu.Startup();
 #endif
 
+#if ENABLE_SERVOS
+  ServoStartup();
+#endif
+
 
 UserCommandExecute(fxController, Cmd_Brightness_Half); 
 UserCommandExecute(fxController, Cmd_ColorDark); 

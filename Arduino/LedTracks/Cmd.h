@@ -17,6 +17,10 @@ enum UserCommand
   Cmd_Unk,
   Cmd_Help,
 
+  Cmd_ServoMin,
+  Cmd_ServoZero,
+  Cmd_ServoMax,
+
   Cmd_Brightness_Max,
   Cmd_Brightness_Normal,
   Cmd_Brightness_Half,

@@ -2,10 +2,12 @@
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
+#include "Config.h"
 #include "Cmd.h"
 #include "Fx.h"
 #include "Track.h"
 #include "Devices.h"
+#include "Servos.h"
 
 void UpdatePalette();
 unsigned long GetTime();
@@ -47,11 +49,9 @@ void UserCommandExecute(FxController &fxc, int cmd)
   Serial.println(F("System: UNKNOWN"));
 #endif
       Serial.println(F("? : Help Menu"));
-      Serial.println(F("+ : Rotate Pos"));
-      Serial.println(F("- : Rotate Neg"));
-      Serial.println(F("( : Track Start"));
-      Serial.println(F(") : Track Stop"));
-      Serial.println(F("* : Track StartFrom"));
+      Serial.println(F("+ - : Rotate Pos/Neg"));
+      Serial.println(F("( * ) : Track Start/StartFrom/Stop"));
+      Serial.println(F("{ \\ } : Servo Min/Zero/Max"));
       Serial.println(F("@code : Time code"));
       Serial.println(F("[ b | n | v] : Brightness Full | Normal | Half"));
       Serial.println(F("z:default mode x:test"));
@@ -61,6 +61,10 @@ void UserCommandExecute(FxController &fxc, int cmd)
       break;
     case Cmd_State_Default: fxc.fxState = FxState_Default;break;
     case Cmd_State_Test:    fxc.fxState = FxState_TestPattern;break;
+
+    case Cmd_ServoMin:  ServoGo(0); Serial.println(F("ServoMin")); break;
+    case Cmd_ServoZero: ServoGo(50); Serial.println(F("ServoZero")); break;
+    case Cmd_ServoMax:  ServoGo(100); Serial.println(F("ServoMax")); break;
       
     case Cmd_PlayFromStart: trackStart(fxc, 0, (unsigned long)(millis() - (signed long)TRACK_START_DELAY), FxTrackEndAction::StopAtEnd); break;
     case Cmd_PlayFrom:      fxc.fxState = FxState_PlayingTrack;break;
@@ -235,6 +239,10 @@ void UserCommandInput(FxController &fxc, int data)
     case 'v': UserCommandExecute(fxc, Cmd_Brightness_Half);break;
     case 'b': UserCommandExecute(fxc, Cmd_Brightness_Max);break;
     case 'n': UserCommandExecute(fxc, Cmd_Brightness_Normal);break;
+
+    case '{': UserCommandExecute(fxc, Cmd_ServoMin); break;
+    case '\\':UserCommandExecute(fxc, Cmd_ServoZero); break;
+    case '}': UserCommandExecute(fxc, Cmd_ServoMax); break;
         
     case ')': UserCommandExecute(fxc, Cmd_PlayFromStart); break;
     case '*': UserCommandExecute(fxc, Cmd_PlayFrom); break;
