@@ -32,7 +32,7 @@ static FIMU fimu;
 
 #if ENABLE_SERVOS
 #include "Servos.h"
-#endif
+#endif 
 
 static unsigned long lastTimeDisplay = 0;
 
@@ -111,8 +111,7 @@ void setup() {
     fxController.fxTrackEndAction = FxTrackEndAction::LoopAtEnd;
     trackStart(fxController, 0, (unsigned long)(millis() - (signed long)TRACK_START_DELAY), fxController.fxTrackEndAction);
   }
-  else Serial.println(F("Ready"));
-
+  else Serial.println(F("Lightstrips OK"));
 #if ENABLE_NEOPIXEL
 //Display brightness levels
   Serial.print(F("Brightness = { "));
@@ -191,7 +190,6 @@ void loop()
 #endif
 
   State_Poll(fxController);
-
   bool needsUpdate = false;
   for (int strip=0;strip<NUM_STRIPS;strip++)
   {
@@ -199,8 +197,7 @@ void loop()
     || fxController.strip[strip]->fxPaletteUpdateType == FxPaletteUpdateType::Always
     || fxController.IsAnimating())
       needsUpdate = true;
-  }
-  
+  }  
   if (fxController.fxState == FxState_PlayingTrack || needsUpdate)
   {
     unsigned long t =  millis();

@@ -29,6 +29,7 @@ static const char *DeviceName = "LightSuitAngelB";
 #define ENABLE_SERVOS       1 //PCA9685
 #define ENABLE_SAFETY       1
 #define ENABLE_TRACK_CHECK  1
+#define ENABLE_BLE          1
 
 #if LEAD
 #define NUM_LEDS_0          53
@@ -63,11 +64,9 @@ static const char *DeviceName = "LightSuitAngelB";
 #define NUM_LEDS_7          35
 #endif
 
-#define ENABLE_MULTISTRIP   1   //Enable multiple LED strips
-#define LED_PIN             2
-//#define LED_PIN             2
 #define ENABLE_NEOPIXEL     1
-#define ENABLE_BLE          1
+#define ENABLE_MULTISTRIP   1   //Enable multiple LED strips
+#define LED_PIN             3
 #define DEBUG_BLE           1
 #define SERIAL_BAUD_RATE    115200
 

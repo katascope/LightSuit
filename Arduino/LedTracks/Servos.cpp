@@ -11,27 +11,28 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 struct ServoStatus servoInfo[SERVO_NUM] =
 {
- { SERVO_LEFT_BACK_HIP,     0, -1, 180 },
- { SERVO_LEFT_BACK_ELBOW,   0, -1, 180 },
- { SERVO_LEFT_BACK_FOOT,    0, -1, 180 },
- { SERVO_LEFT_EAR,          0, -1, 180 },
- { SERVO_LEFT_FRONT_HIP,    0, -1, 180 },
- { SERVO_LEFT_FRONT_ELBOW,  0, -1, 180 },
- { SERVO_LEFT_FRONT_FOOT,   0, -1, 180 },
- { SERVO_LEFT_RESERVED,     0, -1, 180 },
- { SERVO_RIGHT_BACK_HIP,    0, -1, 180 },
- { SERVO_RIGHT_BACK_ELBOW,  0, -1, 180 },
- { SERVO_RIGHT_BACK_FOOT,   0, -1, 180 },
- { SERVO_RIGHT_EAR,         0, -1, 180 },
- { SERVO_RIGHT_FRONT_HIP,   0, -1, 180 },
- { SERVO_RIGHT_FRONT_ELBOW, 0, -1, 180 },
- { SERVO_RIGHT_FRONT_FOOT,  0, -1, 180 },
- { SERVO_TAIL,              0, -1, 180 }
+ { "LBHip",     SERVO_LEFT_BACK_HIP,     80, 90, 100, false },
+ { "LBElbow",   SERVO_LEFT_BACK_ELBOW,   80, 90, 100, false },
+ { "LBFoot",    SERVO_LEFT_BACK_FOOT,    80, 90, 100, false },
+ { "LEar",      SERVO_LEFT_EAR,          80, 90, 100, false },
+ { "LFHip",     SERVO_LEFT_FRONT_HIP,    80, 90, 100, false },
+ { "LFElbow",   SERVO_LEFT_FRONT_ELBOW,  80, 90, 100, false },
+ { "LFFoot",    SERVO_LEFT_FRONT_FOOT,   80, 90, 100, false },
+ { "LReserved", SERVO_LEFT_RESERVED,     80, 90, 100, false },
+ { "RBHip",     SERVO_RIGHT_BACK_HIP,    80, 90, 100, true  },
+ { "RBElbow",   SERVO_RIGHT_BACK_ELBOW,  80, 90, 100, true  },
+ { "RBFoot",    SERVO_RIGHT_BACK_FOOT,   80, 90, 100, true  },
+ { "REar",      SERVO_RIGHT_EAR,         80, 90, 100, false },
+ { "RFHip",     SERVO_RIGHT_FRONT_HIP,   80, 90, 100, true  },
+ { "RFElbow",   SERVO_RIGHT_FRONT_ELBOW, 80, 90, 100, true  },
+ { "RFFoot" ,   SERVO_RIGHT_FRONT_FOOT,  80, 90, 100, true  },
+ { "Tail",      SERVO_TAIL,              80, 90, 100, false }
 };
 
-int pulseWidth(int angle)
+int pulseWidth(int angle, bool reverse)
 {
   int pulse_wide, analog_value;
+  if (reverse) angle = 180-angle;
   pulse_wide   = map(angle, 0, 180, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
   analog_value = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
   return analog_value;
@@ -47,23 +48,18 @@ void ServoStartup()
 
 void ServoSet(int servo, int degree)
 {
-  int pulse=pulseWidth(degree);
+  int pulse=pulseWidth(degree, servoInfo[servo].reverse);
   servoInfo[servo].degree = degree;
   pwm.setPWM(servo,0,pulse);
   Serial.print(F("Servo"));
   Serial.print(servo);
+  Serial.print(F(" "));
+  Serial.print(servoInfo[servo].name);
   Serial.print(F("="));
   Serial.print(degree);
-
   Serial.print(F(",wait 1 sec"));
   Serial.println();
   delay(1000);
-/*  Serial.print(servo);
-  Serial.print(F(", deg="));
-  Serial.print(degree);
-  Serial.println();
-  Serial.print(F(", pulse="));
-  Serial.print(pulse);*/
 }
 
 void ServoSetAll(int degree)
