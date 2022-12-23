@@ -28,9 +28,9 @@ static const char *DeviceName = "LightSuitAngelB";
 #define ENABLE_IMU          1 //builtin imu
 #define ENABLE_SERVOS       1 //PCA9685
 #define ENABLE_SAFETY       1
-#define ENABLE_EMOTION      0
 #define ENABLE_TRACK_CHECK  1
 #define ENABLE_BLE          1
+#define ENABLE_STATUS       1 //Print status to serial
 
 #if LEAD
 #define NUM_LEDS_0          53

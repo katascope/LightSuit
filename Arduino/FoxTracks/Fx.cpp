@@ -568,12 +568,6 @@ void FxEventProcess(FxController &fxc,int event)
 
 void FxProcessSideFX(FxController &fxc)
 {
-/*      if (fxc.strip[strip]->transitionType == Transition_TimedFadeCos)
-      {
-        float sinMux = cos(fxc.transitionMux * 3.14159f * 2 * 1.5f);
-        for (int i = 0; i < numleds; i++)
-          fxc.strip[strip]->palette[i] = LerpRGB(sinMux,fxc.strip[strip]->initialPalette[i],fxc.strip[strip]->nextPalette[i]);
-*/
   if (fxc.fxState == FxState_Default && fxc.HasRunning())
   {
     for (int strip=0;strip<NUM_STRIPS;strip++)
@@ -588,28 +582,7 @@ void FxProcessSideFX(FxController &fxc)
             {
               if (fxc.strip[strip]->particles[particle].on)
               {
-
-               /* if (fxc.strip[strip]->particles[particle].mode == FX_PARTICLEMODE_STAR)
-                {                
-                  fxc.strip[strip]->particles[particle].loc += fxc.strip[strip]->particles[particle].vel;
-                  if (fxc.strip[strip]->particles[particle].loc >= fxc.strip[strip]->numleds)
-                    fxc.strip[strip]->particles[particle].loc = 0;
-                    
-                  if (fxc.strip[strip]->particles[particle].loc < 0)
-                    fxc.strip[strip]->particles[particle].loc =  fxc.strip[strip]->numleds - 1;
-    
-                  int loc = fxc.strip[strip]->particles[particle].loc;
-                  for (int i=0;i<fxc.strip[strip]->particles[particle].len;i++)
-                  {
-                    if (loc + i < fxc.strip[strip]->numleds)
-                    {
-                      fxc.strip[strip]->palette[ loc + i ] = fxc.strip[strip]->particles[particle].rgb;
-                    }
-                  }
-                }
-*/
-
-                if (fxc.strip[strip]->particles[particle].mode == FX_PARTICLEMODE_RND)
+               if (fxc.strip[strip]->particles[particle].mode == FX_PARTICLEMODE_RND)
                 {                
                   fxc.strip[strip]->particles[particle].len += 2;                  
                   int len = fxc.strip[strip]->particles[particle].len;
@@ -640,42 +613,7 @@ void FxProcessSideFX(FxController &fxc)
                     fxc.strip[strip]->particles[particle].len = 1;
                   }                   
                 }
-/*                
-                 if (fxc.strip[strip]->particles[particle].mode == FX_PARTICLEMODE_RND)
-                {                
-                  fxc.strip[strip]->particles[particle].len += 1;                  
-                  
-                  for (int i=0;i<fxc.strip[strip]->particles[particle].len;i++)
-                  {
-                    int loc = fxc.strip[strip]->particles[particle].loc;
-                    //fxc.strip[strip]->particles[particle].rgb;
-                    unsigned int r = (fxc.strip[strip]->palette[ loc ]>> 16) & 0xFF;
-                    unsigned int g = (fxc.strip[strip]->palette[ loc ] >> 8) & 0xFF;
-                    unsigned int b = (fxc.strip[strip]->palette[ loc ] >> 0) & 0xFF;
-                    r *= 6;
-                    g *= 6;
-                    b *= 6;
-                    if (r > 255) r = 255;
-                    if (g > 255) g = 255;
-                    if (b > 255) b = 255;
-                   
-                    fxc.strip[strip]->palette[ loc ] = LEDRGB(r,g,b);
-                    if (loc + i < fxc.strip[strip]->numleds)
-                      fxc.strip[strip]->palette[ loc + i ] = LEDRGB(r,g,b);
-                    if (loc - i > 0)
-                      fxc.strip[strip]->palette[ loc - i ] = LEDRGB(r,g,b);
-                  }
-                  if (fxc.strip[strip]->particles[particle].len > 2)
-                  {
-                    fxc.strip[strip]->particles[particle].loc = rand() % (fxc.strip[strip]->numleds-1);
-                    fxc.strip[strip]->particles[particle].len = 1;
-                  }                   
-                }
-*/
-                                
               }
             }
-    
-  }
-  
+  }  
 }

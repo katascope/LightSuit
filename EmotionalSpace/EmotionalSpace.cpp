@@ -4,146 +4,81 @@
 #include <string>
 #include <vector>
 
-//tinymega ultrasound https://andrewjkramer.net/tag/sonar/
-
-    /*
-    Happy Engaged Unsure = inquisitive
-    Happy Engaged Balanced = playful
-    Happy Engaged Confident = motivated
-    Happy Balanced Unsure = waiting
-    Happy Balanced Balanced = happy
-    Happy Balanced Confident = proud
-    Happy Detached Unsure = shy
-    Happy Detached Balanced = calm
-    Happy Detached Confident = nice
-    Balanced Engaged Unsure = hesitant
-    Balanced Engaged Balanced = engaged
-    Balanced Engaged Confident = decisive
-    Balanced Balanced Unsure = unsure
-    Balanced Balanced Balanced = centered
-    Balanced Balanced Confident = focused
-    Balanced Detached Unsure = shy
-    Balanced Detached Balanced = detached
-    Balanced Detached Confident = skeptical        
-    Sad Engaged Unsure = wary
-    Sad Engaged Balanced = mopey
-    Sad Engaged Confident = aggressive
-    Sad Balanced Unsure = uncomfortable
-    Sad Balanced Balanced = sad
-    Sad Balanced Confident = resigned
-    Sad Detached Unsure = lost
-    Sad Detached Balanced = lonely
-    Sad Detached Confident = alone
-    */
-class Emotion
+struct Emotion
 {
-public:
-    std::string feeling;
-    std::string impulse;
-    std::string expression;
     float freedom;
     float positivity;
     float engagement;
-    Emotion(float f, float p, float e, std::string sf, std::string si, std::string se)
-    {
-        feeling = sf;
-        impulse = si;
-        expression = se;
-        freedom = f;
-        positivity = p;
-        engagement = e;
-    }
+    std::string feeling;
+    std::string impulse;
+    std::string expression;
 };
 
-#define LO 0.3333
-#define HI 0.6666
-#define MX 1.0000
+#define EMOTION_LO 0.3333
+#define EMOTION_HI 0.6666
+#define EMOTION_MX 1.0000
+#define EMOTION_NUM 27
 
-std::vector<Emotion> emotions
+struct Emotion emotions[EMOTION_NUM] =
 {
-    Emotion(LO,LO,LO, "distressed",     "retreat",  "glow red,say whimper,motion retreat"),
-    Emotion(HI,LO,LO, "lonely",         "whimper",  "glow yellow,say whimper,pose wait"),
-    Emotion(MX,LO,LO, "alone",          "search",   "glow blue,say hunt,motion search"),
-    Emotion(LO,LO,HI, "aggressive",     "growl",    "glow red,say growl,pose fight"),
-    Emotion(HI,LO,HI, "sad",            "paw",      "glow yellow,say mrewl,motion pawshake"),
-    Emotion(MX,LO,HI, "resigned",       "stare",    "glow blue,say nothing,pose wait"),
-    Emotion(LO,LO,MX, "uncomfortable",  "wait",     "glow red,say hmewl,pose wait"),
-    Emotion(HI,LO,MX, "mopey",          "mope",     "glow yellow,say nothing,pose wait"),
-    Emotion(MX,LO,MX, "interested",     "watch",    "glow blue,say nothing,pose wait"),
-
-    Emotion(LO,HI,LO, "shy",            "cower",    ""),
-    Emotion(HI,HI,LO, "detached",       "search",   ""),
-    Emotion(MX,HI,LO, "skeptical",      "search",   ""),
-    Emotion(LO,HI,HI, "unsure",         "whine",    ""),
-    Emotion(HI,HI,HI, "centered",       "nothing",  ""),
-    Emotion(MX,HI,HI, "focused",        "continue", ""),
-    Emotion(LO,HI,MX, "hesitant",       "wait",     ""), 
-    Emotion(HI,HI,MX, "engaged",        "be",       ""),
-    Emotion(MX,HI,MX, "decisive",       "be",       ""),
-
-    Emotion(LO,MX,LO, "shy",            "mewl",     ""),
-    Emotion(HI,MX,LO, "calm",           "mew",      ""),
-    Emotion(MX,MX,LO, "nice",           "sing",     ""),
-    Emotion(LO,MX,HI, "waiting",        "wait",     ""),
-    Emotion(HI,MX,HI, "happy",          "be",       ""),
-    Emotion(MX,MX,HI, "proud",          "be",       ""),
-    Emotion(LO,MX,MX, "curious",        "wait",     ""),
-    Emotion(HI,MX,MX, "playful",        "play",     ""),
-    Emotion(MX,MX,MX, "ecstastic",      "be",       ""),
+    { EMOTION_LO,EMOTION_LO,EMOTION_LO, "distressed",     "retreat",  "glow red,say whimper,motion retreat" },
+    { EMOTION_HI,EMOTION_LO,EMOTION_LO, "lonely",         "whimper",  "glow yellow,say whimper,pose wait" },
+    { EMOTION_MX,EMOTION_LO,EMOTION_LO, "alone",          "search",   "glow blue,say hunt,motion search" },
+    { EMOTION_LO,EMOTION_LO,EMOTION_HI, "aggressive",     "growl",    "glow red,say growl,pose fight" },
+    { EMOTION_HI,EMOTION_LO,EMOTION_HI, "sad",            "paw",      "glow yellow,say mrewl,motion pawshake" },
+    { EMOTION_MX,EMOTION_LO,EMOTION_HI, "resigned",       "stare",    "glow blue,say nothing,pose wait" },
+    { EMOTION_LO,EMOTION_LO,EMOTION_MX, "uncomfortable",  "wait",     "glow red,say hmewl,pose wait" },
+    { EMOTION_HI,EMOTION_LO,EMOTION_MX, "mopey",          "mope",     "glow yellow,say nothing,pose wait" },
+    { EMOTION_MX,EMOTION_LO,EMOTION_MX, "interested",     "watch",    "glow blue,say nothing,pose wait" },
+      
+    { EMOTION_LO,EMOTION_HI,EMOTION_LO, "shy",            "cower",    "" },
+    { EMOTION_HI,EMOTION_HI,EMOTION_LO, "detached",       "search",   "" },
+    { EMOTION_MX,EMOTION_HI,EMOTION_LO, "skeptical",      "search",   "" },
+    { EMOTION_LO,EMOTION_HI,EMOTION_HI, "unsure",         "whine",    "" },
+    { EMOTION_HI,EMOTION_HI,EMOTION_HI, "centered",       "nothing",  "" },
+    { EMOTION_MX,EMOTION_HI,EMOTION_HI, "focused",        "continue", "" },
+    { EMOTION_LO,EMOTION_HI,EMOTION_MX, "hesitant",       "wait",     "" },
+    { EMOTION_HI,EMOTION_HI,EMOTION_MX, "engaged",        "be",       "" },
+    { EMOTION_MX,EMOTION_HI,EMOTION_MX, "decisive",       "be",       "" },
+      
+    { EMOTION_LO,EMOTION_MX,EMOTION_LO, "shy",            "mewl",     "" },
+    { EMOTION_HI,EMOTION_MX,EMOTION_LO, "calm",           "mew",      "" },
+    { EMOTION_MX,EMOTION_MX,EMOTION_LO, "nice",           "sing",     "" },
+    { EMOTION_LO,EMOTION_MX,EMOTION_HI, "waiting",        "wait",     "" },
+    { EMOTION_HI,EMOTION_MX,EMOTION_HI, "happy",          "be",       "" },
+    { EMOTION_MX,EMOTION_MX,EMOTION_HI, "proud",          "be",       "" },
+    { EMOTION_LO,EMOTION_MX,EMOTION_MX, "curious",        "wait",     "" },
+    { EMOTION_HI,EMOTION_MX,EMOTION_MX, "playful",        "play",     "" },
+    { EMOTION_MX,EMOTION_MX,EMOTION_MX, "ecstastic",      "be",       "" },
 };
 
 
-const Emotion FeelingToName(float freedom, float positivity, float engagement)
+const Emotion *FeelingToName(float freedom, float positivity, float engagement)
 {
-    for (int i = 0; i < emotions.size(); i++)
+    for (int i = 0; i < EMOTION_NUM; i++)
     {
-        Emotion& e = emotions[i];
-        if (freedom <= e.freedom && positivity <= e.positivity && engagement <= e.engagement)        
+        Emotion *e = &emotions[i];
+        if (freedom <= e->freedom 
+            && positivity <= e->positivity
+            && engagement <= e->engagement)
             return e;
     }
-    return Emotion(0, 0, 0, "unknown", "unk", "");
+    return NULL;
 }
 
 class EmotionalPoint
 {
 public:
-    float Confidence = 0; //Confidence
-    float Positivity = 0; //Positivity
-    float Engagement = 0; //Engagement
+    float Confidence = 0.5f; //Confidence
+    float Positivity = 0.5f; //Positivity
+    float Engagement = 0.5f; //Engagement
     float dirX = 0;
     float dirY = 0;
     float dirZ = 0;
     float spanX = 0;
     float spanY = 0;
     float spanZ = 0;
-    //emotion is a feeling + impulse + expression
-    // pressuring the pet gives gives emotion of anxiety : the feeling of pressure and the impulse of stop/backup
-    // red = mad
-    // orange = scared
-    // yellow = joy
-    // green = powerful
-    // blue = peaceful
-    // purple = sad
-
-    //Actions that can change state
-    //  Anxiety = motion.backup 
-    //  Angry = lights.flash.red calms
-    //  Sad = motion.lookabout 
-    //  camera.found ... engagement++
-    //  camera.notfound .. engagement--
-
-    // Happy Engaged | Happy Bored
-    // Sad Engaged | Sad Bored
-    //27 unit boxes, need paper
-
-
 public:
-    EmotionalPoint()
-    {
-        this->Confidence = 0.5f;
-        this->Positivity = 0.5f;
-        this->Engagement = 0.5f;
-    }
     EmotionalPoint(float c, float p, float e)
     {
         this->Confidence = c;
@@ -195,19 +130,22 @@ public:
 
     EmotionalCore(float bx, float by, float bz)
     {
-        basis = EmotionalPoint(bx, by, bz);
+        basis.Confidence = bx;
+        basis.Positivity = by;
+        basis.Engagement = bz;
+             
         current = EmotionalPoint(0.5f, 0.5f, 0.5f);
     }
     void print()
     {
-        Emotion emotion = FeelingToName(current.Confidence, current.Positivity, current.Engagement);
+        const Emotion *emotion = FeelingToName(current.Confidence, current.Positivity, current.Engagement);
         std::cout << std::to_string(senses.tick)
             << "] " 
             << "Confidence=" << std::to_string((int)(current.Confidence * 100)) << "%, "
             << "Positivity=" << std::to_string((int)(current.Positivity * 100)) << "%, "
             << "Engagement=" << std::to_string((int)(current.Engagement * 100)) << "%  "
-            << "= " << emotion.feeling
-            << ", " << emotion.impulse
+            << "= " << emotion->feeling
+            << ", " << emotion->impulse
             /* << std::to_string(current.dirX) << ", "
             << std::to_string(current.dirY) << ", "
             << std::to_string(current.dirZ) << " : "
@@ -321,3 +259,23 @@ int main()
     return 0;
 }
 
+
+//emotion is a feeling + impulse + expression
+// pressuring the pet gives gives emotion of anxiety : the feeling of pressure and the impulse of stop/backup
+// red = mad
+// orange = scared
+// yellow = joy
+// green = powerful
+// blue = peaceful
+// purple = sad
+
+//Actions that can change state
+//  Anxiety = motion.backup 
+//  Angry = lights.flash.red calms
+//  Sad = motion.lookabout 
+//  camera.found ... engagement++
+//  camera.notfound .. engagement--
+
+// Happy Engaged | Happy Bored
+// Sad Engaged | Sad Bored
+//27 unit boxes, need paper

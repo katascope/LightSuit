@@ -8,8 +8,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "Fx.h"
 #include "Track.h"
 #include "Cmd.h"
-#include "State.h"
 #include "Devices.h"
+#include "FoxenMind.h"
 static FxController fxController;
 
 #if ENABLE_LCD
@@ -34,11 +34,6 @@ static FIMU fimu;
 #include "Servos.h"
 #endif 
 
-#if ENABLE_EMOTION
-#include "Emotion.h"
-static EmotionalCore emotions;
-#endif
-
 static unsigned long lastTimeDisplay = 0;
 
 void setup() {
@@ -47,18 +42,6 @@ void setup() {
   Serial.print(F("Serial init: "));
   Serial.println(SERIAL_BAUD_RATE);
   
-#if SYSTEM_NANO_33_BLE
-  Serial.println(F("System: Arduino Nano 33 BLE"));
-#elif SYSTEM_NANO_33_IOT
-  Serial.println(F("System: Arduino Nano 33 IOT"));
-#elif SYSTEM_UNO
-  Serial.println(F("System: Arduino UNO"));
-#elif SYSTEM_NANO
-  Serial.println(F("System: Arduino Nano"));
-#else
-  Serial.println(F("System: UNKNOWN"));
-#endif
-
 #if ENABLE_LCD
   lcd.Startup();
   lcd.SetCursor(0,0);
@@ -153,62 +136,20 @@ UserCommandExecute(fxController, Cmd_ColorDark);
   Serial.println("Setup complete.");
 }
 
-void UpdatePalette()
-{
-  FxProcessSideFX(fxController);
-  
-  for (int strip=0;strip<NUM_STRIPS;strip++)
-  {
-    if ((int)fxController.strip[strip]->fxPaletteUpdateType != 0)
-    {
-      fxController.strip[strip]->paletteIndex = fxController.strip[strip]->paletteIndex + (fxController.strip[strip]->paletteSpeed * fxController.strip[strip]->paletteDirection);
-      if (fxController.strip[strip]->paletteIndex >= fxController.strip[strip]->numleds)
-        fxController.strip[strip]->paletteIndex -= fxController.strip[strip]->numleds;
-      if (fxController.strip[strip]->paletteIndex < 0)
-        fxController.strip[strip]->paletteIndex = fxController.strip[strip]->numleds - 1;
-    }
-#if ENABLE_NEOPIXEL
-    neopixelSetPalette(strip, fxController.strip[strip]->numleds, fxController.strip[strip]->palette, fxController.strip[strip]->paletteIndex);
-#endif    
-  }
-
-}
-
 void loop()
 {
- 
-  while (Serial.available())    
-    UserCommandInput(fxController, Serial.read());
+  while (Serial.available())
+  {
+      String str = Serial.readString();
+      if (str.length()==3)
+        UserCommandInput(fxController, (int)str[0]);
+      else
+        ComplexUserCommandInput(fxController, str);
+  }
 
 #if ENABLE_BLE
   blePoll(fxController);
 #endif
-
-  State_Poll(fxController);
-  bool needsUpdate = false;
-  for (int strip=0;strip<NUM_STRIPS;strip++)
-  {
-    if (fxController.strip[strip]->fxPaletteUpdateType == FxPaletteUpdateType::Once
-    || fxController.strip[strip]->fxPaletteUpdateType == FxPaletteUpdateType::Always
-    || fxController.IsAnimating())
-      needsUpdate = true;
-  }  
-  if (fxController.fxState == FxState_PlayingTrack || needsUpdate)
-  {
-    unsigned long t =  millis();
-    if (t - fxController.lastTimeLedUpdate > UPDATE_DELAY)//delay to let bluetooth get data(fastled issue)
-    {
-      UpdatePalette();
-      
-      fxController.lastTimeLedUpdate = t;
-      
-      for (int strip=0;strip<NUM_STRIPS;strip++)
-      {
-        if (fxController.strip[strip]->fxPaletteUpdateType == FxPaletteUpdateType::Once)
-          fxController.strip[strip]->fxPaletteUpdateType = FxPaletteUpdateType::Done;
-      }
-    }
-  }
 
 #if ENABLE_IMU
   fimu.Poll();
@@ -226,46 +167,33 @@ void loop()
   ultrasound.Update();
   int distance = ultrasound.GetDistance();
   if (distance == 0) { }
-  else if (distance < 10) { UserCommandExecute(fxController, Cmd_ColorRed);}
-  else if (distance < 19) {UserCommandExecute(fxController, Cmd_ColorOrange);}
-  else if (distance < 29) { UserCommandExecute(fxController, Cmd_ColorYellow);}
-  else if (distance < 39) { UserCommandExecute(fxController, Cmd_ColorGreen);}
-  else {UserCommandExecute(fxController, Cmd_ColorMagenta);} 
+  else if (distance < 10) { SetMindEngagement(1.0f);}
+  else if (distance < 19) { SetMindEngagement(0.7f);}
+  else if (distance < 29) { SetMindEngagement(0.6f);}
+  else if (distance < 39) { SetMindEngagement(0.3f);}
+  else { SetMindEngagement(0.0f);}
 #endif  
 
 #if ENABLE_LCD
-  lcd.ultraDistance = ultrasound.GetDistance();
-  int distance = ultrasound.GetDistance();
-  if (distance == 0) { }
-  else if (distance < 10) { lcd.log="Freeze";}
-  else if (distance < 19) { lcd.log="Danger";}
-  else if (distance < 29) { lcd.log="Warning"; }
-  else if (distance < 39) { lcd.log="Aware";}
-  else {lcd.log="Open";} 
+  lcd.log="Status message";
   lcd.Draw();
 #endif  
+  PollMindState(fxController);
 
-#if ENABLE_EMOTION
-  emotions.Poll(fxController, ultrasound.GetDistance());
-#endif
-
+#if ENABLE_STATUS
 //Display status once a second
   unsigned long t =  millis();
   if (t - lastTimeDisplay > 1000)//delay to let bluetooth get data
   {      
     if (fxController.fxState != FxState_PlayingTrack)
     {
-      Serial.print(DeviceName);
-#if ENABLE_EMOTION
-      Serial.print(F(", Emo="));
-      Serial.print(emotions.GetCurrentFeelingName());
-#endif
-      Serial.print(F(", Ult="));
-      Serial.print(ultrasound.GetDistance());
+      PrintMindState();
       Serial.print(F(" "));
+      //if (GetMindState() == MIND_STATE_DIRECT) 
       FxDisplayStatus(fxController);            
-      Serial.println();
+      Serial.println();  
     }
     lastTimeDisplay = t;
   }
+#endif
 }

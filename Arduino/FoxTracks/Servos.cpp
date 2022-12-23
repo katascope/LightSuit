@@ -15,23 +15,42 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 struct ServoStatus servoInfo[SERVO_NUM] =
 {
- { "LBHip",     SERVO_LEFT_BACK_HIP,     80, 90, 100, false },
- { "LBElbow",   SERVO_LEFT_BACK_ELBOW,   80, 90, 100, false },
- { "LBFoot",    SERVO_LEFT_BACK_FOOT,    80, 90, 100, false },
- { "LEar",      SERVO_LEFT_EAR,          80, 90, 100, false },
- { "LFHip",     SERVO_LEFT_FRONT_HIP,    80, 90, 100, false },
- { "LFElbow",   SERVO_LEFT_FRONT_ELBOW,  80, 90, 100, false },
- { "LFFoot",    SERVO_LEFT_FRONT_FOOT,   80, 90, 100, false },
- { "LReserved", SERVO_LEFT_RESERVED,     80, 90, 100, false },
- { "RBHip",     SERVO_RIGHT_BACK_HIP,    80, 90, 100, true  },
- { "RBElbow",   SERVO_RIGHT_BACK_ELBOW,  80, 90, 100, true  },
- { "RBFoot",    SERVO_RIGHT_BACK_FOOT,   80, 90, 100, true  },
- { "REar",      SERVO_RIGHT_EAR,         80, 90, 100, false },
- { "RFHip",     SERVO_RIGHT_FRONT_HIP,   80, 90, 100, true  },
- { "RFElbow",   SERVO_RIGHT_FRONT_ELBOW, 80, 90, 100, true  },
- { "RFFoot" ,   SERVO_RIGHT_FRONT_FOOT,  80, 90, 100, true  },
- { "Tail",      SERVO_TAIL,              80, 90, 100, false }
+ { "lbh",       SERVO_LEFT_BACK_HIP,     RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   false },
+ { "lbe",       SERVO_LEFT_BACK_ELBOW,   RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, false },
+ { "lbw",       SERVO_LEFT_BACK_WRIST,   RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, false },
+ { "lear",      SERVO_LEFT_EAR,          RANGE_EARS_MIN,  ORIGIN_EARS,  RANGE_EARS_MAX,  false },
+ { "lfh",       SERVO_LEFT_FRONT_HIP,    RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   false },
+ { "lfe",       SERVO_LEFT_FRONT_ELBOW,  RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, false },
+ { "lfw",       SERVO_LEFT_FRONT_WRIST,  RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, false },
+ { "lrsrv",     SERVO_LEFT_RESERVED,     80, 90, 100, false },
+ { "rbh",       SERVO_RIGHT_BACK_HIP,    RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   true  },
+ { "rbe",       SERVO_RIGHT_BACK_ELBOW,  RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, true  },
+ { "rbw",       SERVO_RIGHT_BACK_WRIST,  RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, true  },
+ { "rear",      SERVO_RIGHT_EAR,         RANGE_EARS_MIN,  ORIGIN_EARS,  RANGE_EARS_MAX,  false },
+ { "rfh",       SERVO_RIGHT_FRONT_HIP,   RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   true  },
+ { "rfe",       SERVO_RIGHT_FRONT_ELBOW, RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, true  },
+ { "rfw" ,      SERVO_RIGHT_FRONT_WRIST, RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, true  },
+ { "tail",      SERVO_TAIL,              RANGE_TAIL_MIN,  ORIGIN_TAIL,  RANGE_TAIL_MAX,  false }
 };
+
+void ServosPrint()
+{
+  Serial.print(F("{"));
+  for (int servo=0;servo<SERVO_NUM;servo++)
+  {
+    if (servo != SERVO_LEFT_EAR
+      && servo != SERVO_LEFT_RESERVED
+      && servo != SERVO_RIGHT_EAR
+      && servo != SERVO_TAIL)
+      {
+        Serial.print(servoInfo[servo].degree);
+        Serial.print(F(","));
+      }
+      else if (servo == SERVO_TAIL) Serial.print(F("-1"));
+      else Serial.print(F("-1,"));
+  }
+  Serial.print(F("}"));
+}
 
 int pulseWidth(int angle, bool reverse)
 {
@@ -52,6 +71,10 @@ void ServoStartup()
 
 void ServoSet(int servo, int degree)
 {
+  //Enforce range limits
+  if (degree < servoInfo[servo].min) degree = servoInfo[servo].min;
+  if (degree > servoInfo[servo].max) degree = servoInfo[servo].max;
+  
   int pulse=pulseWidth(degree, servoInfo[servo].reverse);
   servoInfo[servo].degree = degree;
   pwm.setPWM(servo,0,pulse);
@@ -69,10 +92,18 @@ void ServoSet(int servo, int degree)
 void ServoSetAll(int degree)
 {
   for (int servo=0;servo<SERVO_NUM;servo++)
-  {
     ServoSet(servo,degree);
-  }  
 }
+
+void ServoInc(int servo)
+{  
+  ServoSet(servo,servoInfo[servo].degree+5);
+}
+void ServoDec(int servo)
+{
+  ServoSet(servo,servoInfo[servo].degree-5);
+}
+
 
 void ServoPoseLerp(float lerp, const int *servostateOrig, const int *servostateDest)
 {
