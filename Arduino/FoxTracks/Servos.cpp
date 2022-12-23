@@ -9,6 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define MAX_PULSE_WIDTH       2350
 #define DEFAULT_PULSE_WIDTH   1500
 #define FREQUENCY             50
+#define SERVO_DELAY           25
 
 //PCA9685
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
@@ -16,22 +17,30 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 struct ServoStatus servoInfo[SERVO_NUM] =
 {
  { "lbh",       SERVO_LEFT_BACK_HIP,     RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   false },
- { "lbe",       SERVO_LEFT_BACK_ELBOW,   RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, false },
+ { "lbe",       SERVO_LEFT_BACK_ELBOW,   RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, true },
  { "lbw",       SERVO_LEFT_BACK_WRIST,   RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, false },
  { "lear",      SERVO_LEFT_EAR,          RANGE_EARS_MIN,  ORIGIN_EARS,  RANGE_EARS_MAX,  false },
- { "lfh",       SERVO_LEFT_FRONT_HIP,    RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   false },
- { "lfe",       SERVO_LEFT_FRONT_ELBOW,  RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, false },
+ { "lfh",       SERVO_LEFT_FRONT_HIP,    RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   true },
+ { "lfe",       SERVO_LEFT_FRONT_ELBOW,  RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, true },
  { "lfw",       SERVO_LEFT_FRONT_WRIST,  RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, false },
  { "lrsrv",     SERVO_LEFT_RESERVED,     80, 90, 100, false },
  { "rbh",       SERVO_RIGHT_BACK_HIP,    RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   true  },
- { "rbe",       SERVO_RIGHT_BACK_ELBOW,  RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, true  },
+ { "rbe",       SERVO_RIGHT_BACK_ELBOW,  RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, false  },
  { "rbw",       SERVO_RIGHT_BACK_WRIST,  RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, true  },
  { "rear",      SERVO_RIGHT_EAR,         RANGE_EARS_MIN,  ORIGIN_EARS,  RANGE_EARS_MAX,  false },
- { "rfh",       SERVO_RIGHT_FRONT_HIP,   RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   true  },
- { "rfe",       SERVO_RIGHT_FRONT_ELBOW, RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, true  },
+ { "rfh",       SERVO_RIGHT_FRONT_HIP,   RANGE_HIP_MIN,   ORIGIN_HIP,   RANGE_HIP_MAX,   false  },
+ { "rfe",       SERVO_RIGHT_FRONT_ELBOW, RANGE_ELBOW_MIN, ORIGIN_ELBOW, RANGE_ELBOW_MAX, false  },
  { "rfw" ,      SERVO_RIGHT_FRONT_WRIST, RANGE_WRIST_MIN, ORIGIN_WRIST, RANGE_WRIST_MAX, true  },
  { "tail",      SERVO_TAIL,              RANGE_TAIL_MIN,  ORIGIN_TAIL,  RANGE_TAIL_MAX,  false }
 };
+
+void ServosRest()
+{
+  for (int servo=0;servo<SERVO_NUM;servo++)
+  {
+    pwm.setPWM(servo, 0, 0 );
+  }
+}
 
 void ServosPrint()
 {
@@ -74,19 +83,19 @@ void ServoSet(int servo, int degree)
   //Enforce range limits
   if (degree < servoInfo[servo].min) degree = servoInfo[servo].min;
   if (degree > servoInfo[servo].max) degree = servoInfo[servo].max;
-  
-  int pulse=pulseWidth(degree, servoInfo[servo].reverse);
+
   servoInfo[servo].degree = degree;
+  int pulse=pulseWidth(degree, servoInfo[servo].reverse);
   pwm.setPWM(servo,0,pulse);
-  Serial.print(F("Servo"));
+/*  Serial.print(F("Servo"));
   Serial.print(servo);
   Serial.print(F(" "));
   Serial.print(servoInfo[servo].name);
   Serial.print(F("="));
   Serial.print(degree);
   Serial.print(F(",wait 1 sec"));
-  Serial.println();
-  delay(1000);
+  Serial.println();*/
+  delay(SERVO_DELAY);
 }
 
 void ServoSetAll(int degree)
@@ -130,7 +139,8 @@ void ServoPose(const int *servostate)
       && servo != SERVO_TAIL)
       {
         int degree = servostate[servo];
-        ServoSet(servo,degree);
+        if (degree != -1)
+          ServoSet(servo,degree);
       }
   }   
 }

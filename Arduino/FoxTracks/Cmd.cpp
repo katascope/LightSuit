@@ -366,9 +366,25 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.println(F(" (bl+h/e/w) back left hip/elbow/wrist"));
     Serial.println(F(" (br+h/e/w) back right hip/elbow/wrist"));
   }
-  else if (data.equals(F("p0"))) { ServoPose(POSE_ZERO); }
+  else if (data.equals(F("dn"))) { 
+    ServoPose(POSE_PAWSUP); 
+    ServoPose(POSE_HIPS_ORIGIN); 
+    delay(500);
+    ServoPose(POSE_ELBOW_ORIGIN);
+    ServoPose(POSE_WRIST_ORIGIN);
+    delay(500);
+    ServoPose(POSE_PAWSUP); 
+    ServoPose(POSE_ELBOW_MIN);
+  } 
+  else if (data.equals(F("up"))) { 
+    ServoPose(POSE_UP_BACK); 
+    ServoPose(POSE_UP_FRONT); 
+  }
   else if (data.equals(F("p1"))) { ServoPose(POSE_CENTER); }
-  else if (data.equals(F("p2"))) { ServoPose(POSE_MAX); }
+  else if (data.equals(F("pu"))) { ServoPose(POSE_PAWSUP); }
+  else if (data.equals(F("pd"))) { ServoPose(POSE_PAWSDN); }
+  else if (data.equals(F("p0"))) { ServoPose(POSE_ZERO); }
+  else if (data.equals(F("p9"))) { ServoPose(POSE_MAX); }
   
   else if (data.equals(F("*hu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); ServoInc(SERVO_RIGHT_BACK_HIP); ServoInc(SERVO_RIGHT_FRONT_HIP);}
   else if (data.equals(F("*hd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); ServoDec(SERVO_RIGHT_BACK_HIP); ServoDec(SERVO_RIGHT_FRONT_HIP);}
@@ -390,18 +406,18 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   else if (data.equals(F("rwu"))) { ServoInc(SERVO_RIGHT_BACK_WRIST); ServoInc(SERVO_RIGHT_FRONT_WRIST); }
   else if (data.equals(F("rwd"))) { ServoDec(SERVO_RIGHT_BACK_WRIST); ServoDec(SERVO_RIGHT_FRONT_WRIST); }
 
-  else if (data.equals(F("fhu"))) { ServoInc(SERVO_LEFT_FRONT_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); }
-  else if (data.equals(F("fhd"))) { ServoDec(SERVO_LEFT_FRONT_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); }
-  else if (data.equals(F("bhu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_BACK_HIP); }
-  else if (data.equals(F("bhd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_BACK_HIP); }
-  else if (data.equals(F("feu"))) { ServoInc(SERVO_LEFT_FRONT_ELBOW); ServoInc(SERVO_LEFT_FRONT_ELBOW); }
-  else if (data.equals(F("fed"))) { ServoDec(SERVO_LEFT_FRONT_ELBOW); ServoDec(SERVO_LEFT_FRONT_ELBOW); }
-  else if (data.equals(F("beu"))) { ServoInc(SERVO_LEFT_BACK_ELBOW); ServoInc(SERVO_LEFT_BACK_ELBOW); }
-  else if (data.equals(F("bed"))) { ServoDec(SERVO_LEFT_BACK_ELBOW); ServoDec(SERVO_LEFT_BACK_ELBOW); }
-  else if (data.equals(F("fwu"))) { ServoInc(SERVO_LEFT_FRONT_WRIST); ServoInc(SERVO_LEFT_FRONT_WRIST); }
-  else if (data.equals(F("fwd"))) { ServoDec(SERVO_LEFT_FRONT_WRIST); ServoDec(SERVO_LEFT_FRONT_WRIST); }
-  else if (data.equals(F("bwu"))) { ServoInc(SERVO_LEFT_BACK_WRIST); ServoInc(SERVO_LEFT_BACK_WRIST); }
-  else if (data.equals(F("bwd"))) { ServoDec(SERVO_LEFT_BACK_WRIST); ServoDec(SERVO_LEFT_BACK_WRIST); }
+  else if (data.equals(F("fhu"))) { ServoInc(SERVO_LEFT_FRONT_HIP);   ServoInc(SERVO_RIGHT_FRONT_HIP); }
+  else if (data.equals(F("fhd"))) { ServoDec(SERVO_LEFT_FRONT_HIP);   ServoDec(SERVO_RIGHT_FRONT_HIP); }
+  else if (data.equals(F("bhu"))) { ServoInc(SERVO_LEFT_BACK_HIP);    ServoInc(SERVO_RIGHT_BACK_HIP); }
+  else if (data.equals(F("bhd"))) { ServoDec(SERVO_LEFT_BACK_HIP);    ServoDec(SERVO_RIGHT_BACK_HIP); }
+  else if (data.equals(F("feu"))) { ServoInc(SERVO_LEFT_FRONT_ELBOW); ServoInc(SERVO_RIGHT_FRONT_ELBOW); }
+  else if (data.equals(F("fed"))) { ServoDec(SERVO_LEFT_FRONT_ELBOW); ServoDec(SERVO_RIGHT_FRONT_ELBOW); }
+  else if (data.equals(F("beu"))) { ServoInc(SERVO_LEFT_BACK_ELBOW);  ServoInc(SERVO_RIGHT_BACK_ELBOW); }
+  else if (data.equals(F("bed"))) { ServoDec(SERVO_LEFT_BACK_ELBOW);  ServoDec(SERVO_RIGHT_BACK_ELBOW); }
+  else if (data.equals(F("fwu"))) { ServoInc(SERVO_LEFT_FRONT_WRIST); ServoInc(SERVO_RIGHT_FRONT_WRIST); }
+  else if (data.equals(F("fwd"))) { ServoDec(SERVO_LEFT_FRONT_WRIST); ServoDec(SERVO_RIGHT_FRONT_WRIST); }
+  else if (data.equals(F("bwu"))) { ServoInc(SERVO_LEFT_BACK_WRIST);  ServoInc(SERVO_RIGHT_BACK_WRIST); }
+  else if (data.equals(F("bwd"))) { ServoDec(SERVO_LEFT_BACK_WRIST);  ServoDec(SERVO_RIGHT_BACK_WRIST); }
 
   else if (data.equals(F("flhu")) || data.equals(F("lfhu"))) { ServoInc(SERVO_LEFT_FRONT_HIP);  }
   else if (data.equals(F("flhd")) || data.equals(F("flhd"))) { ServoDec(SERVO_LEFT_FRONT_HIP);  }
