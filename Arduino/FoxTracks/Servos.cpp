@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define MAX_PULSE_WIDTH       2350
 #define DEFAULT_PULSE_WIDTH   1500
 #define FREQUENCY             50
-#define SERVO_DELAY           25
+#define SERVO_DELAY           5 //25
 
 //PCA9685
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
@@ -154,7 +154,6 @@ void ServoPoseLerpTo(const int *servostateDest)
           }
         }        
     }
-    delay(5);
   }
 }
 

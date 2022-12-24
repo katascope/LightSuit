@@ -8,6 +8,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "Track.h"
 #include "Devices.h"
 #include "Servos.h"
+#include "FoxenMind.h"
 
 void UpdatePalette(FxController &fxc);
 unsigned long GetTime();
@@ -83,6 +84,9 @@ void UserCommandExecute(FxController &fxc, int cmd)
     case Cmd_ColorOrange:   InstantEvent(fxc, fx_palette_orange,   FxPaletteUpdateType::Once); break;
     case Cmd_ColorHalf:     InstantEvent(fxc, fx_palette_half,     FxPaletteUpdateType::Once); break;
 
+    case Cmd_ColorWhiteMagenta: InstantEvent(fxc, fx_palette_wm,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorWhiteYellow:  InstantEvent(fxc, fx_palette_wy,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorWhiteBlue:    InstantEvent(fxc, fx_palette_wb,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorRedBlue:      InstantEvent(fxc, fx_palette_rb,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorCyanMagenta:   InstantEvent(fxc, fx_palette_cm,      FxPaletteUpdateType::Once); break;
 
@@ -345,8 +349,23 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   //Remove carriage returns; 
   if (data[data.length()-1]=='\n') data.remove(data.length()-1,1);
   if (data[data.length()-1]=='\r') data.remove(data.length()-1,1);
-  
-  if (data.equals(F("??")))
+
+  if (data.equals(F("go")))
+  {
+    Serial.println(F("Waking.."));
+    ServoPose(POSE_CENTER);
+    ServoPoseLerpTo(POSE_PAWSUP); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN);
+    SetMindState(MIND_STATE_PRIMAL);    
+  }
+  else if (data.equals(F("sleep")))
+  {
+    Serial.println(F("Sleeping.."));
+    ComplexUserCommandInput(fxc,"dn");
+    SetMindState(MIND_STATE_ASLEEP);
+  }
+  else if (data.equals(F("??")))
   {
     Serial.println(F("Add u/d"));
     Serial.println(F(" (p0) pose 0 - centered"));
@@ -369,16 +388,20 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   else if (data.equals(F("dn"))) { 
     ServoPoseLerpTo(POSE_PAWSUP); 
     ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
-    delay(50);
-    ServoPoseLerpTo(POSE_WRIST_ORIGIN);
-    ServoPoseLerpTo(POSE_ELBOW_ORIGIN);
-    delay(50);
-    ServoPoseLerpTo(POSE_PAWSUP); 
     ServoPoseLerpTo(POSE_ELBOW_MIN);
   } 
   else if (data.equals(F("up"))) { 
     ServoPoseLerpTo(POSE_UP); 
   }
+  else if (data.equals(F("butt"))) { 
+    ServoPoseLerpTo(POSE_UP_FRONT); 
+    delay(500);
+    ServoPoseLerpTo(POSE_UP_BACK); 
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_PAWSDN);     
+  }
+  
+  else if (data.equals(F("grr"))) { ServoPoseLerpTo(POSE_AGGRESSIVE); }
   else if (data.equals(F("ub"))) { ServoPoseLerpTo(POSE_UP_BACK); }
   else if (data.equals(F("uf"))) { ServoPoseLerpTo(POSE_UP_FRONT); }
   else if (data.equals(F("p1"))) { ServoPose(POSE_CENTER); }

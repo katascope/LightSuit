@@ -9,8 +9,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "State.h"
 #include "Devices.h"
 #include "Servos.h"
+#include "Cmd.h"
 
-static FoxenMindState foxenMindState = MIND_STATE_PRIMAL;
+static FoxenMindState foxenMindState = MIND_STATE_ASLEEP;
 static EmotionalCore emotions;
 
 FoxenMindState GetMindState()
@@ -52,6 +53,7 @@ void PrintMindState()
   Serial.print(DeviceName);  
   switch(foxenMindState)
   {
+    case MIND_STATE_ASLEEP:     Serial.print(F("=asleep"));break;
     case MIND_STATE_PRIMAL:     Serial.print(F("=primal"));break;
     case MIND_STATE_DIRECT:     Serial.print(F("=direct"));break;
     case MIND_STATE_TRACK:      Serial.print(F("=track"));break;
@@ -64,9 +66,25 @@ void PrintMindState()
 
 void PollMindState(struct FxController &fxController)
 {
-  emotions.Poll(fxController);
+  if (fxController.fxState == FxState_PlayingTrack)
+  {
+    //do normal things
+  }  
+  else if (foxenMindState == MIND_STATE_ASLEEP)
+  {
+    UserCommandExecute(fxController, Cmd_ColorPulseMagenta);
+    UserCommandExecute(fxController, Cmd_SpeedNeg);
+    UserCommandExecute(fxController, Cmd_Speed1);
+    
+    return;
+  }
+  else
+  {
+    emotions.Poll(fxController);
+  }
 
   State_Poll(fxController);
+  
   bool needsUpdate = false;
   for (int strip=0;strip<NUM_STRIPS;strip++)
   {

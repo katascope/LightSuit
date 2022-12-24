@@ -68,11 +68,14 @@ EmotionalCore::EmotionalCore()
 
 void EmotionalCore::Poll(struct FxController &fxc)
 {
-  if (current.Engagement <= 0.11) UserCommandExecute(fxc, Cmd_ColorMagenta);
-  else if (current.Engagement <= 0.31) UserCommandExecute(fxc, Cmd_ColorGreen);
-  else if (current.Engagement <= 0.61) UserCommandExecute(fxc, Cmd_ColorYellow);
-  else if (current.Engagement <= 0.71) UserCommandExecute(fxc, Cmd_ColorOrange);
-  else UserCommandExecute(fxc, Cmd_ColorRed);
+  if (fxc.fxState != FxState_PlayingTrack)
+  {
+    if (current.Engagement <= 0.11) UserCommandExecute(fxc, Cmd_ColorMagenta);
+    else if (current.Engagement <= 0.31) UserCommandExecute(fxc, Cmd_ColorGreen);
+    else if (current.Engagement <= 0.61) UserCommandExecute(fxc, Cmd_ColorYellow);
+    else if (current.Engagement <= 0.71) UserCommandExecute(fxc, Cmd_ColorOrange);
+    else UserCommandExecute(fxc, Cmd_ColorRed);
+  }
 }
 
 String EmotionalCore::GetCurrentFeelingName()
