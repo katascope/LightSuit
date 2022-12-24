@@ -69,8 +69,10 @@ const int POSE_ELBOW_MAX[SERVO_NUM]  { -1,RANGE_ELBOW_MAX,-1,-1, -1,RANGE_ELBOW_
 const int POSE_PAWSUP[SERVO_NUM] { -1,-1,RANGE_WRIST_MIN,-1, -1,-1,RANGE_WRIST_MIN,-1, -1,-1,RANGE_WRIST_MIN,-1, -1,-1,RANGE_WRIST_MIN,-1};
 const int POSE_PAWSDN[SERVO_NUM] { -1,-1,RANGE_WRIST_MAX,-1, -1,-1,RANGE_WRIST_MAX,-1, -1,-1,RANGE_WRIST_MAX,-1, -1,-1,RANGE_WRIST_MAX,-1};
 
+const int POSE_UP[SERVO_NUM]  {90,45,100,-1, 90,45,100,-1, 90,45,100,-1, 90,45,100,-1};
 const int POSE_UP_BACK[SERVO_NUM]  {90,45,100,-1, -1,-1,-1,-1, 90,45,100,-1, -1,-1,-1,-1};
 const int POSE_UP_FRONT[SERVO_NUM] {-1,-1,-1,-1, 90,45,100,-1, -1,-1,-1,-1, 90,45,100,-1};
+
 
 void ServosRest();
 void ServosPrint();
@@ -81,5 +83,6 @@ void ServoDec(int servo);
 void ServoSetAll(int degree);
 void ServoPoseLerp(float lerp, const int *servostateOrig, const int *servostateDest);
 void ServoPose(const int *servostate);
-
+//void ServoPoseLerpTimed(const int *servostateOrig, const int *servostateDest);
+void ServoPoseLerpTo(const int *servostateDest);
 #endif

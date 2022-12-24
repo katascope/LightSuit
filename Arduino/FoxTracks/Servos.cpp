@@ -129,6 +129,35 @@ void ServoPoseLerp(float lerp, const int *servostateOrig, const int *servostateD
   }
 }
 
+void ServoPoseLerpTo(const int *servostateDest)
+{
+  //Save first state so can tween properly until end
+  int servostateStart[SERVO_NUM] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
+  for (int servo=0;servo<SERVO_NUM;servo++)
+   servostateStart[servo] = servoInfo[servo].degree;
+   
+  //1 second
+  for (int i=0;i<10;i+=2)
+  {
+    float lerp = (float)i/(float)10;
+    for (int servo=0;servo<SERVO_NUM;servo++)
+    {
+      if (servo != SERVO_LEFT_EAR
+        && servo != SERVO_LEFT_RESERVED
+        && servo != SERVO_RIGHT_EAR
+        && servo != SERVO_TAIL)
+        {
+          if (servostateDest[servo] != -1)
+          {
+            int val = lerpServo(lerp, servostateStart[servo], servostateDest[servo]);      
+            ServoSet(servo,val);
+          }
+        }        
+    }
+    delay(5);
+  }
+}
+
 void ServoPose(const int *servostate)
 {
   for (int servo=0;servo<SERVO_NUM;servo++)

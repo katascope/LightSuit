@@ -367,19 +367,20 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.println(F(" (br+h/e/w) back right hip/elbow/wrist"));
   }
   else if (data.equals(F("dn"))) { 
-    ServoPose(POSE_PAWSUP); 
-    ServoPose(POSE_HIPS_ORIGIN); 
-    delay(500);
-    ServoPose(POSE_ELBOW_ORIGIN);
-    ServoPose(POSE_WRIST_ORIGIN);
-    delay(500);
-    ServoPose(POSE_PAWSUP); 
-    ServoPose(POSE_ELBOW_MIN);
+    ServoPoseLerpTo(POSE_PAWSUP); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
+    delay(50);
+    ServoPoseLerpTo(POSE_WRIST_ORIGIN);
+    ServoPoseLerpTo(POSE_ELBOW_ORIGIN);
+    delay(50);
+    ServoPoseLerpTo(POSE_PAWSUP); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN);
   } 
   else if (data.equals(F("up"))) { 
-    ServoPose(POSE_UP_BACK); 
-    ServoPose(POSE_UP_FRONT); 
+    ServoPoseLerpTo(POSE_UP); 
   }
+  else if (data.equals(F("ub"))) { ServoPoseLerpTo(POSE_UP_BACK); }
+  else if (data.equals(F("uf"))) { ServoPoseLerpTo(POSE_UP_FRONT); }
   else if (data.equals(F("p1"))) { ServoPose(POSE_CENTER); }
   else if (data.equals(F("pu"))) { ServoPose(POSE_PAWSUP); }
   else if (data.equals(F("pd"))) { ServoPose(POSE_PAWSDN); }
