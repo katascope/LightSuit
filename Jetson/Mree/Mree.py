@@ -7,6 +7,19 @@ import sys
 import os
 import time
 
+import time
+import Adafruit_SSD1306   # This is the driver chip for the Adafruit PiOLED
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+import serial
+import subprocess
+import oled as oled
+
+oled.OledInitialize()
+tick = 0
+
+
 # parse the command line
 parser = argparse.ArgumentParser(description="Locate objects in a live camera stream using an object detection DNN.", 
                                  formatter_class=argparse.RawTextHelpFormatter, epilog=jetson.inference.detectNet.Usage() +
@@ -34,8 +47,21 @@ net = jetson.inference.detectNet(opt.network, sys.argv, opt.threshold)
 input = jetson.utils.videoSource(opt.input_URI, argv=sys.argv)
 output = jetson.utils.videoOutput(opt.output_URI, argv=sys.argv+is_headless)
 
+
+with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
+ ser.write(str.encode('ready\r\n'))
+ while True:
+  tick = tick + 1;
+
+  line = ser.readline()
+  print(line)
+  oled.OledRender(tick,line)
+
+# 1.0 = 1 second; The divisor is the desired updates (frames) per second
+  time.sleep(1.0/4)
+
 # process frames until the user exits
-while True:
+#while True:
   # capture the next image
   img = input.Capture()
 

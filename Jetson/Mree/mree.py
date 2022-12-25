@@ -12,6 +12,7 @@ oled.OledInitialize()
 tick = 0
 
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:  
+    ser.write(str.encode('ready\r\n'))
     while True:
         tick = tick + 1;
 
