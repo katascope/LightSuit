@@ -12,6 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 void UpdatePalette(FxController &fxc);
 unsigned long GetTime();
+void ComplexUserCommandInput(FxController &fxc, String data);
 
 //static CaptureTextMode captureMode = CaptureNone;
 //static char captureBuffer[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0};
@@ -254,27 +255,37 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case '8': UserCommandExecute(fxc, Cmd_ColorOrange); break;
     case '9': UserCommandExecute(fxc, Cmd_ColorHalf); break;
 
-    case 'a': UserCommandExecute(fxc, Cmd_ColorPulseDark); break;
-    case 's': UserCommandExecute(fxc, Cmd_ColorPulseWhite); break;
-    case 'd': UserCommandExecute(fxc, Cmd_ColorPulseRed); break;
-    case 'f': UserCommandExecute(fxc, Cmd_ColorPulseYellow); break;
-    case 'g': UserCommandExecute(fxc, Cmd_ColorPulseGreen); break;
-    case 'h': UserCommandExecute(fxc, Cmd_ColorPulseCyan); break;
-    case 'j': UserCommandExecute(fxc, Cmd_ColorPulseBlue); break;
-    case 'k': UserCommandExecute(fxc, Cmd_ColorPulseMagenta); break;
-    case 'l': UserCommandExecute(fxc, Cmd_ColorPulseOrange); break;
-    case 'm': UserCommandExecute(fxc, Cmd_ColorPulseHalf); break;
-    
-    case 'A': UserCommandExecute(fxc, Cmd_ColorPulse2Dark); break;
-    case 'S': UserCommandExecute(fxc, Cmd_ColorPulse2White); break;
-    case 'D': UserCommandExecute(fxc, Cmd_ColorPulse2Red); break;
-    case 'F': UserCommandExecute(fxc, Cmd_ColorPulse2Yellow); break;
-    case 'G': UserCommandExecute(fxc, Cmd_ColorPulse2Green); break;
-    case 'H': UserCommandExecute(fxc, Cmd_ColorPulse2Cyan); break;
-    case 'J': UserCommandExecute(fxc, Cmd_ColorPulse2Blue); break;    
-    case 'K': UserCommandExecute(fxc, Cmd_ColorPulse2Magenta); break;
-    case 'L': UserCommandExecute(fxc, Cmd_ColorPulse2Orange); break;
-    case 'M': UserCommandExecute(fxc, Cmd_ColorPulse2Half); break;
+    case 'A': 
+    {
+      //ComplexUserCommandInput(fxc, "go"); break;
+    ServoPose(POSE_CENTER);
+    ServoPoseLerpTo(POSE_PAWSUP); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN);
+    SetMindState(MIND_STATE_PRIMAL);    
+      break;
+    }
+    case 'B': ComplexUserCommandInput(fxc, "dn"); break;
+    case 'C': ComplexUserCommandInput(fxc, "up"); break;
+    case 'D': ComplexUserCommandInput(fxc, "butt"); break;
+    case 'E': ComplexUserCommandInput(fxc, "grr"); break;
+    case 'F': ComplexUserCommandInput(fxc, "p1"); break;
+    case 'G': ComplexUserCommandInput(fxc, "pu"); break;
+    case 'H': ComplexUserCommandInput(fxc, "pd"); break;
+    case 'I': ComplexUserCommandInput(fxc, "ub"); break;
+    case 'J': ComplexUserCommandInput(fxc, "uf"); break;
+    case 'K': ComplexUserCommandInput(fxc, "go"); break;
+    case 'L': ComplexUserCommandInput(fxc, "*hu"); break;
+    case 'M': ComplexUserCommandInput(fxc, "*hd"); break;
+    case 'N': ComplexUserCommandInput(fxc, "*eu"); break;
+    case 'O': ComplexUserCommandInput(fxc, "*ed"); break;
+    case 'P': ComplexUserCommandInput(fxc, "*wu"); break;
+    case 'Q': ComplexUserCommandInput(fxc, "*wd"); break;
+    case 'R': ComplexUserCommandInput(fxc, "go"); break;
+    case 'S': ComplexUserCommandInput(fxc, "go"); break;
+    case 'T': ComplexUserCommandInput(fxc, "go"); break;    
+    case 'U': ComplexUserCommandInput(fxc, "auto"); break;
+    case 'V': ComplexUserCommandInput(fxc, "sleep"); break;
     
     //case 'q': UserCommandExecute(fxc, Cmd_ColorRedBlue);break;
 //    case 'w': UserCommandExecute(fxc, Cmd_ColorCyanMagenta);break;
@@ -289,14 +300,14 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case 'o': UserCommandExecute(fxc, Cmd_StripNone);break;
     case 'p': UserCommandExecute(fxc, Cmd_StripAll);break;
 
-    case 'Q': UserCommandExecute(fxc, Cmd_ColorLava);break;
-    case 'W': UserCommandExecute(fxc, Cmd_ColorCloud);break;
-    case 'E': UserCommandExecute(fxc, Cmd_ColorCyanMagenta);break;
-    case 'R': UserCommandExecute(fxc, Cmd_ColorRedBlue);break;
-    case 'T': UserCommandExecute(fxc, Cmd_ColorRainbow);break;
-    case 'Y': UserCommandExecute(fxc, Cmd_ColorRainbowstripe);break;
-    case 'U': UserCommandExecute(fxc, Cmd_ColorParty);break;
-    case 'I': UserCommandExecute(fxc, Cmd_ColorHeat);break;
+    case 'a': UserCommandExecute(fxc, Cmd_ColorLava);break;
+    case 's': UserCommandExecute(fxc, Cmd_ColorCloud);break;
+    case 'd': UserCommandExecute(fxc, Cmd_ColorCyanMagenta);break;
+    case 'f': UserCommandExecute(fxc, Cmd_ColorRedBlue);break;
+    case 'g': UserCommandExecute(fxc, Cmd_ColorRainbow);break;
+    case 'h': UserCommandExecute(fxc, Cmd_ColorRainbowstripe);break;
+    case 'j': UserCommandExecute(fxc, Cmd_ColorParty);break;
+    case 'k': UserCommandExecute(fxc, Cmd_ColorHeat);break;
 
     case '_': UserCommandExecute(fxc, Cmd_SpeedNeg);break;
     case '+': UserCommandExecute(fxc, Cmd_SpeedPos);break;
@@ -372,6 +383,10 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.println(F("Sleeping.."));
     ComplexUserCommandInput(fxc,"dn");
     SetMindState(MIND_STATE_ASLEEP);
+  }
+  else if (data.equals(F("auto")))
+  {
+    SetMindState(MIND_STATE_AUTONOMOUS);
   }
   else if (data.equals(F("ppl0"))) { SetPeopleCount(0); }
   else if (data.equals(F("ppl1"))) { SetPeopleCount(1); }

@@ -206,26 +206,6 @@ namespace KataTracks
                     Log8.Text = title + "\n" + message;
                     Log8.ScrollToEnd();
                     break;
-                case 8:
-                    Log9.Foreground = brush;
-                    Log9.Text = title + "\n" + message;
-                    Log9.ScrollToEnd();
-                    break;
-                case 9:
-                    Log10.Foreground = brush;
-                    Log10.Text = title + "\n" + message;
-                    Log10.ScrollToEnd();
-                    break;
-                case 10:
-                    Log11.Foreground = brush;
-                    Log11.Text = title + "\n" + message;
-                    Log11.ScrollToEnd();
-                    break;
-                case 11:
-                    Log12.Foreground = brush;
-                    Log12.Text = title + "\n" + message;
-                    Log12.ScrollToEnd();
-                    break;
             }
         }
 
@@ -429,8 +409,6 @@ namespace KataTracks
             string buttonTag = button.Tag.ToString();
             char buttonTagChar = buttonTag[0];
 
-            if (RadioColorSolid.IsChecked == true)
-            {
                 switch (buttonTagChar)
                 {
                     case '0': StopAndSendToBoth("0"); break;
@@ -444,39 +422,8 @@ namespace KataTracks
                     case '8': StopAndSendToBoth("8"); break;
                     case '9': StopAndSendToBoth("9"); break;
                 }
-            }
-            else if (RadioColorPulse.IsChecked == true)
-            {
-                switch (buttonTagChar)
-                {
-                    case '0': StopAndSendToBoth("a"); break;
-                    case '1': StopAndSendToBoth("s"); break;
-                    case '2': StopAndSendToBoth("d"); break;
-                    case '3': StopAndSendToBoth("f"); break;
-                    case '4': StopAndSendToBoth("g"); break;
-                    case '5': StopAndSendToBoth("h"); break;
-                    case '6': StopAndSendToBoth("j"); break;
-                    case '7': StopAndSendToBoth("k"); break;
-                    case '8': StopAndSendToBoth("l"); break;
-                    case '9': StopAndSendToBoth("m"); break;
-                }
-            }
-            else if (RadioColorPulse2.IsChecked == true)
-            {
-                switch (buttonTagChar)
-                {
-                    case '0': StopAndSendToBoth("A"); break;
-                    case '1': StopAndSendToBoth("S"); break;
-                    case '2': StopAndSendToBoth("D"); break;
-                    case '3': StopAndSendToBoth("F"); break;
-                    case '4': StopAndSendToBoth("G"); break;
-                    case '5': StopAndSendToBoth("H"); break;
-                    case '6': StopAndSendToBoth("J"); break;
-                    case '7': StopAndSendToBoth("K"); break;
-                    case '8': StopAndSendToBoth("L"); break;
-                    case '9': StopAndSendToBoth("M"); break;
-                }
-            }
+
+
 
         }
 

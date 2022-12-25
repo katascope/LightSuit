@@ -34,6 +34,7 @@ static FIMU fimu;
 #include "Servos.h"
 #endif 
 
+static unsigned long lastTimeUlt = 0;
 static unsigned long lastTimeDisplay = 0;
 
 void setup() {
@@ -164,17 +165,18 @@ void loop()
 #endif  
 
 #if ENABLE_ULTRASOUND
-  if (GetMindState() > MIND_STATE_READY &&
-    fxController.fxState != FxState_PlayingTrack)
-  {
-    ultrasound.Update();
-    int distance = ultrasound.GetDistance();
-    if (distance == 0) { }
-    else if (distance < 10) { SetMindEngagement(1.0f);}
-    else if (distance < 19) { SetMindEngagement(0.7f);}
-    else if (distance < 29) { SetMindEngagement(0.6f);}
-    else if (distance < 39) { SetMindEngagement(0.3f);}
-    else { SetMindEngagement(0.0f);}
+    if (GetMindState() ==MIND_STATE_AUTONOMOUS &&
+      fxController.fxState != FxState_PlayingTrack)
+    {
+      ultrasound.Update();
+      int distance = ultrasound.GetDistance();
+      if (distance == 0) { }
+      else if (distance < 10) { SetMindEngagement(1.0f);}
+      else if (distance < 19) { SetMindEngagement(0.7f);}
+      else if (distance < 29) { SetMindEngagement(0.6f);}
+      else if (distance < 39) { SetMindEngagement(0.3f);}
+      else { SetMindEngagement(0.0f);}
+    }
   }
 #endif  
 
