@@ -141,7 +141,7 @@ void loop()
   while (Serial.available())
   {
       String str = Serial.readString();
-      if (str.length()==3)
+      if (str.length()<=3)
         UserCommandInput(fxController, (int)str[0]);
       else
         ComplexUserCommandInput(fxController, str);
@@ -164,7 +164,8 @@ void loop()
 #endif  
 
 #if ENABLE_ULTRASOUND
-  if (fxController.fxState != FxState_PlayingTrack)
+  if (GetMindState() > MIND_STATE_READY &&
+    fxController.fxState != FxState_PlayingTrack)
   {
     ultrasound.Update();
     int distance = ultrasound.GetDistance();

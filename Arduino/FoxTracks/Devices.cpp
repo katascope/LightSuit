@@ -254,8 +254,8 @@ void blePoll(FxController &fxc)
   if ( central )
   {
 #if DEBUG_BLE  
-//    Serial.print( F("Connected to central: " ));
-    //Serial.print( central.address() );
+    Serial.print( F("Connected to central: " ));
+    Serial.print( central.address() );
 #endif
     if ( central.connected() )
     {

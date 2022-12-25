@@ -62,6 +62,7 @@ namespace KataTracks
             InputVolumeSlider.Value = InputVolumeBias;
 
             //CombinedBluetoothController.Initialize();
+            LoadConfig(configFilename);
 
             DeviceVolume.Use("Line");
             DeviceWatcher.StartMonitoring();
@@ -76,7 +77,6 @@ namespace KataTracks
             btTextTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             btTextTimer.Start();
 
-            LoadConfig(configFilename);
         }
 
         private void LoadImage(string filename)
@@ -97,7 +97,7 @@ namespace KataTracks
                 if (splits.Length > 1)
                 {
                     string key = splits[0]; //get key name
-                    string value = splits[1].Split('#')[0];//remove comments
+                    string value = splits[1].Split('#')[0].Trim();//remove comments
 
                     if (key == "SongName")
                         songName = value;

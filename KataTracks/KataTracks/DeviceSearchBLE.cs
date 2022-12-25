@@ -24,13 +24,13 @@ namespace KataTracks
             scanFilter = new BluetoothLEScanFilter();
             rdo = new RequestDeviceOptions();
             discoveredBLE = new Dictionary<string, string>();
-            scanFilter.NamePrefix = "Light";    
-            rdo.Filters.Add(scanFilter);
+            //scanFilter.NamePrefix = "Light";    
+            //rdo.Filters.Add(scanFilter);
             discoveredDevices = await Bluetooth.ScanForDevicesAsync();            
 
             foreach (BluetoothDevice bd in discoveredDevices)
             {
-                if (bd.Name.Contains("LightSuit") || bd.Name.Contains("Lightsuit"))
+                if (bd.Name.Contains("Mree") || bd.Name.Contains("LightSuit") || bd.Name.Contains("Lightsuit"))
                 {
                     if (!discoveredBLE.ContainsKey(bd.Id))
                     {
