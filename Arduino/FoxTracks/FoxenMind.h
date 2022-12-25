@@ -10,12 +10,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 enum FoxenMindState
 {
   MIND_STATE_ASLEEP     = 0,
-  MIND_STATE_READY      = 1,
-  MIND_STATE_PRIMAL     = 2,
-  MIND_STATE_DIRECT     = 3,
-  MIND_STATE_TRACK      = 4,
-  MIND_STATE_AUTONOMOUS = 5
+  MIND_STATE_WAKING     = 1,
+  MIND_STATE_READY      = 2,
+  MIND_STATE_PRIMAL     = 3,
+  MIND_STATE_DIRECT     = 4,
+  MIND_STATE_TRACK      = 5,
+  MIND_STATE_AUTONOMOUS = 6
 };
+
+
+void SetPeopleCount(int count);
+int GetPeopleCount();
 
 FoxenMindState GetMindState();
 void SetMindState(FoxenMindState state);

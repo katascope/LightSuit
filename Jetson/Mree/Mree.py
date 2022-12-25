@@ -16,6 +16,11 @@ import serial
 import subprocess
 import oled as oled
 
+from playsound import playsound
+
+
+#playsound("growl.mp3");
+
 oled.OledInitialize()
 tick = 0
 
@@ -47,9 +52,14 @@ net = jetson.inference.detectNet(opt.network, sys.argv, opt.threshold)
 input = jetson.utils.videoSource(opt.input_URI, argv=sys.argv)
 output = jetson.utils.videoOutput(opt.output_URI, argv=sys.argv+is_headless)
 
+lastPpl = 0;
 
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
+ ser.write(str.encode('waking\r\n'))
+ playsound("Sounds/growl.mp3");
+ img = input.Capture()
  ser.write(str.encode('ready\r\n'))
+ playsound("Sounds/growl.mp3");
  while True:
   tick = tick + 1;
 
@@ -77,6 +87,19 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
   for detection in detections:
     name = net.GetClassDesc(detection.ClassID)
     print("Detect:"+str(detection.ClassID)+ " - " + name)
+
+  numPeople = 0
+  pplRects = []
+  for detection in detections:
+    name = net.GetClassDesc(detection.ClassID)
+    if (name == "person" or name == "dog" or name == "cat"):
+      pplRects.append(detection)
+      numPeople = numPeople + 1
+
+  print("People:"+str(numPeople))
+  if (numPeople != lastPpl):
+   lastPpl = numPeople
+   ser.write( str.encode("ppl"+str(numPeople)) )
 
   # render the image
   output.Render(img)

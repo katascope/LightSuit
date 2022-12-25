@@ -14,6 +14,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 static FoxenMindState foxenMindState = MIND_STATE_ASLEEP;
 static EmotionalCore emotions;
 
+static int pplCount = 0;
+void SetPeopleCount(int count)
+{
+  pplCount = count;
+}
+int GetPeopleCount()
+{
+  return pplCount;
+}
+
+
 FoxenMindState GetMindState()
 {
   return foxenMindState;  
@@ -54,12 +65,16 @@ void PrintMindState()
   switch(foxenMindState)
   {
     case MIND_STATE_ASLEEP:     Serial.print(F("=asleep"));break;
+    case MIND_STATE_WAKING:     Serial.print(F("=waking"));break;
     case MIND_STATE_READY:      Serial.print(F("=ready"));break;
     case MIND_STATE_PRIMAL:     Serial.print(F("=primal"));break;
     case MIND_STATE_DIRECT:     Serial.print(F("=direct"));break;
     case MIND_STATE_TRACK:      Serial.print(F("=track"));break;
     case MIND_STATE_AUTONOMOUS: Serial.print(F("=auto"));break;
   }
+  Serial.print(F(",ppl="));  
+  Serial.print(pplCount);
+  
   emotions.Print();
   Serial.print(F(","));  
   ServosPrint();
@@ -71,18 +86,28 @@ void PollMindState(struct FxController &fxController)
   {
     //do normal things
   }  
-  else if (foxenMindState == MIND_STATE_READY)
-  {
-    UserCommandExecute(fxController, Cmd_ColorCyanMagenta);
-    UserCommandExecute(fxController, Cmd_SpeedPos);
-    UserCommandExecute(fxController, Cmd_Speed1);    
-    return;
-  }
   else if (foxenMindState == MIND_STATE_ASLEEP)
   {
     UserCommandExecute(fxController, Cmd_ColorPulseCyan);
     UserCommandExecute(fxController, Cmd_SpeedNeg);
     UserCommandExecute(fxController, Cmd_Speed1);    
+    return;
+  }
+  else if (foxenMindState == MIND_STATE_WAKING)
+  {
+    UserCommandExecute(fxController, Cmd_ColorPulseMagenta);
+    UserCommandExecute(fxController, Cmd_SpeedPos);
+    UserCommandExecute(fxController, Cmd_Speed1);    
+    return;
+  }
+  else if (foxenMindState == MIND_STATE_READY)
+  {
+    UserCommandExecute(fxController, Cmd_ColorCyanMagenta);
+    UserCommandExecute(fxController, Cmd_SpeedPos);
+    if (pplCount == 0) UserCommandExecute(fxController, Cmd_Speed1);    
+    else if (pplCount == 1) UserCommandExecute(fxController, Cmd_Speed2);    
+    else if (pplCount == 2) UserCommandExecute(fxController, Cmd_Speed3);    
+    else UserCommandExecute(fxController, Cmd_Speed4);
     return;
   }
   else

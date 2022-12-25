@@ -350,7 +350,11 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   if (data[data.length()-1]=='\n') data.remove(data.length()-1,1);
   if (data[data.length()-1]=='\r') data.remove(data.length()-1,1);
 
-  if (data.equals(F("ready")))
+  if (data.equals(F("waking")))
+  {  
+    SetMindState(MIND_STATE_WAKING);
+  }
+  else if (data.equals(F("ready")))
   {  
     SetMindState(MIND_STATE_READY);
   }
@@ -369,6 +373,14 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     ComplexUserCommandInput(fxc,"dn");
     SetMindState(MIND_STATE_ASLEEP);
   }
+  else if (data.equals(F("ppl0"))) { SetPeopleCount(0); }
+  else if (data.equals(F("ppl1"))) { SetPeopleCount(1); }
+  else if (data.equals(F("ppl2"))) { SetPeopleCount(2); }
+  else if (data.equals(F("ppl3"))) { SetPeopleCount(3); }
+  else if (data.equals(F("ppl4"))) { SetPeopleCount(4); }
+  else if (data.equals(F("ppl5"))) { SetPeopleCount(5); }
+  else if (data.equals(F("ppl6"))) { SetPeopleCount(6); }
+  else if (data.equals(F("ppl7"))) { SetPeopleCount(7); }
   else if (data.equals(F("??")))
   {
     Serial.println(F("Add u/d"));
