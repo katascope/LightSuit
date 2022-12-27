@@ -369,6 +369,10 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   {  
     SetMindState(MIND_STATE_READY);
   }
+  else if (data.equals(F("center")))
+  {
+    ServoPose(POSE_CENTER);
+  }
   else if (data.equals(F("go")))
   {
     Serial.println(F("Waking.."));

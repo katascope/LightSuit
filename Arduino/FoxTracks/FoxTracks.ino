@@ -165,7 +165,8 @@ void loop()
 #endif  
 
 #if ENABLE_ULTRASOUND
-    if (GetMindState() ==MIND_STATE_AUTONOMOUS &&
+    if (
+      GetMindState() ==MIND_STATE_AUTONOMOUS &&
       fxController.fxState != FxState_PlayingTrack)
     {
       ultrasound.Update();
@@ -177,7 +178,7 @@ void loop()
       else if (distance < 39) { SetMindEngagement(0.3f);}
       else { SetMindEngagement(0.0f);}
     }
-  }
+  
 #endif  
 
 #if ENABLE_LCD
