@@ -1,16 +1,42 @@
+Quadruped robot basics:
+ https://www.youtube.com/watch?v=O_2swSMecB4
+
+rgbd camera?
 
 
 Install image
  Then sudo apt-get update
  install python3.7
+  sudo apt-get install python3.7
+ install python3.7-dev
+  sudo apt-get install python3.7-dev
  install jetson-inference & build (numpy too)
+  instructions on page
+ install pip3
+  sudo apt-get install python3-pip
+ adafruit-blinka issue
+  python3.7 -m pip install Adafruit-Blinka
  install adafruit-circuitpython-servokit
- servo+jetson = good to go?
+  pip3  install adafruit-circuitpython-servokit
+  python3.7 -m pip  install adafruit-circuitpython-servokit
  install arduinoide
+  git clone https://github.com/JetsonHacksNano/installArduinoIDE
+  cd installArduinoIDE
+  ./installArduinoIDE.sh
  pip3 install playsound
  pi OLED
+  install:
+   git clone https://github.com/JetsonHacksNano/installPiOLED
+   cd installPiOLED
+   ./installPiOLED.sh
+    modify script if python3.7 issue
   https://custom-build-robots.com/top-story-en/jetson-nano-oled-display-ssd1306/12124?lang=en
   https://github.com/JetsonHacksNano/installPiOLED
+ Finally..
+  git clone https://github.com/katascope/LightSuit
+ Setup autorun:
+  
+ All Known Tasks Complete
 
 Resize drive? Necessary now?
 sudo resize2fs /dev/mmcblk0p1
