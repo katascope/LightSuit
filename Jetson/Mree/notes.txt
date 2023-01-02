@@ -1,3 +1,21 @@
+li-ion batteries for Xree
+
+Code
+ Ard to Jetson:
+  Id (Mree to Pree)
+  Sound to play
+  Emotional state
+  [0 Pree, 1 Mree] , [Sound Code]
+  Code: [Hdr] [Id] [Snd]
+ Jetson to Ard
+  Camera sense
+   ids's
+   Center Track : location (for xy tracking)
+  Command (from voice recognition)? no, build into controller?
+  Code: [Hdr] [#Life] [x%] [y%]
+
+
+
 https://www.thingiverse.com/thing:4155673/files
 
 * Better backplate
@@ -14,8 +32,6 @@ https://www.thingiverse.com/thing:4155673/files
  .. make available on network?
  discoverable network drive.
 
-
-
 Traits
 Homeostastis
 Sensors
@@ -23,9 +39,6 @@ Effectors
 Sensor + Trait = Feeling
 Effector + Trait = Impulse
 Feeling + Impulse + Expression = Emotion
-
-
-
 
 Install image
  Then sudo apt-get update
@@ -38,203 +51,6 @@ Install image
  pi OLED
   https://custom-build-robots.com/top-story-en/jetson-nano-oled-display-ssd1306/12124?lang=en
   https://github.com/JetsonHacksNano/installPiOLED
-
-Resize drive? Necessary now?
-sudo resize2fs /dev/mmcblk0p1
-https://stackoverflow.com/questions/44862100/need-to-run-docker-run-command-inside-python-script
-
-
-
-
-
-Features:
- Jetson
-  Servos
-  Camera with Object recognition
-  Sound Output
-  Sound Input
-  Foxbutt serial usb interface
-  OLED display https://github.com/JetsonHacksNano/installPiOLED
- Foxbutt
-  LedStrip interface
-  Ultrasonics
-  IMU
-  BLE Bluetooth
-  Voltage display
-  Voltage converter & capacitor
-
-
-
-
-
-https://github.com/dusty-nv/jetson-voice
-
-Vetco shopping:
- Small, light toggle switches
- Breadboards
-
-Foxbutt
- Snd:
-  [ServoSet # #]
-  [LED Char] - to char LED command
-  [SetDisplay] LED Screen data
- Rcv:
-  [Name]
-  [Distance]
-  [IMU]
-
-
-
-Pree & Mree Features:
- 3d-Printed Spot Nano chassis
- 4S 16v Lipo
- Jetson Nano Dev Kit
- Sensors:
-  8MP camera
-  IMU
-  Wifi&Bluetooth
-  Microphone
-  Ultrasonics
- Effectors:
-  Servo
-   12 metal gear servos
-   1 servo tail
-   3 configurable
-  LED Strip
-  Speakers
-  https://learn.adafruit.com/circuitpython-libraries-on-linux-and-the-nvidia-jetson-nano/initial-setup
-  https://askubuntu.com/questions/1086509/ubuntu-18-terminal-not-opening
-
-
-
-
-
-Camera: https://www.amazon.com/gp/product/B07T43K7LC/
-https://docs.nvidia.com/isaac/archive/2020.1/packages/led/doc/wire_neopixels.html
-
-Pree's primary loop is Feeling, Intuiting
- 'Emotional Reactor Loop' : Energy, Trust, Warmth, Focus, Curiosity
-  1. Sensors and state influence emotional state
-  2. Emotional state influences behavior drives
-  3. Behavior then influences sensors
- [Emotional State To Drives]
-  Low Energy -> +Drive FindFocusSoft
-  Low Trust -> +Drive Retreat
-  Low Warmth -> +Drive lower curiosity
-  Low Focus -> lower curiosity
-  Low Curiosity -> +Drive lower energy
-  High Energy -> +Drive FindFocusHard
-  High Trust -> +Drive Closer
-  High Warmth -> +Drive Closer
-  High Focus -> +Drive Play
-  High Curiosity -> +Drive Play
- [Drives]
-  Strongest urge wins
-
-
-
-
- If pree is low, pree looks for things of interest
-  with people or animals, do engagement
- more than 6 people scares pree?
-  Emotional Matrix?
-
-
- States
-   NRG Hue
-  [0     ] Starting - bootup procedures
-  [0     ] Sleeping - booted but dormant
-  [n     ] Testing - self checking
-  [1     ] Resting - active but no motors
-  [2     ] Searching - look about for focus
-  [3     ] Focusing - interacting with focus
-  [3     ] Reciting - dancing, sequences, etc
-  [4     ] Playing - interacting with friendly
-  [n     ] Freezing - immediately stopping in place
-  Events
-   Ultrasonic bump - yellow/warning flash
-   See person - more excitement/energy
-  Emotional Palette:
-   White+Blue : Clearheaded
-   Red : Aggressive
-   Blue+Orange: Nostalgic
-   Purple+Green: Ready to party
-   Green: Trusting
-
-
-
- If has focus
-  Dofocusy
- Else
-  Read the room, find new focus
- Dance
- Obey direct commands (no voice)
- https://github.com/dusty-nv/jetson-voice
-
-Sensors
- Camera
- Ultrasonics
- Gyro
- Power
- Microphone - speech recognition
-Effectors
- Motor rotation
- tail set
- wifi, bluetooth
- led strips
-
-
-Pree's primary drive is to read the room
- Secondary dri
-
-Networked together.. or light signals?
-Light Signal Language
- Boat lights?
-  GreenRight (target sees left)
-  RedLeft (target sees right)
-  White for behind
-  Then red/light for the shoes on other person?
-
-
-Quadruped robot basics:
- https://www.youtube.com/watch?v=O_2swSMecB4
-
-rgbd camera?
-
-
-Install image
- Then sudo apt-get update
- install python3.7
-  sudo apt-get install python3.7
- install python3.7-dev
-  sudo apt-get install python3.7-dev
- install jetson-inference & build (numpy too)
-  instructions on page
- install pip3
-  sudo apt-get install python3-pip
- adafruit-blinka issue
-  python3.7 -m pip install Adafruit-Blinka
- install adafruit-circuitpython-servokit
-  pip3  install adafruit-circuitpython-servokit
-  python3.7 -m pip  install adafruit-circuitpython-servokit
- install arduinoide
-  git clone https://github.com/JetsonHacksNano/installArduinoIDE
-  cd installArduinoIDE
-  ./installArduinoIDE.sh
- pip3 install playsound
- pi OLED
-  install:
-   git clone https://github.com/JetsonHacksNano/installPiOLED
-   cd installPiOLED
-   ./installPiOLED.sh
-    modify script if python3.7 issue
-  https://custom-build-robots.com/top-story-en/jetson-nano-oled-display-ssd1306/12124?lang=en
-  https://github.com/JetsonHacksNano/installPiOLED
- Finally..
-  git clone https://github.com/katascope/LightSuit
- Setup autorun:
-
- All Known Tasks Complete
 
 Resize drive? Necessary now?
 sudo resize2fs /dev/mmcblk0p1
