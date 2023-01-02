@@ -5,18 +5,37 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #ifndef CONFIG_DEF
 #define CONFIG_DEF
 
-#define LEAD      1 //Generally LightSuit*A silver
+#define LEAD      0 //Generally LightSuit*A silver
 #define FOLLOW    0 //Generally LightSuit*B gold
+#define FOXBOT    1 //Generally LightSuit*B gold
+#define MREE      1
+#define PREE      0 
 #define SUIT_JACKET    0
 #define LAMP           0
+
+static const char *DeviceName = "Pree";
 
 #if SUIT_JACKET
 static const char *DeviceName = "LightSuitAngelTest";
 #elif LEAD
-static const char *DeviceName = "Pree";
+static const char *DeviceName = "LightSuitAngelLead";
 #elif FOLLOW
 static const char *DeviceName = "LightSuitAngelB";
 #endif
+
+#if MREE
+#define ColorSleeping Cmd_ColorPulseMagenta
+#define ColorWaking Cmd_ColorWhiteMagenta
+#define ColorReady Cmd_ColorCyanMagenta
+#endif
+
+#if PREE
+#define ColorSleeping Cmd_ColorPulseCyan
+#define ColorWaking Cmd_ColorWhiteCyan
+#define ColorReady Cmd_ColorCyanMagenta
+#endif
+
+
 
 #define STARTUP_STATE       FxState_Default    //FxState_Default;//FxState_TestPattern;//FxState_PlayingTrack;//
 #define UPDATE_DELAY        30 //100 //Milliseconds to delay between palette updates, set to 100 for iot, 30 for ble
@@ -55,6 +74,17 @@ static const char *DeviceName = "LightSuitAngelB";
 #endif
 
 #if SUIT_JACKET
+#define NUM_LEDS_0          46
+#define NUM_LEDS_1          46
+#define NUM_LEDS_2          36
+#define NUM_LEDS_3          36
+#define NUM_LEDS_4          38 //arms
+#define NUM_LEDS_5          38
+#define NUM_LEDS_6          35 //legs
+#define NUM_LEDS_7          35
+#endif
+
+#if FOXBOT
 #define NUM_LEDS_0          46
 #define NUM_LEDS_1          46
 #define NUM_LEDS_2          36
