@@ -80,6 +80,18 @@ void PrintMindState()
   ServosPrint();
 }
 
+#if MREE
+#define ColorSleeping Cmd_ColorPulseMagenta
+#define ColorWaking Cmd_ColorWhiteMagenta
+#define ColorReady Cmd_ColorCyanMagenta
+#endif
+
+#if PREE
+#define ColorSleeping Cmd_ColorPulseCyan
+#define ColorWaking Cmd_ColorWhiteCyan
+#define ColorReady Cmd_ColorCyanMagenta
+#endif
+
 void PollMindState(struct FxController &fxController)
 {
   if (fxController.fxState == FxState_PlayingTrack)
@@ -88,21 +100,21 @@ void PollMindState(struct FxController &fxController)
   }  
   else if (foxenMindState == MIND_STATE_ASLEEP)
   {
-    UserCommandExecute(fxController, Cmd_ColorPulseCyan);
+    UserCommandExecute(fxController, ColorSleeping);
     UserCommandExecute(fxController, Cmd_SpeedNeg);
     UserCommandExecute(fxController, Cmd_Speed1);    
     return;
   }
   else if (foxenMindState == MIND_STATE_WAKING)
   {
-    UserCommandExecute(fxController, Cmd_ColorPulseMagenta);
+    UserCommandExecute(fxController, ColorWaking);
     UserCommandExecute(fxController, Cmd_SpeedPos);
     UserCommandExecute(fxController, Cmd_Speed1);    
     return;
   }
   else if (foxenMindState == MIND_STATE_READY)
   {
-    UserCommandExecute(fxController, Cmd_ColorCyanMagenta);
+    UserCommandExecute(fxController, ColorReady);
     UserCommandExecute(fxController, Cmd_SpeedPos);
     if (pplCount == 0) UserCommandExecute(fxController, Cmd_Speed1);    
     else if (pplCount == 1) UserCommandExecute(fxController, Cmd_Speed2);    

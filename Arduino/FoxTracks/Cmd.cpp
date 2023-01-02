@@ -86,6 +86,7 @@ void UserCommandExecute(FxController &fxc, int cmd)
     case Cmd_ColorHalf:     InstantEvent(fxc, fx_palette_half,     FxPaletteUpdateType::Once); break;
 
     case Cmd_ColorWhiteMagenta: InstantEvent(fxc, fx_palette_wm,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorWhiteCyan:    InstantEvent(fxc, fx_palette_wc,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorWhiteYellow:  InstantEvent(fxc, fx_palette_wy,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorWhiteBlue:    InstantEvent(fxc, fx_palette_wb,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorRedBlue:      InstantEvent(fxc, fx_palette_rb,      FxPaletteUpdateType::Once); break;

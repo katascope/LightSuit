@@ -47,6 +47,7 @@ enum UserCommand
   Cmd_ColorWhiteBlue,
   Cmd_ColorWhiteYellow,
   Cmd_ColorWhiteMagenta,
+  Cmd_ColorWhiteCyan,
   Cmd_ColorRedBlue,
   Cmd_ColorCyanMagenta,
 

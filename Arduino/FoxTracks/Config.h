@@ -13,7 +13,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define SUIT_JACKET    0
 #define LAMP           0
 
-static const char *DeviceName = "Pree";
 
 #if SUIT_JACKET
 static const char *DeviceName = "LightSuitAngelTest";
@@ -21,19 +20,13 @@ static const char *DeviceName = "LightSuitAngelTest";
 static const char *DeviceName = "LightSuitAngelLead";
 #elif FOLLOW
 static const char *DeviceName = "LightSuitAngelB";
+#elif MREE
+static const char *DeviceName = "Mree";
+#elif PREE
+static const char *DeviceName = "Pree";
 #endif
 
-#if MREE
-#define ColorSleeping Cmd_ColorPulseMagenta
-#define ColorWaking Cmd_ColorWhiteMagenta
-#define ColorReady Cmd_ColorCyanMagenta
-#endif
 
-#if PREE
-#define ColorSleeping Cmd_ColorPulseCyan
-#define ColorWaking Cmd_ColorWhiteCyan
-#define ColorReady Cmd_ColorCyanMagenta
-#endif
 
 
 
