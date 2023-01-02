@@ -255,37 +255,29 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case '8': UserCommandExecute(fxc, Cmd_ColorOrange); break;
     case '9': UserCommandExecute(fxc, Cmd_ColorHalf); break;
 
-    case 'A': 
-    {
-      //ComplexUserCommandInput(fxc, "go"); break;
-    ServoPose(POSE_CENTER);
-    ServoPoseLerpTo(POSE_PAWSUP); 
-    ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
-    ServoPoseLerpTo(POSE_ELBOW_MIN);
-    SetMindState(MIND_STATE_PRIMAL);    
-      break;
-    }
+    case 'A': ComplexUserCommandInput(fxc, ""); break;
     case 'B': ComplexUserCommandInput(fxc, "dn"); break;
     case 'C': ComplexUserCommandInput(fxc, "up"); break;
     case 'D': ComplexUserCommandInput(fxc, "butt"); break;
     case 'E': ComplexUserCommandInput(fxc, "grr"); break;
-    case 'F': ComplexUserCommandInput(fxc, "p1"); break;
-    case 'G': ComplexUserCommandInput(fxc, "pu"); break;
-    case 'H': ComplexUserCommandInput(fxc, "pd"); break;
-    case 'I': ComplexUserCommandInput(fxc, "ub"); break;
-    case 'J': ComplexUserCommandInput(fxc, "uf"); break;
-    case 'K': ComplexUserCommandInput(fxc, "go"); break;
-    case 'L': ComplexUserCommandInput(fxc, "*hu"); break;
-    case 'M': ComplexUserCommandInput(fxc, "*hd"); break;
-    case 'N': ComplexUserCommandInput(fxc, "*eu"); break;
-    case 'O': ComplexUserCommandInput(fxc, "*ed"); break;
-    case 'P': ComplexUserCommandInput(fxc, "*wu"); break;
-    case 'Q': ComplexUserCommandInput(fxc, "*wd"); break;
-    case 'R': ComplexUserCommandInput(fxc, "go"); break;
-    case 'S': ComplexUserCommandInput(fxc, "go"); break;
-    case 'T': ComplexUserCommandInput(fxc, "go"); break;    
-    case 'U': ComplexUserCommandInput(fxc, "auto"); break;
-    case 'V': ComplexUserCommandInput(fxc, "sleep"); break;
+    case 'F': ComplexUserCommandInput(fxc, "center"); break;
+    case 'G': ComplexUserCommandInput(fxc, "p1"); break;
+    case 'H': ComplexUserCommandInput(fxc, "pu"); break;
+    case 'I': ComplexUserCommandInput(fxc, "pd"); break;
+    case 'J': ComplexUserCommandInput(fxc, "ub"); break;
+    case 'K': ComplexUserCommandInput(fxc, "uf"); break;
+    case 'L': ComplexUserCommandInput(fxc, "go"); break;
+    case 'M': ComplexUserCommandInput(fxc, "*hu"); break;
+    case 'N': ComplexUserCommandInput(fxc, "*hd"); break;
+    case 'O': ComplexUserCommandInput(fxc, "*eu"); break;
+    case 'P': ComplexUserCommandInput(fxc, "*ed"); break;
+    case 'Q': ComplexUserCommandInput(fxc, "*wu"); break;
+    case 'R': ComplexUserCommandInput(fxc, "*wd"); break;
+    case 'S': ComplexUserCommandInput(fxc, "auto"); break;
+    case 'T': ComplexUserCommandInput(fxc, "primal"); break;
+    case 'U': ComplexUserCommandInput(fxc, "waking"); break;    
+    case 'V': ComplexUserCommandInput(fxc, "ready"); break;
+    case 'W': ComplexUserCommandInput(fxc, "sleep"); break;
     
     //case 'q': UserCommandExecute(fxc, Cmd_ColorRedBlue);break;
 //    case 'w': UserCommandExecute(fxc, Cmd_ColorCyanMagenta);break;
@@ -375,7 +367,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("go")))
   {
-    Serial.println(F("Waking.."));
+    Serial.println(F("Primal.."));
     ServoPose(POSE_CENTER);
     ServoPoseLerpTo(POSE_PAWSUP); 
     ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
@@ -403,9 +395,8 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   else if (data.equals(F("??")))
   {
     Serial.println(F("Add u/d"));
-    Serial.println(F(" (p0) pose 0 - centered"));
-    Serial.println(F(" (p1) pose 1 - coosh"));
-    Serial.println(F(" (p1) pose 2 - stand"));
+    Serial.println(F(" sleep/waking/ready/go/auto"));
+    Serial.println(F(" dn/up/butt/grr"));
     Serial.println(F("--------------------------"));
     Serial.println(F("Combo:"));
     Serial.println(F(" (*+h/e/w) all hips/elbows/wrists"));
@@ -421,6 +412,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.println(F(" (br+h/e/w) back right hip/elbow/wrist"));
   }
   else if (data.equals(F("dn"))) { 
+    Serial.println("dn");
     ServoPoseLerpTo(POSE_PAWSUP); 
     ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
     ServoPoseLerpTo(POSE_ELBOW_MIN);
