@@ -9,7 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define FOLLOW    0 //Generally LightSuit*B gold
 #define FOXBOT    1 //Generally LightSuit*B gold
 #define MREE      1
-#define PREE      0 
+#define PREE      0
 #define SUIT_JACKET    0
 #define LAMP           0
 

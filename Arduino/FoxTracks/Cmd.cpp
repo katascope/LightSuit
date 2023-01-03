@@ -256,7 +256,7 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case '8': UserCommandExecute(fxc, Cmd_ColorOrange); break;
     case '9': UserCommandExecute(fxc, Cmd_ColorHalf); break;
 
-    case 'A': ComplexUserCommandInput(fxc, ""); break;
+    case 'A': ComplexUserCommandInput(fxc, "wave"); break;
     case 'B': ComplexUserCommandInput(fxc, "dn"); break;
     case 'C': ComplexUserCommandInput(fxc, "up"); break;
     case 'D': ComplexUserCommandInput(fxc, "butt"); break;
@@ -370,9 +370,9 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   {
     Serial.println(F("Primal.."));
     ServoPose(POSE_CENTER);
-    ServoPoseLerpTo(POSE_PAWSUP); 
-    ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
-    ServoPoseLerpTo(POSE_ELBOW_MIN);
+    ServoPoseLerpTo(POSE_PAWSUP, 1); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 1); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
     SetMindState(MIND_STATE_PRIMAL);    
   }
   else if (data.equals(F("sleep")))
@@ -414,24 +414,48 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("dn"))) { 
     Serial.println("dn");
-    ServoPoseLerpTo(POSE_PAWSUP); 
-    ServoPoseLerpTo(POSE_HIPS_ORIGIN); 
-    ServoPoseLerpTo(POSE_ELBOW_MIN);
+    ServoPoseLerpTo(POSE_PAWSUP, 4); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 3); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
   } 
   else if (data.equals(F("up"))) { 
-    ServoPoseLerpTo(POSE_UP); 
+    ServoPoseLerpTo(POSE_UP_BACK, 1); 
+    delay(250);
+    ServoPoseLerpTo(POSE_UP, 1); 
   }
   else if (data.equals(F("butt"))) { 
-    ServoPoseLerpTo(POSE_UP_FRONT); 
-    delay(500);
-    ServoPoseLerpTo(POSE_UP_BACK); 
+    ServoPoseLerpTo(POSE_UP_FRONT,4); 
     delay(250);
-    ServoPoseLerpTo(POSE_FRONT_PAWSDN);     
+    ServoPoseLerpTo(POSE_UP_BACK,4); 
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_PAWSDN,2);
   }
-  
-  else if (data.equals(F("grr"))) { ServoPoseLerpTo(POSE_AGGRESSIVE); }
-  else if (data.equals(F("ub"))) { ServoPoseLerpTo(POSE_UP_BACK); }
-  else if (data.equals(F("uf"))) { ServoPoseLerpTo(POSE_UP_FRONT); }
+  else if (data.equals(F("wave"))) { 
+    ServoPoseLerpTo(POSE_UP_FRONT,4); 
+    delay(250);
+    ServoPoseLerpTo(POSE_UP_BACK,4); 
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_PAWSDN,2);
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_RIGHT_PAWUP,2);
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_RIGHT_PAWDN,2);
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_RIGHT_PAWUP,2);
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_RIGHT_PAWDN,2);
+    delay(250);
+    ServoPoseLerpTo(POSE_UP_FRONT,1); 
+    delay(250);
+    ServoPoseLerpTo(POSE_FRONT_PAWSDN,2);
+  }  
+  else if (data.equals(F("grr"))) { 
+    ServoPoseLerpTo(POSE_UP_BACK, 1); 
+    delay(250);
+    ServoPoseLerpTo(POSE_AGGRESSIVE, 1); 
+    }
+  else if (data.equals(F("ub"))) { ServoPoseLerpTo(POSE_UP_BACK, 1); }
+  else if (data.equals(F("uf"))) { ServoPoseLerpTo(POSE_UP_FRONT, 1); }
   else if (data.equals(F("p1"))) { ServoPose(POSE_CENTER); }
   else if (data.equals(F("pu"))) { ServoPose(POSE_PAWSUP); }
   else if (data.equals(F("pd"))) { ServoPose(POSE_PAWSDN); }

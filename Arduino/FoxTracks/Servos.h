@@ -71,11 +71,13 @@ const int POSE_PAWSUP[SERVO_NUM] { -1,-1,RANGE_WRIST_MIN,-1, -1,-1,RANGE_WRIST_M
 const int POSE_PAWSDN[SERVO_NUM] { -1,-1,RANGE_WRIST_MAX,-1, -1,-1,RANGE_WRIST_MAX,-1, -1,-1,RANGE_WRIST_MAX,-1, -1,-1,RANGE_WRIST_MAX,-1};
 const int POSE_FRONT_PAWSDN[SERVO_NUM] { -1,-1,-1,-1, -1,-1,RANGE_WRIST_MAX,-1, -1,-1,-1,-1, -1,-1,RANGE_WRIST_MAX,-1};
 
+const int POSE_FRONT_RIGHT_PAWUP[SERVO_NUM] { -1,-1,-1,-1, -1,-1,RANGE_WRIST_MAX,-1,  -1,-1,-1,-1, -1,RANGE_ELBOW_MIN,RANGE_WRIST_MIN,-1};
+const int POSE_FRONT_RIGHT_PAWDN[SERVO_NUM] { -1,-1,-1,-1, -1,-1,RANGE_WRIST_MAX,-1,  -1,-1,-1,-1, -1,ORIGIN_ELBOW,RANGE_WRIST_MAX,-1};
 
 const int POSE_AGGRESSIVE[SERVO_NUM]{89,49,104,-1,89,49,89,-1,89,49,104,-1,89,49,89,-1};
 
 const int POSE_UP[SERVO_NUM]  {89,51,105,-1,89,51,105,-1,89,51,105,-1,89,51,105,-1};
-const int POSE_UP_BACK[SERVO_NUM]  {90,45,100,-1, -1,-1,-1,-1, 90,45,100,-1, -1,-1,-1,-1};
+const int POSE_UP_BACK[SERVO_NUM]  {90,45,80,-1, -1,-1,-1,-1, 90,45,80,-1, -1,-1,-1,-1};
 const int POSE_UP_FRONT[SERVO_NUM] {-1,-1,-1,-1, 90,45,100,-1, -1,-1,-1,-1, 90,45,100,-1};
 
 
@@ -89,5 +91,5 @@ void ServoSetAll(int degree);
 void ServoPoseLerp(float lerp, const int *servostateOrig, const int *servostateDest);
 void ServoPose(const int *servostate);
 //void ServoPoseLerpTimed(const int *servostateOrig, const int *servostateDest);
-void ServoPoseLerpTo(const int *servostateDest);
+void ServoPoseLerpTo(const int *servostateDest, float sec);
 #endif

@@ -129,17 +129,18 @@ void ServoPoseLerp(float lerp, const int *servostateOrig, const int *servostateD
   }
 }
 
-void ServoPoseLerpTo(const int *servostateDest)
+void ServoPoseLerpTo(const int *servostateDest, float sec)
 {
   //Save first state so can tween properly until end
   int servostateStart[SERVO_NUM] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
   for (int servo=0;servo<SERVO_NUM;servo++)
    servostateStart[servo] = servoInfo[servo].degree;
-   
+
+  int ms = (sec*100)/10;
   //1 second
-  for (int i=0;i<10;i+=2)
+  for (int i=0;i<ms;i++)//because 5ms delay in each servo call
   {
-    float lerp = (float)i/(float)10;
+    float lerp = (float)i/(float)ms;
     for (int servo=0;servo<SERVO_NUM;servo++)
     {
       if (servo != SERVO_LEFT_EAR

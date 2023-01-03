@@ -1,3 +1,23 @@
+How to solve 'learning at the studio'
+ Need way to pose it in realtime
+ Need way to record that too
+ .. Ability to transfer tracks to jetson.. write to .h..fetch realtime
+
+Practical things:
+ feed lola treats
+ direct-dance to music
+ play games
+ ree MakeAVideo - plays music and tracks and records
+ ree Watch us
+ ree Record us
+ ree Play music
+ ree Dance track/lightshow
+ ree 'posing'
+ Save poses to jetson, recover and burn to arduino - writes to .cpp or .h file in lightsuit/arduino/foxtracks folder
+
+
+
+
 li-ion batteries for Xree
 
 Code
