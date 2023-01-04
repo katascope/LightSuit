@@ -16,7 +16,7 @@ import serial
 import subprocess
 import oled as oled
 
-#from playsound import playsound
+from playsound import playsound
 #playsound("growl.mp3");
 
 oled.OledInitialize()
@@ -54,16 +54,18 @@ lastPpl = 0;
 
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
  ser.write(str.encode('waking\r\n'))
-#playsound("Sounds/growl.mp3");
+ playsound("Sounds/growl.mp3");
  img = input.Capture()
  ser.write(str.encode('ready\r\n'))
 #playsound("Sounds/growl.mp3");
  while True:
   tick = tick + 1;
 
-  line = ser.readline()
-  print(line)
-  oled.OledRender(tick,line)
+  if (ser.in_waiting):
+    line = str(ser.readline()).lstrip('b').rstrip('\'').lstrip('\'')
+    line = line.rstrip('\\n').lstrip('\\r')
+    print(line)
+    oled.OledRender(tick,line)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
   time.sleep(1.0/4)
