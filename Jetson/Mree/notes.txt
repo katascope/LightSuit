@@ -1,3 +1,25 @@
+Sketch uses 370624 bytes (37%) of program storage space. Maximum is 983040 bytes.
+Global variables use 73992 bytes (28%) of dynamic memory, leaving 188152 bytes for local variables. Maximum is 262144 bytes.
+
+
+int
+Sketch uses 370624 bytes (37%) of program storage space. Maximum is 983040 bytes.
+Global variables use 73992 bytes (28%) of dynamic memory, leaving 188152 bytes for local variables. Maximum is 262144 bytes.
+
+const int
+Sketch uses 370624 bytes (37%) of program storage space. Maximum is 983040 bytes.
+Global variables use 73992 bytes (28%) of dynamic memory, leaving 188152 bytes for local variables. Maximum is 262144 bytes.
+
+
+Tuesday TODO:
+ x works Investigate serial transmission of whole sequences
+ x Change existing xree.py to not block on serial wait
+ Take out garbage
+ x File share system works
+ Design pose system
+
+
+
 How to solve 'learning at the studio'
  Need way to pose it in realtime
  Need way to record that too
@@ -21,6 +43,17 @@ Practical things:
 li-ion batteries for Xree
 
 Code
+ Arduino-To-Jetson
+  Snd <code>
+  Id <code>
+  Poses
+  ready
+  waking
+ Jetson-To-Arduino
+  Person X1 Y1 X2 Y2 (in percentages)
+  Sequence <poses>
+  Poses
+
  Ard to Jetson:
   Id (Mree to Pree)
   Sound to play

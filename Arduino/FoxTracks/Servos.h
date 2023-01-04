@@ -80,6 +80,8 @@ const int POSE_UP[SERVO_NUM]  {89,51,105,-1,89,51,105,-1,89,51,105,-1,89,51,105,
 const int POSE_UP_BACK[SERVO_NUM]  {90,45,80,-1, -1,-1,-1,-1, 90,45,80,-1, -1,-1,-1,-1};
 const int POSE_UP_FRONT[SERVO_NUM] {-1,-1,-1,-1, 90,45,100,-1, -1,-1,-1,-1, 90,45,100,-1};
 
+#define NUM_DB_POSES 100
+static int POSE_DB[NUM_DB_POSES][SERVO_NUM] = {};
 
 void ServosRest();
 void ServosPrint();
