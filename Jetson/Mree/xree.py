@@ -17,7 +17,6 @@ import subprocess
 import oled as oled
 
 from playsound import playsound
-#playsound("growl.mp3");
 
 from posedb import PoseDB
 
@@ -55,20 +54,31 @@ lastPpl = 0;
 
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
  ser.write(str.encode('waking\r\n'))
- playsound("Sounds/growl.mp3");
- exit()
+ playsound("Sounds/growl.mp3",0);
  img = input.Capture()
  ser.write(str.encode('ready\r\n'))
 #playsound("Sounds/growl.mp3");
  while True:
   tick = tick + 1;
 
-  if (ser.in_waiting):
+  while (ser.in_waiting):
     line = str(ser.readline()).lstrip('b').rstrip('\'').lstrip('\'')
     line = line.rstrip('\\n').rstrip('\\r')
     print("SERIAL:"+line)
     if "POSES" in line:
       pdb.write(line)
+    if "Snd Hiss" in line:
+      playsound("Sounds/hiss.mp3",0)
+    if "Snd Purr" in line:
+      playsound("Sounds/purr.mp3",0)
+    if "Snd Thunder" in line:
+      playsound("Sounds/thunder.mp3",0)
+    if "Snd Howl" in line:
+      playsound("Sounds/howl.mp3",0)
+    if "Snd Meow" in line:
+      playsound("Sounds/meow.mp3",0)
+    if "Snd Growl" in line:
+      playsound("Sounds/growl.mp3",0)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
   time.sleep(1.0/4)
