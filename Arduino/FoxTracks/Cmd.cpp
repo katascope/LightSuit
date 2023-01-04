@@ -376,6 +376,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("ready")))
   {  
+    Serial.println(F("POSES"));//Time to call and get our poses
     SetMindState(MIND_STATE_READY);
   }
   else if (data.equals(F("center")))

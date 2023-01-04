@@ -81,7 +81,7 @@ void ServoStartup()
   {
     for (int s=0;s<SERVO_NUM;s++)
     {    
-      POSE_DB[p][s] = -1;
+      POSE_DB[p][s] = 90;
     }      
   }
 }
