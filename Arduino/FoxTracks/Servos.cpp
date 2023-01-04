@@ -76,6 +76,14 @@ void ServoStartup()
 {
   pwm.begin();
   pwm.setPWMFreq(FREQUENCY);  // Analog servos run at ~60 Hz updates  
+
+  for (int p=0;p<NUM_DB_POSES;p++)
+  {
+    for (int s=0;s<SERVO_NUM;s++)
+    {    
+      POSE_DB[p][s] = -1;
+    }      
+  }
 }
 
 void ServoSet(int servo, int degree)

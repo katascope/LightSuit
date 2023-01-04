@@ -19,9 +19,10 @@ import oled as oled
 from playsound import playsound
 #playsound("growl.mp3");
 
-oled.OledInitialize()
-tick = 0
+from posedb import PoseDB
 
+tick = 0
+pdb = PoseDB("poses.txt")
 
 # parse the command line
 parser = argparse.ArgumentParser(description="Locate objects in a live camera stream using an object detection DNN.", 
@@ -55,6 +56,7 @@ lastPpl = 0;
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
  ser.write(str.encode('waking\r\n'))
  playsound("Sounds/growl.mp3");
+ exit()
  img = input.Capture()
  ser.write(str.encode('ready\r\n'))
 #playsound("Sounds/growl.mp3");
@@ -63,9 +65,10 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
 
   if (ser.in_waiting):
     line = str(ser.readline()).lstrip('b').rstrip('\'').lstrip('\'')
-    line = line.rstrip('\\n').lstrip('\\r')
-    print(line)
-    oled.OledRender(tick,line)
+    line = line.rstrip('\\n').rstrip('\\r')
+    print("SERIAL:"+line)
+    if "POSES" in line:
+      pdb.write(line)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
   time.sleep(1.0/4)
@@ -112,7 +115,7 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
 
   # exit on input/output EOS
   if not input.IsStreaming() or not output.IsStreaming():
-    break
+   break
 
 
 

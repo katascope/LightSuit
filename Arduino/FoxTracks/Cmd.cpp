@@ -354,6 +354,22 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   if (data[data.length()-1]=='\n') data.remove(data.length()-1,1);
   if (data[data.length()-1]=='\r') data.remove(data.length()-1,1);
 
+  if (data.equals(F("POSES")))
+  {
+    for (int p=0;p<NUM_DB_POSES;p++)
+    {
+      Serial.print(F("POSE"));
+      Serial.print(p);
+      Serial.print(F(" "));
+      for (int s=0;s<SERVO_NUM;s++)
+      {    
+        Serial.print(POSE_DB[p][s]);
+        Serial.print(F(" "));
+      }
+      Serial.println();
+    }
+  }
+
   if (data.equals(F("waking")))
   {  
     SetMindState(MIND_STATE_WAKING);
