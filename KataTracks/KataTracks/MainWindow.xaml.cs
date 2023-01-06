@@ -41,6 +41,7 @@ namespace KataTracks
         static bool useSoundTrigger = false;
         static float InputVolumeBias = 50;
         static int VolumeThreshold = 50;
+        static GameController gameController = new GameController();
 
         public MainWindow()
         {
@@ -60,6 +61,8 @@ namespace KataTracks
             Canvas.SetLeft(TrackIndexPlay, 0);
             OutputVolumeSlider.Value = volume;
             InputVolumeSlider.Value = InputVolumeBias;
+
+            gameController.Initialize();
 
             //CombinedBluetoothController.Initialize();
             LoadConfig(configFilename);
@@ -211,7 +214,43 @@ namespace KataTracks
 
         private void btTextTimer_Tick(object sender, EventArgs e)
         {
-            //DeviceManagerBLE.poll();
+            GameControllerEvent joyEvent = gameController.Poll();
+
+            switch (joyEvent)
+            {
+                case GameControllerEvent.B1_Dn: StopAndSendToBoth("C"); break;
+                case GameControllerEvent.B1_Up: break;
+                case GameControllerEvent.B2_Dn: StopAndSendToBoth("D"); break;
+                case GameControllerEvent.B2_Up: break;
+                case GameControllerEvent.B3_Dn: StopAndSendToBoth("E"); break;
+                case GameControllerEvent.B3_Up: break;
+                case GameControllerEvent.B4_Dn: StopAndSendToBoth("B"); break;
+                case GameControllerEvent.B4_Up: break;
+                case GameControllerEvent.L1_Dn: Console.WriteLine("L1_Dn"); break;
+                case GameControllerEvent.L1_Up: Console.WriteLine("L1_Up"); break;
+                case GameControllerEvent.R1_Dn: Console.WriteLine("R1_Dn"); break;
+                case GameControllerEvent.R1_Up: Console.WriteLine("R1_Up"); break;
+                case GameControllerEvent.L2_Dn: Console.WriteLine("L2_Dn"); break;
+                case GameControllerEvent.L2_Up: Console.WriteLine("L2_Up"); break;
+                case GameControllerEvent.R2_Dn: Console.WriteLine("R2_Dn"); break;
+                case GameControllerEvent.R2_Up: Console.WriteLine("R2_Up"); break;
+                case GameControllerEvent.Select_Dn: Console.WriteLine("Select_Dn"); break;
+                case GameControllerEvent.Select_Up: Console.WriteLine("Select_Up"); break;
+                case GameControllerEvent.Start_Dn: StopAndSendToBoth("0"); break;
+                case GameControllerEvent.Start_Up: break;
+                case GameControllerEvent.J1_Dn: Console.WriteLine("J1_Dn"); break;
+                case GameControllerEvent.J1_Up: Console.WriteLine("J1_Up"); break;
+                case GameControllerEvent.J2_Dn: Console.WriteLine("J2_Dn"); break;
+                case GameControllerEvent.J2_Up: Console.WriteLine("J2_Up"); break;
+                case GameControllerEvent.XLeft_Dn: Console.WriteLine("XLeft_Dn"); break;
+                case GameControllerEvent.XLeft_Up: Console.WriteLine("XLeft_Up"); break;
+                case GameControllerEvent.XRight_Dn: Console.WriteLine("XRight_Dn"); break;
+                case GameControllerEvent.XRight_Up: Console.WriteLine("XRight_Up"); break;
+                case GameControllerEvent.YUp_Dn: Console.WriteLine("YUp_Dn"); break;
+                case GameControllerEvent.YUp_Up: Console.WriteLine("YUp_Up"); break;
+                case GameControllerEvent.YDn_Dn: Console.WriteLine("YDn_Dn"); break;
+                case GameControllerEvent.YDn_Up: Console.WriteLine("YDn_Up"); break;
+            }
 
             int slot = 0;
             foreach (KeyValuePair<string,BleDevice> kvp in DeviceManagerBLE.bleDevices)
