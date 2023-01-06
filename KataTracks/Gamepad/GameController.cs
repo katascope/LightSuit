@@ -157,7 +157,7 @@ namespace KataTracks
                 else if (offset.ToString() == "Buttons3") return (state.Value == 0) ? GameControllerEvent.B4_Up : GameControllerEvent.B4_Dn;
                 else if (offset.ToString() == "Buttons4") return (state.Value == 0) ? GameControllerEvent.L1_Up : GameControllerEvent.L1_Dn;
                 else if (offset.ToString() == "Buttons5") return (state.Value == 0) ? GameControllerEvent.R1_Up : GameControllerEvent.R1_Dn;
-                else if (offset.ToString() == "Buttons6") return (state.Value == 0) ? GameControllerEvent.L2_Up : GameControllerEvent.R2_Dn;
+                else if (offset.ToString() == "Buttons6") return (state.Value == 0) ? GameControllerEvent.L2_Up : GameControllerEvent.L2_Dn;
                 else if (offset.ToString() == "Buttons7") return (state.Value == 0) ? GameControllerEvent.R2_Up : GameControllerEvent.R2_Dn;
                 else if (offset.ToString() == "Buttons8") return (state.Value == 0) ? GameControllerEvent.Select_Up : GameControllerEvent.Select_Dn;
                 else if (offset.ToString() == "Buttons9") return (state.Value == 0) ? GameControllerEvent.Start_Up : GameControllerEvent.Start_Dn;
