@@ -224,6 +224,8 @@ namespace KataTracks
         {
             if (joyId == 0 && JoystickToBle1 != "")
                 DeviceManagerBLE.SendMessage(JoystickToBle1, value);
+            if (joyId == 1 && JoystickToBle2 != "")
+                DeviceManagerBLE.SendMessage(JoystickToBle2, value);
         }
         private void ProcessControllerEvent(int joyId, GameControllerEvent joyEvent)
         {
