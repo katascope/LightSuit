@@ -4,6 +4,8 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using SharpDX;
 using SharpDX.DirectInput;
 
@@ -98,7 +100,8 @@ namespace KataTracks
     class GameController
     {
         public GameControllerState gameControllerState = new GameControllerState();
-        private Joystick joystick;
+        private Joystick joystick1;
+        private Joystick joystick2;
 
         public void Initialize()
         {
@@ -106,20 +109,29 @@ namespace KataTracks
             var directInput = new DirectInput();
 
             // Find a Joystick Guid
-            var joystickGuid = Guid.Empty;
+            var joystickGuid1 = Guid.Empty;
+            var joystickGuid2 = Guid.Empty;
 
-            foreach (var deviceInstance in directInput.GetDevices(DeviceType.Gamepad,
-                        DeviceEnumerationFlags.AllDevices))
-                joystickGuid = deviceInstance.InstanceGuid;
+            //foreach (var deviceInstance in directInput.GetDevices(DeviceType.Gamepad,DeviceEnumerationFlags.AllDevices))
 
             // If Gamepad not found, look for a Joystick
-            if (joystickGuid == Guid.Empty)
+            if (joystickGuid1 == Guid.Empty)
                 foreach (var deviceInstance in directInput.GetDevices(DeviceType.Joystick,
                         DeviceEnumerationFlags.AllDevices))
-                    joystickGuid = deviceInstance.InstanceGuid;
+                {
+                    joystickGuid1 = deviceInstance.InstanceGuid;
+                }
+
+            if (joystickGuid2 == Guid.Empty)
+                foreach (var deviceInstance in directInput.GetDevices(DeviceType.Joystick,
+                        DeviceEnumerationFlags.AllDevices))
+                {
+                    if (deviceInstance.InstanceGuid != joystickGuid1)
+                        joystickGuid2 = deviceInstance.InstanceGuid;
+                }
 
             // If Joystick not found, throws an error
-            if (joystickGuid == Guid.Empty)
+            if (joystickGuid1 == Guid.Empty)
             {
                 Console.WriteLine("No joystick/Gamepad found.");
                 Console.ReadKey();
@@ -127,27 +139,28 @@ namespace KataTracks
             }
 
             // Instantiate the joystick
-            joystick = new Joystick(directInput, joystickGuid);
+            joystick1 = new Joystick(directInput, joystickGuid1);
+            joystick2 = new Joystick(directInput, joystickGuid2);
 
-            Console.WriteLine("Found Joystick/Gamepad with GUID: {0}", joystickGuid);
+            Console.WriteLine("Found Joystick/Gamepad with GUID: {0}", joystickGuid1);
+            Console.WriteLine("Found Joystick/Gamepad with GUID: {0}", joystickGuid2);
 
             // Query all suported ForceFeedback effects
-            var allEffects = joystick.GetEffects();
+/*            var allEffects = joystick1.GetEffects();
             foreach (var effectInfo in allEffects)
-                Console.WriteLine("Effect available {0}", effectInfo.Name);
+                Console.WriteLine("Effect available {0}", effectInfo.Name);*/
 
             // Set BufferSize in order to use buffered data.
-            joystick.Properties.BufferSize = 128;
+            joystick1.Properties.BufferSize = 128;
+            joystick2.Properties.BufferSize = 128;
 
             // Acquire the joystick
-            joystick.Acquire();
-
+            joystick1.Acquire();
+            joystick2.Acquire();
         }
-        public GameControllerEvent Poll()
-        {
-            joystick.Poll();
-            var datas = joystick.GetBufferedData();
 
+        public GameControllerEvent ProcessData(JoystickUpdate[] datas)
+        {
             foreach (var state in datas)
             {
                 JoystickOffset offset = state.Offset;
@@ -193,6 +206,24 @@ namespace KataTracks
                 Console.WriteLine(gameControllerState);*/
             }
 
+            return GameControllerEvent.None;
+
+        }
+        public GameControllerEvent Poll(int joy)
+        {
+            JoystickUpdate[] datas;
+            if (joy == 0)
+            {
+                joystick1.Poll();
+                datas = joystick1.GetBufferedData();
+                return ProcessData(datas);
+            }
+            if (joy == 1)
+            {
+                joystick2.Poll();
+                datas = joystick2.GetBufferedData();
+                return ProcessData(datas);
+            }
             return GameControllerEvent.None;
         }
     }

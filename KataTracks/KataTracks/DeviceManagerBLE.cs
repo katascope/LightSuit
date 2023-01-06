@@ -325,6 +325,32 @@ namespace KataTracks
             }
         }
 
+        public static async void SendMessage(string id, string message)
+        {
+            foreach (KeyValuePair<string, BleDevice> kvp in bleDevices)
+            {
+                BleDevice bd = kvp.Value;
+                if (bd.bluetoothDevice != null && bd.bluetoothDevice.Gatt != null)
+                {
+                    try
+                    {
+                        if (bd.serviceCache.Count > 0)
+                        {
+                            kvp.Value.sendQueue.Enqueue(message);
+                        }
+                        else
+                        {
+                            bd.log = " waiting";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error unexpected! Ex[" + ex.Message + "]");
+                    }
+                }
+            }
+        }
+
         public static async void SendMessage(string message)
         {
             foreach (KeyValuePair<string, BleDevice> kvp in bleDevices)

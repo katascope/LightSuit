@@ -23,6 +23,8 @@ namespace KataTracks
     public partial class MainWindow : Window
     {
         static string songName = "Unknown";
+        static string JoystickToBle1 = "";
+        static string JoystickToBle2 = "";
         static string songFilename = "";//..\\..\\..\\TronGame.m4a";
         static string imageFilename = "";//..\\..\\..\\TronGameCroppedCyan.png";
         static string configFilename = "..\\..\\..\\..\\..\\TronGame.TrackConfig";
@@ -113,6 +115,12 @@ namespace KataTracks
                     }
                     if (key == "DeviceId")
                         DeviceManagerBLE.connectionList.Add(value);
+
+                    if (key == "JoystickToBle1")
+                        JoystickToBle1 = value;
+
+                    if (key == "JoystickToBle2")
+                        JoystickToBle2 = value;
                 }
             }
         }
@@ -212,31 +220,35 @@ namespace KataTracks
             }
         }
 
-        private void btTextTimer_Tick(object sender, EventArgs e)
+        private void StopAndSendToJoy(int joyId, string value)
         {
-            GameControllerEvent joyEvent = gameController.Poll();
+            if (joyId == 0 && JoystickToBle1 != "")
+                DeviceManagerBLE.SendMessage(JoystickToBle1, value);
+        }
+        private void ProcessControllerEvent(int joyId, GameControllerEvent joyEvent)
+        {
 
             switch (joyEvent)
             {
-                case GameControllerEvent.B1_Dn: StopAndSendToBoth("C"); break;
+                case GameControllerEvent.B1_Dn: StopAndSendToJoy(joyId,"C"); break;
                 case GameControllerEvent.B1_Up: break;
-                case GameControllerEvent.B2_Dn: StopAndSendToBoth("D"); break;
+                case GameControllerEvent.B2_Dn: StopAndSendToJoy(joyId, "D"); break;
                 case GameControllerEvent.B2_Up: break;
-                case GameControllerEvent.B3_Dn: StopAndSendToBoth("B"); break;
+                case GameControllerEvent.B3_Dn: StopAndSendToJoy(joyId, "B"); break;
                 case GameControllerEvent.B3_Up: break;
-                case GameControllerEvent.B4_Dn: StopAndSendToBoth("E"); break;
+                case GameControllerEvent.B4_Dn: StopAndSendToJoy(joyId, "E"); break;
                 case GameControllerEvent.B4_Up: break;
-                case GameControllerEvent.L1_Dn: StopAndSendToBoth("O"); break;
+                case GameControllerEvent.L1_Dn: StopAndSendToJoy(joyId, "O"); break;
                 case GameControllerEvent.L1_Up: break;
-                case GameControllerEvent.R1_Dn: StopAndSendToBoth("Q"); break;
+                case GameControllerEvent.R1_Dn: StopAndSendToJoy(joyId, "Q"); break;
                 case GameControllerEvent.R1_Up: break;
-                case GameControllerEvent.L2_Dn: StopAndSendToBoth("P"); break;
+                case GameControllerEvent.L2_Dn: StopAndSendToJoy(joyId, "P"); break;
                 case GameControllerEvent.L2_Up: break;
-                case GameControllerEvent.R2_Dn: StopAndSendToBoth("R"); break;
+                case GameControllerEvent.R2_Dn: StopAndSendToJoy(joyId, "R"); break;
                 case GameControllerEvent.R2_Up: break;
                 case GameControllerEvent.Select_Dn: Console.WriteLine("Select_Dn"); break;
                 case GameControllerEvent.Select_Up: Console.WriteLine("Select_Up"); break;
-                case GameControllerEvent.Start_Dn: StopAndSendToBoth("0"); break;
+                case GameControllerEvent.Start_Dn: StopAndSendToJoy(joyId, "0"); break;
                 case GameControllerEvent.Start_Up: break;
                 case GameControllerEvent.J1_Dn: Console.WriteLine("J1_Dn"); break;
                 case GameControllerEvent.J1_Up: Console.WriteLine("J1_Up"); break;
@@ -251,6 +263,15 @@ namespace KataTracks
                 case GameControllerEvent.YDn_Dn: Console.WriteLine("YDn_Dn"); break;
                 case GameControllerEvent.YDn_Up: Console.WriteLine("YDn_Up"); break;
             }
+        }
+
+        private void btTextTimer_Tick(object sender, EventArgs e)
+        {
+            GameControllerEvent joyEvent1 = gameController.Poll(0);
+            GameControllerEvent joyEvent2 = gameController.Poll(1);
+
+            ProcessControllerEvent(0,joyEvent1);
+            ProcessControllerEvent(1,joyEvent2);
 
             int slot = 0;
             foreach (KeyValuePair<string,BleDevice> kvp in DeviceManagerBLE.bleDevices)

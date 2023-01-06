@@ -1,11 +1,12 @@
 SongName=The Game Has Changed
 SongFile=..\..\..\TronGame.m4a
 ImageFile=g:\github\lightsuit\katatracks\katatracks\TronGameCroppedCyan.png
-DeviceId=7F4BF7B9FCCA #Mree
 DeviceId=A7874E65DBA7 #Pree
+DeviceId=7F4BF7B9FCCA #Mree
+JoystickToBle1=A7874E65DBA7
+JoystickToBle2=7F4BF7B9FCCA
 DeviceId=91CDE3A4B695 #LightSuitAngelA
 DeviceId=B872B08E0D8E #LightSuitAngelB
 DeviceId=F6426025BEE  #LightSuitAngelJ
 DeviceId=2198D30EA040 #LightSuitAngelD
 DeviceId=77C648CCE101 #LightSuitAngel?
-
