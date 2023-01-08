@@ -2,9 +2,9 @@
 import sys, getopt
 from playsound import playsound
 
-def main(argv):
-    print("Test")
+print("Playing" + sys.argv[1])
 
-    playsound(sys.argv[1]);
+playsound(sys.argv[1])
+
 
 

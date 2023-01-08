@@ -378,11 +378,14 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   {  
     Serial.println(F("POSES"));//Time to call and get our poses
     SetMindState(MIND_STATE_READY);
-    Serial.println("Snd Nature");
+    delay(250);
+    Serial.println("SNature");
   }
   else if (data.equals(F("center")))
   {
     ServoPose(POSE_CENTER);
+    delay(250);
+    Serial.println("SNerv");
   }
   else if (data.equals(F("go")))
   {
@@ -395,10 +398,10 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("sleep")))
   {
-    Serial.println(F("Sleeping.."));
     ComplexUserCommandInput(fxc,"dn");
     SetMindState(MIND_STATE_ASLEEP);
-    Serial.println("Snd Purr");
+    delay(250);
+    Serial.println("SPurr");
   }
   else if (data.equals(F("auto")))
   {
@@ -432,17 +435,18 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.println(F(" (br+h/e/w) back right hip/elbow/wrist"));
   }
   else if (data.equals(F("dn"))) { 
-    Serial.println("dn");
     ServoPoseLerpTo(POSE_PAWSUP, 4); 
     ServoPoseLerpTo(POSE_HIPS_ORIGIN, 3); 
     ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
-    Serial.println(F("Snd Purr"));//Time to call and get our poses
+    Serial.println("SPurr");//Time to call and get our poses
+    delay(250);
   } 
   else if (data.equals(F("up"))) { 
     ServoPoseLerpTo(POSE_UP_BACK, 1); 
     delay(250);
     ServoPoseLerpTo(POSE_UP, 1); 
-    Serial.println("Snd Thunder");
+    Serial.println("SThunder");
+    delay(250);
   }
   else if (data.equals(F("butt"))) { 
     ServoPoseLerpTo(POSE_UP_FRONT,4); 
@@ -450,7 +454,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     ServoPoseLerpTo(POSE_UP_BACK,4); 
     delay(250);
     ServoPoseLerpTo(POSE_FRONT_PAWSDN,2);
-    Serial.println("Snd Howl");
+    Serial.println("SHowl");
   }
   else if (data.equals(F("wave"))) { 
     ServoPoseLerpTo(POSE_UP_FRONT,4); 
@@ -458,8 +462,8 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     ServoPoseLerpTo(POSE_UP_BACK,4); 
     delay(250);
     ServoPoseLerpTo(POSE_FRONT_PAWSDN,2);
+    Serial.println("SMeow");
     delay(250);
-    Serial.println("Snd Meow");
     ServoPoseLerpTo(POSE_FRONT_RIGHT_PAWUP,2);
     delay(250);
     ServoPoseLerpTo(POSE_FRONT_RIGHT_PAWDN,2);
@@ -474,7 +478,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }  
   else if (data.equals(F("grr"))) { 
     ServoPoseLerpTo(POSE_UP_BACK, 1); 
-    Serial.println("Snd Hiss");
+    Serial.println("SHiss");
     delay(250);
     ServoPoseLerpTo(POSE_AGGRESSIVE, 1); 
     }
