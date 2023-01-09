@@ -39,8 +39,8 @@ struct ServoStatus
 #define ORIGIN_WRIST 90
 #define ORIGIN_EARS  90
 #define ORIGIN_TAIL  90
-#define RANGE_HIP    10
-#define RANGE_ELBOW  45
+#define RANGE_HIP    35
+#define RANGE_ELBOW  55
 #define RANGE_WRIST  45
 #define RANGE_EARS   10
 #define RANGE_TAIL   10

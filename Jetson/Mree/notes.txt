@@ -1,3 +1,6 @@
+FoxenTasks:
+ 
+
 Pree & Mree Features:
  3d-Printed Spot Nano chassis
  4S 16v Lipo
@@ -16,7 +19,10 @@ Pree & Mree Features:
   LED Strip
   Speakers
 
-Foxen minds
+
+Pree's primary drive is to read the room?
+ Secondary dri
+
  Traits - modules
  Homeostastis
  Sensors
@@ -145,8 +151,6 @@ Pree's primary loop is Feeling, Intuiting
   Strongest urge wins
 
 
-
-
  If pree is low, pree looks for things of interest
   with people or animals, do engagement
  more than 6 people scares pree?
@@ -175,30 +179,6 @@ Pree's primary loop is Feeling, Intuiting
    Green: Trusting
 
 
-
- If has focus
-  Dofocusy
- Else
-  Read the room, find new focus
- Dance
- Obey direct commands (no voice)
- https://github.com/dusty-nv/jetson-voice
-
-Sensors
- Camera
- Ultrasonics
- Gyro
- Power
- Microphone - speech recognition
-Effectors
- Motor rotation
- tail set
- wifi, bluetooth
- led strips
-
-
-Pree's primary drive is to read the room
- Secondary dri
 
 Networked together.. or light signals?
 Light Signal Language
