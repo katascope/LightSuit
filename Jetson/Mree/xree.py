@@ -62,23 +62,29 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
   tick = tick + 1;
 
   while (ser.in_waiting):
-    line = str(ser.readline()).lstrip('b').rstrip('\'').lstrip('\'')
-    line = line.rstrip('\\n').rstrip('\\r')
+    line = str(ser.readline())
+    line = line.lstrip('B').lstrip('b').rstrip('\'').lstrip('\'')
+    line = line.rstrip('\\n').rstrip('\\r').lstrip('b')
+    line = line.lstrip('B')
     print("SERIAL:"+line)
     if "POSES" in line:
       pdb.write(line)
-    if "Snd Hiss" in line:
-      playsound("Sounds/hiss.mp3",0)
-    if "Snd Purr" in line:
+    if "SHiss" in line:
+      playsound("DogSounds/AggressiveBark_1.mp3",0)
+    if "SPu" in line:
       playsound("Sounds/purr.mp3",0)
-    if "Snd Thunder" in line:
+    if "Thun" in line:
       playsound("Sounds/thunder.mp3",0)
-    if "Snd Howl" in line:
-      playsound("Sounds/howl.mp3",0)
-    if "Snd Meow" in line:
+    if "Bark" in line:
+      playsound("DogSounds/PlayingBark_1.mp3",0)
+    if "Nerv" in line:
+      playsound("DogSounds/NervousPanting_Pacing.mp3",0)
+    if "SHowl" in line:
+      playsound("DogSounds/BarkSnarl_1.mp3",0)
+    if "SMeow" in line:
       playsound("Sounds/meow.mp3",0)
-    if "Snd Growl" in line:
-      playsound("Sounds/growl.mp3",0)
+    if "SGrowl" in line:
+      playsound("DogSounds/WarningGrowl_1.mp3",0)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
   time.sleep(1.0/4)
