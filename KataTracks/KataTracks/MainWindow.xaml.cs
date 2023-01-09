@@ -232,7 +232,7 @@ namespace KataTracks
 
             switch (joyEvent)
             {
-                case GameControllerEvent.B1_Dn: StopAndSendToJoy(joyId,"C"); break;
+                case GameControllerEvent.B1_Dn: StopAndSendToJoy(joyId, "C"); break;
                 case GameControllerEvent.B1_Up: break;
                 case GameControllerEvent.B2_Dn: StopAndSendToJoy(joyId, "D"); break;
                 case GameControllerEvent.B2_Up: break;
@@ -242,24 +242,24 @@ namespace KataTracks
                 case GameControllerEvent.B4_Up: break;
                 case GameControllerEvent.L1_Dn: StopAndSendToJoy(joyId, "O"); break;
                 case GameControllerEvent.L1_Up: break;
-                case GameControllerEvent.R1_Dn: StopAndSendToJoy(joyId, "Q"); break;
-                case GameControllerEvent.R1_Up: break;
                 case GameControllerEvent.L2_Dn: StopAndSendToJoy(joyId, "P"); break;
                 case GameControllerEvent.L2_Up: break;
+                case GameControllerEvent.R1_Dn: StopAndSendToJoy(joyId, "Q"); break;
+                case GameControllerEvent.R1_Up: break;
                 case GameControllerEvent.R2_Dn: StopAndSendToJoy(joyId, "R"); break;
                 case GameControllerEvent.R2_Up: break;
-                case GameControllerEvent.Select_Dn: Console.WriteLine("Select_Dn"); break;
-                case GameControllerEvent.Select_Up: Console.WriteLine("Select_Up"); break;
-                case GameControllerEvent.Start_Dn: StopAndSendToJoy(joyId, "0"); break;
+                case GameControllerEvent.Select_Dn: StopTrack(true);break;
+                case GameControllerEvent.Select_Up: break;
+                case GameControllerEvent.Start_Dn: PlayTrack(0);break;
                 case GameControllerEvent.Start_Up: break;
                 case GameControllerEvent.J1_Dn: Console.WriteLine("J1_Dn"); break;
                 case GameControllerEvent.J1_Up: Console.WriteLine("J1_Up"); break;
                 case GameControllerEvent.J2_Dn: Console.WriteLine("J2_Dn"); break;
                 case GameControllerEvent.J2_Up: Console.WriteLine("J2_Up"); break;
-                case GameControllerEvent.XLeft_Dn: Console.WriteLine("XLeft_Dn"); break;
-                case GameControllerEvent.XLeft_Up: Console.WriteLine("XLeft_Up"); break;
-                case GameControllerEvent.XRight_Dn: Console.WriteLine("XRight_Dn"); break;
-                case GameControllerEvent.XRight_Up: Console.WriteLine("XRight_Up"); break;
+                case GameControllerEvent.XLeft_Dn: StopAndSendToJoy(joyId, "M"); break;
+                case GameControllerEvent.XLeft_Up: break;
+                case GameControllerEvent.XRight_Dn: StopAndSendToJoy(joyId, "N"); break;
+                case GameControllerEvent.XRight_Up: break;
                 case GameControllerEvent.YUp_Dn: Console.WriteLine("YUp_Dn"); break;
                 case GameControllerEvent.YUp_Up: Console.WriteLine("YUp_Up"); break;
                 case GameControllerEvent.YDn_Dn: Console.WriteLine("YDn_Dn"); break;
