@@ -410,14 +410,14 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   {
     SetMindState(MIND_STATE_AUTONOMOUS);
   }
-  else if (data.equals(F("ppl0"))) { SetPeopleCount(0); }
-  else if (data.equals(F("ppl1"))) { SetPeopleCount(1); }
-  else if (data.equals(F("ppl2"))) { SetPeopleCount(2); }
-  else if (data.equals(F("ppl3"))) { SetPeopleCount(3); }
-  else if (data.equals(F("ppl4"))) { SetPeopleCount(4); }
-  else if (data.equals(F("ppl5"))) { SetPeopleCount(5); }
-  else if (data.equals(F("ppl6"))) { SetPeopleCount(6); }
-  else if (data.equals(F("ppl7"))) { SetPeopleCount(7); }
+  else if (data.indexOf("l0") != -1) { SetPeopleCount(0); }
+  else if (data.indexOf("l1") != -1) { SetPeopleCount(1); }
+  else if (data.indexOf("l2") != -1) { SetPeopleCount(2); }
+  else if (data.indexOf("l3") != -1) { SetPeopleCount(3); }
+  else if (data.indexOf("l4") != -1) { SetPeopleCount(4); }
+  else if (data.indexOf("l5") != -1) { SetPeopleCount(5); }
+  else if (data.indexOf("l6") != -1) { SetPeopleCount(6); }
+  else if (data.indexOf("l7") != -1) { SetPeopleCount(7); }
   else if (data.equals(F("??")))
   {
     Serial.println(F("Add u/d"));
