@@ -17,7 +17,7 @@ import subprocess
 import oled as oled
 
 from playsound import playsound
-playsound("Sounds/StartupStart.mp3",0);
+playsound("RobofoxSounds/StartUpEnd.mp3",0);
 
 from posedb import PoseDB
 
@@ -55,7 +55,7 @@ lastPpl = 0;
 
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
  ser.write(str.encode('waking\r\n'))
- playsound("Sounds/StartupEnd.mp3",0);
+ playsound("RobofoxSounds/Purr.mp3",0);
  img = input.Capture()
  ser.write(str.encode('ready\r\n'))
 #playsound("Sounds/growl.mp3");
@@ -79,25 +79,25 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
     if "Bark" in line:
       playsound("RobofoxSounds/Alert.mp3",0)
     if "Nerv" in line:
-      playsound("RobofoxSounds/NervousPanting_Pacing.mp3",0)
+      playsound("RobofoxSounds/Confused_Error.mp3",0)
     if "SHowl" in line:
       playsound("RobofoxSounds/Scream.mp3",0)
     if "SMeow" in line:
       playsound("RobofoxSounds/RoboMeow.mp3",0)
     if "SGrowl" in line:
       playsound("RobofoxSounds/Bored.mp3",0)
-    if "S*Hu" in line:
-      playsound("RobofoxSounds/Expression_1.mp3",0)
-    if "S*Hd" in line:
-      playsound("RobofoxSounds/Expression_2.mp3",0)
-    if "S*Wu" in line:
-      playsound("RobofoxSounds/Expression_3.mp3",0)
-    if "S*Wd" in line:
-      playsound("RobofoxSounds/Expression_4.mp3",0)
-    if "S*Eu" in line:
-      playsound("RobofoxSounds/Expression_5.mp3",0)
-    if "S*Ed" in line:
-      playsound("RobofoxSounds/Expression_6.mp3",0)
+#   if "S*Hu" in line:
+#     playsound("RobofoxSounds/Expression_1.mp3",0)
+#   if "S*Hd" in line:
+#     playsound("RobofoxSounds/Expression_2.mp3",0)
+#   if "S*Wu" in line:
+#     playsound("RobofoxSounds/Expression_3.mp3",0)
+#   if "S*Wd" in line:
+#     playsound("RobofoxSounds/Expression_4.mp3",0)
+#   if "S*Eu" in line:
+#     playsound("RobofoxSounds/Expression_5.mp3",0)
+#   if "S*Ed" in line:
+#     playsound("RobofoxSounds/Expression_6.mp3",0)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
   time.sleep(1.0/4)
