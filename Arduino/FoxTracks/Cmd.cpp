@@ -279,7 +279,10 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case 'U': ComplexUserCommandInput(fxc, "waking"); break;    
     case 'V': ComplexUserCommandInput(fxc, "ready"); break;
     case 'W': ComplexUserCommandInput(fxc, "sleep"); break;
-    
+    case 'X': break;
+    case 'Y': break;
+    case 'Z': ComplexUserCommandInput(fxc, "select"); break;
+     
     //case 'q': UserCommandExecute(fxc, Cmd_ColorRedBlue);break;
 //    case 'w': UserCommandExecute(fxc, Cmd_ColorCyanMagenta);break;
     case 'q': UserCommandExecute(fxc, Cmd_Strip0);break;
@@ -489,13 +492,25 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   else if (data.equals(F("pd"))) { ServoPose(POSE_PAWSDN); }
   else if (data.equals(F("p0"))) { ServoPose(POSE_ZERO); }
   else if (data.equals(F("p9"))) { ServoPose(POSE_MAX); }
+
+  else if (data.equals(F("select")))
+  { 
+    fxc.select++;
+    if (fxc.select > 4)
+    {
+      fxc.select = 0;
+      InstantEvent(fxc, fx_strip_all,     FxPaletteUpdateType::Once);
+    }
+    Serial.print("Sel");
+    Serial.println(fxc.select);
+ }
   
-  else if (data.equals(F("*hu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); ServoInc(SERVO_RIGHT_BACK_HIP); ServoInc(SERVO_RIGHT_FRONT_HIP);}
-  else if (data.equals(F("*hd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); ServoDec(SERVO_RIGHT_BACK_HIP); ServoDec(SERVO_RIGHT_FRONT_HIP);}
-  else if (data.equals(F("*eu"))) { ServoInc(SERVO_LEFT_BACK_ELBOW); ServoInc(SERVO_LEFT_FRONT_ELBOW); ServoInc(SERVO_RIGHT_BACK_ELBOW); ServoInc(SERVO_RIGHT_FRONT_ELBOW);}
-  else if (data.equals(F("*ed"))) { ServoDec(SERVO_LEFT_BACK_ELBOW); ServoDec(SERVO_LEFT_FRONT_ELBOW); ServoDec(SERVO_RIGHT_BACK_ELBOW); ServoDec(SERVO_RIGHT_FRONT_ELBOW);}
-  else if (data.equals(F("*wu"))) { ServoInc(SERVO_LEFT_BACK_WRIST); ServoInc(SERVO_LEFT_FRONT_WRIST); ServoInc(SERVO_RIGHT_BACK_WRIST); ServoInc(SERVO_RIGHT_FRONT_WRIST);}
-  else if (data.equals(F("*wd"))) { ServoDec(SERVO_LEFT_BACK_WRIST); ServoDec(SERVO_LEFT_FRONT_WRIST); ServoDec(SERVO_RIGHT_BACK_WRIST); ServoDec(SERVO_RIGHT_FRONT_WRIST);}
+  else if (data.equals(F("*hu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); ServoInc(SERVO_RIGHT_BACK_HIP); ServoInc(SERVO_RIGHT_FRONT_HIP); delay(250); Serial.println("S*Hu"); }
+  else if (data.equals(F("*hd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); ServoDec(SERVO_RIGHT_BACK_HIP); ServoDec(SERVO_RIGHT_FRONT_HIP); delay(250); Serial.println("S*Hd"); }
+  else if (data.equals(F("*eu"))) { ServoInc(SERVO_LEFT_BACK_ELBOW); ServoInc(SERVO_LEFT_FRONT_ELBOW); ServoInc(SERVO_RIGHT_BACK_ELBOW); ServoInc(SERVO_RIGHT_FRONT_ELBOW); delay(250); Serial.println("S*Eu"); }
+  else if (data.equals(F("*ed"))) { ServoDec(SERVO_LEFT_BACK_ELBOW); ServoDec(SERVO_LEFT_FRONT_ELBOW); ServoDec(SERVO_RIGHT_BACK_ELBOW); ServoDec(SERVO_RIGHT_FRONT_ELBOW); delay(250); Serial.println("S*Ed"); }
+  else if (data.equals(F("*wu"))) { ServoInc(SERVO_LEFT_BACK_WRIST); ServoInc(SERVO_LEFT_FRONT_WRIST); ServoInc(SERVO_RIGHT_BACK_WRIST); ServoInc(SERVO_RIGHT_FRONT_WRIST); delay(250); Serial.println("S*Wu"); }
+  else if (data.equals(F("*wd"))) { ServoDec(SERVO_LEFT_BACK_WRIST); ServoDec(SERVO_LEFT_FRONT_WRIST); ServoDec(SERVO_RIGHT_BACK_WRIST); ServoDec(SERVO_RIGHT_FRONT_WRIST); delay(250); Serial.println("S*Wd"); }
   
   else if (data.equals(F("lhu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); }
   else if (data.equals(F("lhd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); }

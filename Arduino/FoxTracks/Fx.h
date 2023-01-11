@@ -120,6 +120,7 @@ public:
   unsigned long lastTimeLedUpdate = 0;  
   unsigned char stripMask = 255;
   FxStripController *strip[NUM_STRIPS];
+  int select = 0;
   public:
   bool IsAnimating()
   {

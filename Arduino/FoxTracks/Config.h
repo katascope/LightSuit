@@ -32,7 +32,7 @@ static const char *DeviceName = "Pree";
 
 #define STARTUP_STATE       FxState_Default    //FxState_Default;//FxState_TestPattern;//FxState_PlayingTrack;//
 #define UPDATE_DELAY        30 //100 //Milliseconds to delay between palette updates, set to 100 for iot, 30 for ble
-#define NUM_STRIPS          1
+#define NUM_STRIPS          2
 #define BRIGHTNESS          50  //Default brightness
 #define BRIGHTNESS_LIMIT    100 //Maximum allowed brightness, //90 possible but runs too hot
 #define ENABLE_LCD          0 //OLED 1306 driver
@@ -78,8 +78,8 @@ static const char *DeviceName = "Pree";
 #endif
 
 #if FOXBOT
-#define NUM_LEDS_0          46
-#define NUM_LEDS_1          46
+#define NUM_LEDS_0          32
+#define NUM_LEDS_1          32
 #define NUM_LEDS_2          36
 #define NUM_LEDS_3          36
 #define NUM_LEDS_4          38 //arms

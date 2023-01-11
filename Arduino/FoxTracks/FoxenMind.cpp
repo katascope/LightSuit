@@ -94,7 +94,10 @@ void PrintMindState()
 
 void PollMindState(struct FxController &fxController)
 {
-  if (fxController.fxState == FxState_PlayingTrack)
+  if (fxController.select)
+  {    
+  }
+  else if (fxController.fxState == FxState_PlayingTrack)
   {
     //do normal things
   }  
@@ -128,8 +131,15 @@ void PollMindState(struct FxController &fxController)
   }
 
   State_Poll(fxController);
-  
   bool needsUpdate = false;
+
+  if (fxController.select)
+  {
+    FxEventProcess(fxController, fx_status_section_0 + fxController.select);
+    needsUpdate = true;
+  }
+  else FxEventProcess(fxController, fx_strip_all);
+  
   for (int strip=0;strip<NUM_STRIPS;strip++)
   {
     if (fxController.strip[strip]->fxPaletteUpdateType == FxPaletteUpdateType::Once

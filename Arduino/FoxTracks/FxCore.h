@@ -286,6 +286,12 @@ enum FxEvent
   fx_particles_color_orange,
   fx_particles_color_half,
   fx_particles_color_lowhalf,    
+
+  fx_status_section_0,
+  fx_status_section_1,
+  fx_status_section_2,
+  fx_status_section_3,
+  fx_status_section_4,
   
   fx_strip_all,  //Target all strips
   fx_strip_none, //Target no strips, why?

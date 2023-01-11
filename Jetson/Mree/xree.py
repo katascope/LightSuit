@@ -17,6 +17,7 @@ import subprocess
 import oled as oled
 
 from playsound import playsound
+playsound("Sounds/StartupStart.mp3",0);
 
 from posedb import PoseDB
 
@@ -24,7 +25,7 @@ tick = 0
 pdb = PoseDB("poses.txt")
 
 # parse the command line
-parser = argparse.ArgumentParser(description="Locate objects in a live camera stream using an object detection DNN.", 
+parser = argparse.ArgumentParser(description="Locate objects in a live camera stream using an object detection DNN.",
                                  formatter_class=argparse.RawTextHelpFormatter, epilog=jetson.inference.detectNet.Usage() +
                                  jetson.utils.videoSource.Usage() + jetson.utils.videoOutput.Usage() + jetson.utils.logUsage())
 
@@ -32,7 +33,7 @@ parser.add_argument("input_URI", type=str, default="", nargs='?', help="URI of t
 parser.add_argument("output_URI", type=str, default="", nargs='?', help="URI of the output stream")
 parser.add_argument("--network", type=str, default="ssd-mobilenet-v2", help="pre-trained model to load (see below for options)")
 parser.add_argument("--overlay", type=str, default="box,labels,conf", help="detection overlay flags (e.g. --overlay=box,labels,conf)\nvalid combinations are:  'box', 'labels', 'conf', 'none'")
-parser.add_argument("--threshold", type=float, default=0.5, help="minimum detection threshold to use") 
+parser.add_argument("--threshold", type=float, default=0.5, help="minimum detection threshold to use")
 
 is_headless = ["--headless"] if sys.argv[0].find('console.py') != -1 else [""]
 
@@ -54,7 +55,7 @@ lastPpl = 0;
 
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
  ser.write(str.encode('waking\r\n'))
- playsound("Sounds/growl.mp3",0);
+ playsound("Sounds/StartupEnd.mp3",0);
  img = input.Capture()
  ser.write(str.encode('ready\r\n'))
 #playsound("Sounds/growl.mp3");
@@ -70,21 +71,33 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
     if "POSES" in line:
       pdb.write(line)
     if "SHiss" in line:
-      playsound("DogSounds/AggressiveBark_1.mp3",0)
+      playsound("RobofoxSounds/Gasp.mp3",0)
     if "SPu" in line:
-      playsound("Sounds/purr.mp3",0)
+      playsound("RobofoxSounds/Purr.mp3",0)
     if "Thun" in line:
-      playsound("Sounds/thunder.mp3",0)
+      playsound("RobofoxSounds/Mumble.mp3",0)
     if "Bark" in line:
-      playsound("DogSounds/PlayingBark_1.mp3",0)
+      playsound("RobofoxSounds/Alert.mp3",0)
     if "Nerv" in line:
-      playsound("DogSounds/NervousPanting_Pacing.mp3",0)
+      playsound("RobofoxSounds/NervousPanting_Pacing.mp3",0)
     if "SHowl" in line:
-      playsound("DogSounds/BarkSnarl_1.mp3",0)
+      playsound("RobofoxSounds/Scream.mp3",0)
     if "SMeow" in line:
-      playsound("Sounds/meow.mp3",0)
+      playsound("RobofoxSounds/RoboMeow.mp3",0)
     if "SGrowl" in line:
-      playsound("DogSounds/WarningGrowl_1.mp3",0)
+      playsound("RobofoxSounds/Bored.mp3",0)
+    if "S*Hu" in line:
+      playsound("RobofoxSounds/Expression_1.mp3",0)
+    if "S*Hd" in line:
+      playsound("RobofoxSounds/Expression_2.mp3",0)
+    if "S*Wu" in line:
+      playsound("RobofoxSounds/Expression_3.mp3",0)
+    if "S*Wd" in line:
+      playsound("RobofoxSounds/Expression_4.mp3",0)
+    if "S*Eu" in line:
+      playsound("RobofoxSounds/Expression_5.mp3",0)
+    if "S*Ed" in line:
+      playsound("RobofoxSounds/Expression_6.mp3",0)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
   time.sleep(1.0/4)

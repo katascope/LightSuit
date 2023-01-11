@@ -561,7 +561,46 @@ void FxEventProcess(FxController &fxc,int event)
     case fx_particles_color_orange:  fxc.SetParticlesColor(CRGB_ORANGE); break;
     case fx_particles_color_half:    fxc.SetParticlesColor(CRGB_HALF); break;
     case fx_particles_color_lowhalf: fxc.SetParticlesColor(CRGB_LOWHALF); break;
-    
+
+
+    case fx_status_section_1:       
+    fxc.select = 1;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+    case fx_status_section_2:       
+    fxc.select = 2;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+          break;
+
+    case fx_status_section_3:
+    fxc.select = 3;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc, WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+    case fx_status_section_4:
+    fxc.select = 4;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc, WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+
  }
 }
 
