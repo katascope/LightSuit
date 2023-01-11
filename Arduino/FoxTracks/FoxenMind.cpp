@@ -92,6 +92,11 @@ void PrintMindState()
 #define ColorReady Cmd_ColorCyanMagenta
 #endif
 
+#define ColorAuto_0 Cmd_ColorPulseRed
+#define ColorAuto_1 Cmd_ColorPulseYellow
+#define ColorAuto_2 Cmd_ColorPulseGreen
+#define ColorAuto_N Cmd_ColorRainbow
+
 void PollMindState(struct FxController &fxController)
 {
   if (fxController.select)
@@ -124,6 +129,18 @@ void PollMindState(struct FxController &fxController)
     else if (pplCount == 2) UserCommandExecute(fxController, Cmd_Speed3);    
     else UserCommandExecute(fxController, Cmd_Speed4);
     return;
+  }
+  else if (foxenMindState == MIND_STATE_AUTONOMOUS)
+  {
+    switch (GetPeopleCount())
+    {
+      case 0:  UserCommandExecute(fxController, ColorAuto_0); break;
+      case 1:  UserCommandExecute(fxController, ColorAuto_1); break;
+      case 2:  UserCommandExecute(fxController, ColorAuto_2); break;
+      default: UserCommandExecute(fxController, ColorAuto_N); break;
+    }
+    UserCommandExecute(fxController, Cmd_SpeedPos);
+    UserCommandExecute(fxController, Cmd_Speed1);  
   }
   else
   {
