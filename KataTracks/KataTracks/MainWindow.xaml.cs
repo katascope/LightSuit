@@ -248,9 +248,9 @@ namespace KataTracks
                 case GameControllerEvent.R1_Up: break;
                 case GameControllerEvent.R2_Dn: StopAndSendToJoy(joyId, "R"); break;
                 case GameControllerEvent.R2_Up: break;
-                case GameControllerEvent.Select_Dn: StopTrack(true);break;
+                case GameControllerEvent.Select_Dn: StopAndSendToJoy(joyId, "Z"); break;
                 case GameControllerEvent.Select_Up: break;
-                case GameControllerEvent.Start_Dn: PlayTrack(0);break;
+                case GameControllerEvent.Start_Dn: //PlayTrack(0);break;
                 case GameControllerEvent.Start_Up: break;
                 case GameControllerEvent.J1_Dn: Console.WriteLine("J1_Dn"); break;
                 case GameControllerEvent.J1_Up: Console.WriteLine("J1_Up"); break;
