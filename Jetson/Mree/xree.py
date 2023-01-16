@@ -131,8 +131,11 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
   print("People:"+str(numPeople))
   if (numPeople != lastPpl):
    lastPpl = numPeople
-   ser.write( str.encode("ppl"+str(numPeople)) )
-
+   s="l"+str(numPeople)
+   ser.write( str.encode(s) )
+   time.sleep(0.5)
+   ser.write( str.encode(s) )
+   print("sending " + s)
   # render the image
   output.Render(img)
 
