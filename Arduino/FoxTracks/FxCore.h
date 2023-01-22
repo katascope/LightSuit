@@ -292,6 +292,17 @@ enum FxEvent
   fx_status_section_2,
   fx_status_section_3,
   fx_status_section_4,
+  fx_status_section_5,
+  fx_status_section_6,
+  fx_status_section_7,
+  fx_status_section_8,
+  fx_status_section_9,
+  fx_status_section_10,
+  fx_status_section_11,
+  fx_status_section_12,
+  fx_status_section_13,
+  fx_status_section_14,
+  fx_status_section_15,
   
   fx_strip_all,  //Target all strips
   fx_strip_none, //Target no strips, why?

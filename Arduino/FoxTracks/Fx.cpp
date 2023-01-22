@@ -283,6 +283,36 @@ void SetPaletteDirection(FxController &fxc, int c)
   }
 }
 
+void FxSelectLeds(FxController &fxc)
+{
+  Serial.print(F("Select"));
+  Serial.println(fxc.select);
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    unsigned long rgb1 = WEBRGB::Black;
+    unsigned long rgb2 = WEBRGB::Black;
+    unsigned long rgb3 = WEBRGB::Black;
+    unsigned long rgb4 = WEBRGB::Black;
+    if (fxc.select & 1) rgb1 = WEBRGB::Green;
+    if (fxc.select & 2) rgb2 = WEBRGB::Green;
+    if (fxc.select & 4) rgb3 = WEBRGB::Green;
+    if (fxc.select & 8) rgb4 = WEBRGB::Green;
+    
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, 
+      rgb1,rgb1,rgb1,rgb1,
+      rgb2,rgb2,rgb2,rgb2,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc, 
+      rgb3,rgb3,rgb3,rgb3,
+      rgb4,rgb4,rgb4,rgb4,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+    fxc.stripMask = (LEDS_0|LEDS_1);
+}
+
 void FxEventProcess(FxController &fxc,int event)
 {
   bool updatePal = false;
@@ -292,6 +322,14 @@ void FxEventProcess(FxController &fxc,int event)
     fxc.stripMask = (unsigned int)event-(unsigned int)fx_stripmask_0;
     return;
   }
+
+  if (event >= fx_status_section_0 && event <= fx_status_section_15)
+  {
+    fxc.select = (unsigned int)event-(unsigned int)fx_status_section_0;
+    FxSelectLeds(fxc);
+    return;
+  }
+
   
   switch (event)
   {
@@ -601,6 +639,92 @@ void FxEventProcess(FxController &fxc,int event)
       WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
       break;
 
+    case fx_status_section_5:
+    fxc.select = 5;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc, WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+
+    case fx_status_section_6:
+    fxc.select = 6;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, 
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+
+    case fx_status_section_7:
+    fxc.select = 7;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, 
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+
+    case fx_status_section_8:
+    fxc.select = 8;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc, 
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;                  
+
+    case fx_status_section_9:
+    fxc.select = 9;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc, 
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;
+
+    case fx_status_section_10:
+    fxc.select = 10;
+    fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
+    fxc.stripMask = LEDS_0;
+    Create16Color(fxc, 
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,      
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+    fxc.stripMask = LEDS_1;
+    Create16Color(fxc,
+      WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,WEBRGB::Green,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,      
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,
+      WEBRGB::Black,WEBRGB::Black,WEBRGB::Black,WEBRGB::Black);
+      break;      
  }
 }
 

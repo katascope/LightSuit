@@ -242,7 +242,7 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case '}': UserCommandExecute(fxc, Cmd_ServoMax); break;
         
     case ')': UserCommandExecute(fxc, Cmd_PlayFromStart); break;
-    case '*': UserCommandExecute(fxc, Cmd_PlayFrom); break;
+    case '`': UserCommandExecute(fxc, Cmd_PlayFrom); break;
     case '(': UserCommandExecute(fxc, Cmd_PlayStop); break;
     
     case '0': UserCommandExecute(fxc, Cmd_ColorDark); break;
@@ -283,6 +283,16 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case 'Y': break;
     case 'Z': ComplexUserCommandInput(fxc, "select"); break;
      
+    case '!': ComplexUserCommandInput(fxc, "sa1"); break;
+    case '%': ComplexUserCommandInput(fxc, "da1"); break;
+    case '@': ComplexUserCommandInput(fxc, "sa2"); break;
+    case '^': ComplexUserCommandInput(fxc, "da2"); break;
+    case '#': ComplexUserCommandInput(fxc, "sa3"); break;
+    case '&': ComplexUserCommandInput(fxc, "da3"); break;
+    case '$': ComplexUserCommandInput(fxc, "sa4"); break;
+    case '*': ComplexUserCommandInput(fxc, "da4"); break;
+
+    
     //case 'q': UserCommandExecute(fxc, Cmd_ColorRedBlue);break;
 //    case 'w': UserCommandExecute(fxc, Cmd_ColorCyanMagenta);break;
     case 'q': UserCommandExecute(fxc, Cmd_Strip0);break;
@@ -493,24 +503,76 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   else if (data.equals(F("p0"))) { ServoPose(POSE_ZERO); }
   else if (data.equals(F("p9"))) { ServoPose(POSE_MAX); }
 
-  else if (data.equals(F("select")))
+ else if (data.equals(F("sa1"))) { fxc.select |= 1; }
+ else if (data.equals(F("da1"))) { fxc.select &= ~1; }
+ else if (data.equals(F("sa2"))) { fxc.select |= 2; }
+ else if (data.equals(F("da2"))) { fxc.select &= ~2; }
+ else if (data.equals(F("sa3"))) { fxc.select |= 4; }
+ else if (data.equals(F("da3"))) { fxc.select &= ~4; }
+ else if (data.equals(F("sa4"))) { fxc.select |= 8; }
+ else if (data.equals(F("da4"))) { fxc.select &= ~8; }
+
+ 
+ /* else if (data.equals(F("select")))
   { 
     fxc.select++;
-    if (fxc.select > 4)
+    if (fxc.select > 10)
     {
       fxc.select = 0;
       InstantEvent(fxc, fx_strip_all,     FxPaletteUpdateType::Once);
     }
     Serial.print("Sel");
     Serial.println(fxc.select);
- }
+ }*/
   
-  else if (data.equals(F("*hu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); ServoInc(SERVO_RIGHT_BACK_HIP); ServoInc(SERVO_RIGHT_FRONT_HIP); delay(250); Serial.println("S*Hu"); }
-  else if (data.equals(F("*hd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); ServoDec(SERVO_RIGHT_BACK_HIP); ServoDec(SERVO_RIGHT_FRONT_HIP); delay(250); Serial.println("S*Hd"); }
-  else if (data.equals(F("*eu"))) { ServoInc(SERVO_LEFT_BACK_ELBOW); ServoInc(SERVO_LEFT_FRONT_ELBOW); ServoInc(SERVO_RIGHT_BACK_ELBOW); ServoInc(SERVO_RIGHT_FRONT_ELBOW); delay(250); Serial.println("S*Eu"); }
-  else if (data.equals(F("*ed"))) { ServoDec(SERVO_LEFT_BACK_ELBOW); ServoDec(SERVO_LEFT_FRONT_ELBOW); ServoDec(SERVO_RIGHT_BACK_ELBOW); ServoDec(SERVO_RIGHT_FRONT_ELBOW); delay(250); Serial.println("S*Ed"); }
-  else if (data.equals(F("*wu"))) { ServoInc(SERVO_LEFT_BACK_WRIST); ServoInc(SERVO_LEFT_FRONT_WRIST); ServoInc(SERVO_RIGHT_BACK_WRIST); ServoInc(SERVO_RIGHT_FRONT_WRIST); delay(250); Serial.println("S*Wu"); }
-  else if (data.equals(F("*wd"))) { ServoDec(SERVO_LEFT_BACK_WRIST); ServoDec(SERVO_LEFT_FRONT_WRIST); ServoDec(SERVO_RIGHT_BACK_WRIST); ServoDec(SERVO_RIGHT_FRONT_WRIST); delay(250); Serial.println("S*Wd"); }
+  else if (data.equals(F("*hu"))) { 
+    int bits = fxc.select;
+    if (bits&SERVOS_LEFT_BACK) ServoInc(SERVO_LEFT_BACK_HIP); 
+    if (bits&SERVOS_LEFT_FRONT) ServoInc(SERVO_LEFT_FRONT_HIP); 
+    if (bits&SERVOS_RIGHT_BACK) ServoInc(SERVO_RIGHT_BACK_HIP); 
+    if (bits&SERVOS_RIGHT_FRONT) ServoInc(SERVO_RIGHT_FRONT_HIP); 
+    delay(250); Serial.println("S*Hu"); 
+    }
+  else if (data.equals(F("*hd"))) { 
+    int bits = fxc.select;
+    if (bits&SERVOS_LEFT_BACK) ServoDec(SERVO_LEFT_BACK_HIP); 
+    if (bits&SERVOS_LEFT_FRONT) ServoDec(SERVO_LEFT_FRONT_HIP); 
+    if (bits&SERVOS_RIGHT_BACK) ServoDec(SERVO_RIGHT_BACK_HIP); 
+    if (bits&SERVOS_RIGHT_FRONT) ServoDec(SERVO_RIGHT_FRONT_HIP); 
+    delay(250); Serial.println("S*Hd"); 
+  }
+  else if (data.equals(F("*eu"))) { 
+    int bits = fxc.select;
+    if (bits&SERVOS_LEFT_BACK) ServoInc(SERVO_LEFT_BACK_ELBOW); 
+    if (bits&SERVOS_LEFT_FRONT) ServoInc(SERVO_LEFT_FRONT_ELBOW); 
+    if (bits&SERVOS_RIGHT_BACK) ServoInc(SERVO_RIGHT_BACK_ELBOW); 
+    if (bits&SERVOS_RIGHT_FRONT) ServoInc(SERVO_RIGHT_FRONT_ELBOW); 
+    delay(250); Serial.println("S*Eu"); 
+    }
+  else if (data.equals(F("*ed"))) { 
+    int bits = fxc.select;
+    if (bits&SERVOS_LEFT_BACK) ServoDec(SERVO_LEFT_BACK_ELBOW); 
+    if (bits&SERVOS_LEFT_FRONT) ServoDec(SERVO_LEFT_FRONT_ELBOW); 
+    if (bits&SERVOS_RIGHT_BACK) ServoDec(SERVO_RIGHT_BACK_ELBOW); 
+    if (bits&SERVOS_RIGHT_FRONT) ServoDec(SERVO_RIGHT_FRONT_ELBOW); 
+    delay(250); Serial.println("S*Ed"); 
+    }
+  else if (data.equals(F("*wu"))) { 
+    int bits = fxc.select;
+    if (bits&SERVOS_LEFT_BACK) ServoInc(SERVO_LEFT_BACK_WRIST); 
+    if (bits&SERVOS_LEFT_FRONT) ServoInc(SERVO_LEFT_FRONT_WRIST); 
+    if (bits&SERVOS_RIGHT_BACK) ServoInc(SERVO_RIGHT_BACK_WRIST); 
+    if (bits&SERVOS_RIGHT_FRONT) ServoInc(SERVO_RIGHT_FRONT_WRIST); 
+    delay(250); Serial.println("S*Wu"); 
+    }
+  else if (data.equals(F("*wd"))) {
+    int bits = fxc.select;
+    if (bits&SERVOS_LEFT_BACK) ServoDec(SERVO_LEFT_BACK_WRIST); 
+    if (bits&SERVOS_LEFT_FRONT) ServoDec(SERVO_LEFT_FRONT_WRIST); 
+    if (bits&SERVOS_RIGHT_BACK) ServoDec(SERVO_RIGHT_BACK_WRIST); 
+    if (bits&SERVOS_RIGHT_FRONT) ServoDec(SERVO_RIGHT_FRONT_WRIST); 
+    delay(250); Serial.println("S*Wd"); 
+    }
   
   else if (data.equals(F("lhu"))) { ServoInc(SERVO_LEFT_BACK_HIP); ServoInc(SERVO_LEFT_FRONT_HIP); }
   else if (data.equals(F("lhd"))) { ServoDec(SERVO_LEFT_BACK_HIP); ServoDec(SERVO_LEFT_FRONT_HIP); }
