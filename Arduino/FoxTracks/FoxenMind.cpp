@@ -102,9 +102,14 @@ void PollMindState(struct FxController &fxController)
   if (fxController.select)
   {    
   }
+  else if (STARTUP_STATE == FxState_TestPattern)
+  {
+    UserCommandExecute(fxController, Cmd_ColorRainbow);
+    UserCommandExecute(fxController, Cmd_SpeedPos);
+    UserCommandExecute(fxController, Cmd_Speed1);    
+  }  
   else if (fxController.fxState == FxState_PlayingTrack)
   {
-    //do normal things
   }  
   else if (foxenMindState == MIND_STATE_ASLEEP)
   {

@@ -8,8 +8,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define LEAD      0 //Generally LightSuit*A silver
 #define FOLLOW    0 //Generally LightSuit*B gold
 #define FOXBOT    1 //Generally LightSuit*B gold
-#define MREE      1
-#define PREE      0
+#define MREE      0
+#define PREE      1
 #define SUIT_JACKET    0
 #define LAMP           0
 
@@ -37,7 +37,7 @@ static const char *DeviceName = "Pree";
 #define BRIGHTNESS_LIMIT    100 //Maximum allowed brightness, //90 possible but runs too hot
 #define ENABLE_LCD          0 //OLED 1306 driver
 #define ENABLE_ULTRASOUND   0 //HC-SR04 ultrasound
-#define ENABLE_IMU          1 //builtin imu
+#define ENABLE_IMU          0 //builtin imu
 #define ENABLE_SERVOS       1 //PCA9685
 #define ENABLE_SAFETY       1
 #define ENABLE_TRACK_CHECK  1
@@ -102,9 +102,9 @@ static const char *DeviceName = "Pree";
 #undef ENABLE_BLE
 #define ENABLE_BLE          1
 #undef NUM_STRIPS
-#define NUM_STRIPS          1
+#define NUM_STRIPS          8
 #undef ENABLE_MULTISTRIP
-#define ENABLE_MULTISTRIP   0
+#define ENABLE_MULTISTRIP   1
 
 #endif
 

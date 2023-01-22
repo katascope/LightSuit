@@ -5,6 +5,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #ifndef SERVOS_DEF
 #define SERVOS_DEF
 
+#define SERVOS_LEFT_BACK        0x1
+#define SERVOS_LEFT_FRONT       0x2
+#define SERVOS_RIGHT_BACK       0x4
+#define SERVOS_RIGHT_FRONT      0x8
+
 #define SERVO_LEFT_BACK_HIP     0x0
 #define SERVO_LEFT_BACK_ELBOW   0x1
 #define SERVO_LEFT_BACK_WRIST   0x2
@@ -94,4 +99,5 @@ void ServoPoseLerp(float lerp, const int *servostateOrig, const int *servostateD
 void ServoPose(const int *servostate);
 //void ServoPoseLerpTimed(const int *servostateOrig, const int *servostateDest);
 void ServoPoseLerpTo(const int *servostateDest, float sec);
+
 #endif

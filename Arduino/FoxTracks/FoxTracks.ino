@@ -188,19 +188,19 @@ void loop()
   PollMindState(fxController);
 
 #if ENABLE_STATUS
-//Display status once a second
-  unsigned long t =  millis();
-  if (t - lastTimeDisplay > 1000)//delay to let bluetooth get data
-  {      
-    if (fxController.fxState != FxState_PlayingTrack)
-    {
-      PrintMindState();
-      Serial.print(F(" "));
-      //if (GetMindState() == MIND_STATE_DIRECT) 
-      FxDisplayStatus(fxController);            
-      Serial.println();  
+  //Display status once a second
+    unsigned long t =  millis();
+    if (t - lastTimeDisplay > 1000)//delay to let bluetooth get data
+    {      
+      if (fxController.fxState != FxState_PlayingTrack)
+      {
+        PrintMindState();
+        Serial.print(F(" "));
+        //if (GetMindState() == MIND_STATE_DIRECT) 
+        FxDisplayStatus(fxController);            
+        Serial.println();  
+      }
+      lastTimeDisplay = t;
     }
-    lastTimeDisplay = t;
-  }
 #endif
 }

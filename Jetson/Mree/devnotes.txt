@@ -1,3 +1,14 @@
+Midstep:
+ Write poses (how to do timing?
+ transition?
+ Sit to stand =
+  Raise back
+  Raise front
+ Sidestep first
+  
+
+
+
 https://github.com/dusty-nv/jetson-voice
 https://stackoverflow.com/questions/44862100/need-to-run-docker-run-command-inside-python-script
 
