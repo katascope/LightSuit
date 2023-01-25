@@ -184,6 +184,42 @@ void PollMindState(struct FxController &fxController)
     }
     UserCommandExecute(fxController, Cmd_SpeedPos);
     UserCommandExecute(fxController, Cmd_Speed1);  
+
+    if (GetPeopleRectSeenFlag() == false)
+    {
+      int x1,y1,x2,y2;
+      GetPeopleRect(x1,y1,x2,y2);
+      int nudgeX = 0;
+      int nudgeY = 0;
+      
+      if (y1 > 88) nudgeY = -1;//prioritize looking at feet
+      else if (y2 < 10) nudgeY = 1; //try to get heads in picture otherwise
+  
+      if (x1 > 20 && x2 > 79) nudgeX = 1; //try to keep centered horizontally
+      else if (x1 < 20 && x2 < 79) nudgeX = -1;
+  
+      if (nudgeY>0) ServoInc(SERVO_LEFT_FRONT_WRIST);
+      else if (nudgeY < 0) ServoDec(SERVO_LEFT_FRONT_WRIST);
+
+      if (nudgeX>0) ServoInc(SERVO_LEFT_FRONT_HIP);
+      else if (nudgeX < 0) ServoDec(SERVO_LEFT_FRONT_HIP);
+
+      Serial.print(F("Rect:"));
+      Serial.print(x1);
+      Serial.print(F(" "));
+      Serial.print(y1);
+      Serial.print(F(" "));
+      Serial.print(x2);
+      Serial.print(F(" "));
+      Serial.print(y2);
+      Serial.print(F("="));
+      Serial.print(nudgeX);
+      Serial.print(F(","));
+      Serial.print(nudgeY);
+      Serial.println();
+
+      SetPeopleRectSeenFlag(true);
+    }
   }
   else
   {

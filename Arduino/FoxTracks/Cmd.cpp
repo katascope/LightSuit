@@ -369,7 +369,25 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   if (data[data.length()-1]=='\n') data.remove(data.length()-1,1);
   if (data[data.length()-1]=='\r') data.remove(data.length()-1,1);
 
-  if (data.equals(F("POSES")))
+  if (data[0] == '!')
+  {
+    int x1 = ((int)data[1] - '0');
+    int y1 = ((int)data[2] - '0');
+    int x2 = ((int)data[3] - '0');
+    int y2 = ((int)data[4] - '0');
+    Serial.print(F("PplRect:"));
+    Serial.print(x1);
+    Serial.print(F(" "));
+    Serial.print(y1);
+    Serial.print(F(" "));
+    Serial.print(x2);
+    Serial.print(F(" "));
+    Serial.print(y2);
+    Serial.println();
+    SetPeopleRect(x1*10,y1*10,x2*10,y2*10);
+    SetPeopleRectSeenFlag(false);
+  }
+  else if (data.equals(F("POSES")))
   {
     for (int p=0;p<NUM_DB_POSES;p++)
     {
