@@ -139,7 +139,7 @@ namespace KataTracks
 
             timePick = seconds * 10;
 
-            string code = "@" + (timePick * 100) + "\r\n";
+            //string code = "@" + (timePick * 100) + "\r\n";
             DeviceManagerBLE.Play((ulong)timePick * 100);
 
             outputDevice.Play();
@@ -234,36 +234,36 @@ namespace KataTracks
             {
                 case GameControllerEvent.B1_Dn: StopAndSendToJoy(joyId, "C"); break;
                 case GameControllerEvent.B1_Up: break;
-                case GameControllerEvent.B2_Dn: StopAndSendToJoy(joyId, "D"); break;
+                case GameControllerEvent.B2_Dn: StopAndSendToJoy(joyId, "M"); break;
                 case GameControllerEvent.B2_Up: break;
                 case GameControllerEvent.B3_Dn: StopAndSendToJoy(joyId, "B"); break;
                 case GameControllerEvent.B3_Up: break;
-                case GameControllerEvent.B4_Dn: StopAndSendToJoy(joyId, "E"); break;
+                case GameControllerEvent.B4_Dn: StopAndSendToJoy(joyId, "N"); break;
                 case GameControllerEvent.B4_Up: break;
-                case GameControllerEvent.L1_Dn: StopAndSendToJoy(joyId, "O"); break;
-                case GameControllerEvent.L1_Up: break;
-                case GameControllerEvent.L2_Dn: StopAndSendToJoy(joyId, "P"); break;
-                case GameControllerEvent.L2_Up: break;
-                case GameControllerEvent.R1_Dn: StopAndSendToJoy(joyId, "Q"); break;
-                case GameControllerEvent.R1_Up: break;
-                case GameControllerEvent.R2_Dn: StopAndSendToJoy(joyId, "R"); break;
-                case GameControllerEvent.R2_Up: break;
+                case GameControllerEvent.L1_Dn: StopAndSendToJoy(joyId, "!"); break;
+                case GameControllerEvent.L1_Up: StopAndSendToJoy(joyId, "%"); break;
+                case GameControllerEvent.L2_Dn: StopAndSendToJoy(joyId, "@"); break;
+                case GameControllerEvent.L2_Up: StopAndSendToJoy(joyId, "^"); break;
+                case GameControllerEvent.R1_Dn: StopAndSendToJoy(joyId, "#"); break;
+                case GameControllerEvent.R1_Up: StopAndSendToJoy(joyId, "&"); break;
+                case GameControllerEvent.R2_Dn: StopAndSendToJoy(joyId, "$"); break;
+                case GameControllerEvent.R2_Up: StopAndSendToJoy(joyId, "*"); break;
                 case GameControllerEvent.Select_Dn: StopAndSendToJoy(joyId, "Z"); break;
-                case GameControllerEvent.Select_Up: break;
+                case GameControllerEvent.Select_Up: break; 
                 case GameControllerEvent.Start_Dn: //PlayTrack(0);break;
                 case GameControllerEvent.Start_Up: break;
                 case GameControllerEvent.J1_Dn: Console.WriteLine("J1_Dn"); break;
                 case GameControllerEvent.J1_Up: Console.WriteLine("J1_Up"); break;
                 case GameControllerEvent.J2_Dn: Console.WriteLine("J2_Dn"); break;
                 case GameControllerEvent.J2_Up: Console.WriteLine("J2_Up"); break;
-                case GameControllerEvent.XLeft_Dn: StopAndSendToJoy(joyId, "M"); break;
+                case GameControllerEvent.XLeft_Dn: StopAndSendToJoy(joyId, "O"); break;
                 case GameControllerEvent.XLeft_Up: break;
-                case GameControllerEvent.XRight_Dn: StopAndSendToJoy(joyId, "N"); break;
+                case GameControllerEvent.XRight_Dn: StopAndSendToJoy(joyId, "P"); break;
                 case GameControllerEvent.XRight_Up: break;
-                case GameControllerEvent.YUp_Dn: Console.WriteLine("YUp_Dn"); break;
-                case GameControllerEvent.YUp_Up: Console.WriteLine("YUp_Up"); break;
-                case GameControllerEvent.YDn_Dn: Console.WriteLine("YDn_Dn"); break;
-                case GameControllerEvent.YDn_Up: Console.WriteLine("YDn_Up"); break;
+                case GameControllerEvent.YUp_Dn: StopAndSendToJoy(joyId, "Q"); break;
+                case GameControllerEvent.YUp_Up: break;
+                case GameControllerEvent.YDn_Dn: StopAndSendToJoy(joyId, "R"); break;
+                case GameControllerEvent.YDn_Up: break;
             }
         }
 
