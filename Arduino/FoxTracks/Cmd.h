@@ -50,7 +50,9 @@ enum UserCommand
   Cmd_ColorWhiteCyan,
   Cmd_ColorRedBlue,
   Cmd_ColorCyanMagenta,
-
+  Cmd_ColorCyanBlue,
+  Cmd_ColorBlueMagenta,
+  
   Cmd_ColorPulseDark, 
   Cmd_ColorPulseWhite,
   Cmd_ColorPulseRed,

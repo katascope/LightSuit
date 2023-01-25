@@ -285,8 +285,6 @@ void SetPaletteDirection(FxController &fxc, int c)
 
 void FxSelectLeds(FxController &fxc)
 {
-  Serial.print(F("Select"));
-  Serial.println(fxc.select);
     fxc.stripMask = (LEDS_0|LEDS_1);ResetPaletteSpeed(fxc);CreateSingleColor(fxc, DARK);
     unsigned long rgb1 = WEBRGB::Black;
     unsigned long rgb2 = WEBRGB::Black;

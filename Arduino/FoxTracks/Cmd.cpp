@@ -90,7 +90,9 @@ void UserCommandExecute(FxController &fxc, int cmd)
     case Cmd_ColorWhiteYellow:  InstantEvent(fxc, fx_palette_wy,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorWhiteBlue:    InstantEvent(fxc, fx_palette_wb,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorRedBlue:      InstantEvent(fxc, fx_palette_rb,      FxPaletteUpdateType::Once); break;
-    case Cmd_ColorCyanMagenta:   InstantEvent(fxc, fx_palette_cm,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorCyanMagenta:  InstantEvent(fxc, fx_palette_cm,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorCyanBlue:     InstantEvent(fxc, fx_palette_cb,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorBlueMagenta:  InstantEvent(fxc, fx_palette_bm,      FxPaletteUpdateType::Once); break;
 
     case Cmd_ColorPulseDark:     InstantEvent(fxc, fx_palette_pulse_dark,     FxPaletteUpdateType::Once); break;
     case Cmd_ColorPulseWhite:    InstantEvent(fxc, fx_palette_pulse_white,    FxPaletteUpdateType::Once); break;
@@ -268,19 +270,19 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case 'J': ComplexUserCommandInput(fxc, "ub"); break;
     case 'K': ComplexUserCommandInput(fxc, "uf"); break;
     case 'L': ComplexUserCommandInput(fxc, "go"); break;
-    case 'M': ComplexUserCommandInput(fxc, "*hu"); break;
+    case 'M': ComplexUserCommandInput(fxc, "*hu");break;
     case 'N': ComplexUserCommandInput(fxc, "*hd"); break;
     case 'O': ComplexUserCommandInput(fxc, "*eu"); break;
     case 'P': ComplexUserCommandInput(fxc, "*ed"); break;
-    case 'Q': ComplexUserCommandInput(fxc, "*wu"); break;
-    case 'R': ComplexUserCommandInput(fxc, "*wd"); break;
+    case 'Q': if (fxc.select) ComplexUserCommandInput(fxc, "*wu"); else ComplexUserCommandInput(fxc, "ff"); break;
+    case 'R': if (fxc.select) ComplexUserCommandInput(fxc, "*wd"); else ComplexUserCommandInput(fxc, "fg"); break;
     case 'S': ComplexUserCommandInput(fxc, "auto"); break;
     case 'T': ComplexUserCommandInput(fxc, "primal"); break;
     case 'U': ComplexUserCommandInput(fxc, "waking"); break;    
     case 'V': ComplexUserCommandInput(fxc, "ready"); break;
     case 'W': ComplexUserCommandInput(fxc, "sleep"); break;
-    case 'X': break;
-    case 'Y': break;
+    case 'X': ComplexUserCommandInput(fxc, "hop"); break;
+    case 'Y': ComplexUserCommandInput(fxc, "gg"); break;
     case 'Z': ComplexUserCommandInput(fxc, "select"); break;
      
     case '!': ComplexUserCommandInput(fxc, "sa1"); break;
@@ -382,10 +384,66 @@ void ComplexUserCommandInput(FxController &fxc, String data)
       Serial.println();
     }
   }
-
-  if (data.equals(F("waking")))
+  else if (data.equals(F("waking")))
   {  
     SetMindState(MIND_STATE_WAKING);
+  }
+  else if (data.equals(F("ff")))
+  {
+    int SPEED = 100;   
+    const int POSE_CYCLE1[SERVO_NUM] { 89,44,109,-1,  89,49,79,-1,  89,44,109,-1,  89,49,79,-1 };
+    const int POSE_CYCLE2[SERVO_NUM] { 89,49,99,-1,   89,54,80,-1,  89,54,80,-1,   89,49,79,-1 };
+    const int POSE_CYCLE3[SERVO_NUM] { 89,54,80,-1,   89,65,103,-1, 89,65,103,-1,  89,54,80,-1 };
+    const int POSE_CYCLE4[SERVO_NUM] { 89,65,103,-1,  89,49,79,-1,  89,44,109,-1,  89,65,103,-1 };
+    const int POSE_CYCLE5[SERVO_NUM] { 89,44,109,-1,  89,49,79,-1,  89,44,109,-1,  89,49,79,-1 };
+    ServoPose(POSE_CYCLE1); delay(SPEED);   
+    ServoPose(POSE_CYCLE2); delay(SPEED);
+    ServoPose(POSE_CYCLE3); delay(SPEED);      
+    ServoPose(POSE_CYCLE4); delay(SPEED);      
+    ServoPose(POSE_CYCLE5); delay(SPEED);      
+  }
+  else if (data.equals(F("fg")))
+  {
+    int SPEED = 100;   
+    const int POSE_CYCLE1[SERVO_NUM] { 89,44,109,-1,  89,49,79,-1,  89,44,109,-1,  89,49,79,-1 };
+    const int POSE_CYCLE2[SERVO_NUM] { 89,49,99,-1,   89,54,80,-1,  89,54,80,-1,   89,49,79,-1 };
+    const int POSE_CYCLE3[SERVO_NUM] { 89,54,80,-1,   89,65,103,-1, 89,65,103,-1,  89,54,80,-1 };
+    const int POSE_CYCLE4[SERVO_NUM] { 89,65,103,-1,  89,49,79,-1,  89,44,109,-1,  89,65,103,-1 };
+    const int POSE_CYCLE5[SERVO_NUM] { 89,44,109,-1,  89,49,79,-1,  89,44,109,-1,  89,49,79,-1 };
+    ServoPose(POSE_CYCLE1); delay(SPEED);      
+    ServoPose(POSE_CYCLE4); delay(SPEED);      
+    ServoPose(POSE_CYCLE3); delay(SPEED);
+    ServoPose(POSE_CYCLE2); delay(SPEED);   
+    ServoPose(POSE_CYCLE5); delay(SPEED);      
+  }
+  else if (data.equals(F("gg")))
+  {
+    int SPEED = 250;
+#define GGPOSE1 89,49,84    
+    const int POSE_CYCLE0[SERVO_NUM] { 89,50,87,-1,  89,49,74,-1,  89,50,87,-1,  89,49,74,-1 };
+    const int POSE_CYCLE1[SERVO_NUM] { GGPOSE1 ,-1,  89,49,74, -1,  89,50,87,-1,  89,49,74,-1 };
+    const int POSE_CYCLE2[SERVO_NUM] { GGPOSE1,-1,  GGPOSE1 ,-1,  89,50,87,-1,  89,49,74,-1 };
+    const int POSE_CYCLE3[SERVO_NUM] { GGPOSE1,-1,  89,49,74,-1,  GGPOSE1 ,-1,  89,64,65,-1 };
+    const int POSE_CYCLE4[SERVO_NUM] { 89,50,87,-1,  89,49,74,-1,  89,50,87,-1,  GGPOSE1 ,-1 };
+    const int POSE_CYCLE5[SERVO_NUM] { 89,50,87,-1,  89,49,74,-1,  89,50,87,-1,  89,49,74,-1 };
+    ServoPose(POSE_CYCLE0); delay(SPEED);
+    ServoPose(POSE_CYCLE1); delay(SPEED);      
+    ServoPose(POSE_CYCLE2); delay(SPEED);      
+    ServoPose(POSE_CYCLE3); delay(SPEED);
+    ServoPose(POSE_CYCLE4); delay(SPEED);   
+    ServoPose(POSE_CYCLE5); delay(SPEED);      
+  }
+  else if (data.equals(F("hop")))
+  {
+    int SPEED = 250;
+#define GGCROUCHF 89,36,46,-1
+#define GGCROUCHB 89,36,61,-1
+    const int POSE_CYCLE1[SERVO_NUM] { GGCROUCHB, GGCROUCHF, GGCROUCHB, GGCROUCHF };
+    const int POSE_CYCLE2[SERVO_NUM] { -1,65,126,-1, -1,61,111,-1, -1,65,126,-1, -1,61,111,-1 };
+    const int POSE_CYCLE3[SERVO_NUM] { GGCROUCHB, GGCROUCHF, GGCROUCHB, GGCROUCHF };
+    ServoPose(POSE_CYCLE1); delay(1000);      
+    ServoPose(POSE_CYCLE2); delay(1000);
+    ServoPose(POSE_CYCLE3); delay(SPEED);   
   }
   else if (data.equals(F("ready")))
   {  
@@ -407,7 +465,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     ServoPoseLerpTo(POSE_PAWSUP, 1); 
     ServoPoseLerpTo(POSE_HIPS_ORIGIN, 1); 
     ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
-    SetMindState(MIND_STATE_PRIMAL);    
+    SetMindState(MIND_STATE_READY);
   }
   else if (data.equals(F("sleep")))
   {
@@ -418,6 +476,10 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("auto")))
   {
+    const int POSE_AUTO_BACK[SERVO_NUM]  {-1,-1,-1,-1, 98,78,119,-1, -1,-1,-1,-1, 88,50,89,-1};
+    const int POSE_AUTO_FRONT[SERVO_NUM] {98,35,93,-1, 98,78,119,-1, 98,35,93,-1, 88,50,89,-1};
+    ServoPoseLerpTo(POSE_AUTO_BACK, 4);  
+    ServoPoseLerpTo(POSE_AUTO_FRONT, 4); 
     SetMindState(MIND_STATE_AUTONOMOUS);
   }
   else if (data.indexOf("l0") != -1) { SetPeopleCount(0); }
@@ -511,20 +573,28 @@ void ComplexUserCommandInput(FxController &fxc, String data)
  else if (data.equals(F("da3"))) { fxc.select &= ~4; }
  else if (data.equals(F("sa4"))) { fxc.select |= 8; }
  else if (data.equals(F("da4"))) { fxc.select &= ~8; }
-
  
- /* else if (data.equals(F("select")))
-  { 
-    fxc.select++;
-    if (fxc.select > 10)
+  else if (data.equals(F("select")))
+  {
+    FoxenMindState mindState = GetMindState();
+    mindState = (FoxenMindState)((int)mindState + 1);
+
+    if (mindState == MIND_STATE_WAKING)
+      mindState = MIND_STATE_READY;
+    if (mindState == MIND_STATE_TRACK)
+      mindState = MIND_STATE_AUTONOMOUS;
+    if (mindState == MIND_STATE_LAST)
+      mindState = MIND_STATE_ASLEEP;
+
+    if (mindState == MIND_STATE_AUTONOMOUS)
     {
-      fxc.select = 0;
-      InstantEvent(fxc, fx_strip_all,     FxPaletteUpdateType::Once);
+      ComplexUserCommandInput(fxc,F("auto"));
+      mindState = MIND_STATE_AUTONOMOUS;
     }
-    Serial.print("Sel");
-    Serial.println(fxc.select);
- }*/
-  
+      
+    SetMindState(mindState);
+    PrintMindState();
+  }  
   else if (data.equals(F("*hu"))) { 
     int bits = fxc.select;
     if (bits&SERVOS_LEFT_BACK) ServoInc(SERVO_LEFT_BACK_HIP); 

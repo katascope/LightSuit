@@ -59,6 +59,35 @@ void UpdatePalette(struct FxController &fxController)
   }
 }
 
+static bool peopleRectSeenFlag = false;
+bool SetPeopleRectSeenFlag(bool status)
+{
+  peopleRectSeenFlag = status;  
+}
+bool GetPeopleRectSeenFlag()
+{
+  return peopleRectSeenFlag;
+}
+
+static int peopleRectX1 = 0;
+static int peopleRectY1 = 0;
+static int peopleRectX2 = 0;
+static int peopleRectY2 = 0;
+void SetPeopleRect(int x1, int y1, int x2, int y2)
+{
+  peopleRectX1 = x1;
+  peopleRectY1 = y1;
+  peopleRectX2 = x2;
+  peopleRectY2 = y2;
+}
+void GetPeopleRect(int &x1, int &y1, int &x2, int &y2)
+{
+  x1 = peopleRectX1;
+  y1 = peopleRectY1;
+  x2 = peopleRectX2;
+  y2 = peopleRectY2;
+}
+
 void PrintMindState()
 {
   Serial.print(DeviceName);  
@@ -67,8 +96,6 @@ void PrintMindState()
     case MIND_STATE_ASLEEP:     Serial.print(F("=asleep"));break;
     case MIND_STATE_WAKING:     Serial.print(F("=waking"));break;
     case MIND_STATE_READY:      Serial.print(F("=ready"));break;
-    case MIND_STATE_PRIMAL:     Serial.print(F("=primal"));break;
-    case MIND_STATE_DIRECT:     Serial.print(F("=direct"));break;
     case MIND_STATE_TRACK:      Serial.print(F("=track"));break;
     case MIND_STATE_AUTONOMOUS: Serial.print(F("=auto"));break;
   }
@@ -81,15 +108,19 @@ void PrintMindState()
 }
 
 #if MREE
-#define ColorSleeping Cmd_ColorPulseMagenta
-#define ColorWaking Cmd_ColorWhiteMagenta
-#define ColorReady Cmd_ColorCyanMagenta
+#define ColorSleeping Cmd_ColorRainbow
+#define ColorWaking Cmd_ColorGreen
+#define ColorReady Cmd_ColorBlueMagenta
+#define ColorTrack  Cmd_ColorMagenta
+#define ColorAuto  Cmd_ColorOrange
 #endif
 
 #if PREE
-#define ColorSleeping Cmd_ColorPulseCyan
-#define ColorWaking Cmd_ColorWhiteCyan
-#define ColorReady Cmd_ColorCyanMagenta
+#define ColorSleeping Cmd_ColorRainbow
+#define ColorWaking Cmd_ColorGreen
+#define ColorReady Cmd_ColorCyanBlue
+#define ColorTrack  Cmd_ColorMagenta
+#define ColorAuto  Cmd_ColorOrange
 #endif
 
 #define ColorAuto_0 Cmd_ColorPulseRed
@@ -133,6 +164,13 @@ void PollMindState(struct FxController &fxController)
     else if (pplCount == 1) UserCommandExecute(fxController, Cmd_Speed2);    
     else if (pplCount == 2) UserCommandExecute(fxController, Cmd_Speed3);    
     else UserCommandExecute(fxController, Cmd_Speed4);
+    return;
+  }
+  else if (foxenMindState == MIND_STATE_TRACK)
+  {
+    UserCommandExecute(fxController, ColorTrack);
+    UserCommandExecute(fxController, Cmd_SpeedPos);
+    UserCommandExecute(fxController, Cmd_Speed1);    
     return;
   }
   else if (foxenMindState == MIND_STATE_AUTONOMOUS)

@@ -9,15 +9,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 enum FoxenMindState
 {
-  MIND_STATE_ASLEEP     = 0,
-  MIND_STATE_WAKING     = 1,
-  MIND_STATE_READY      = 2,
-  MIND_STATE_PRIMAL     = 3,
-  MIND_STATE_DIRECT     = 4,
-  MIND_STATE_TRACK      = 5,
-  MIND_STATE_AUTONOMOUS = 6
+  MIND_STATE_ASLEEP     = 0, //dark
+  MIND_STATE_WAKING     = 1, //green
+  MIND_STATE_READY      = 2, //blue/purple
+  MIND_STATE_TRACK      = 3, //yellow
+  MIND_STATE_AUTONOMOUS = 4, //orange
+  MIND_STATE_LAST       = 5
 };
 
+void SetPeopleRect(int x1, int y1, int x2, int y2);
+void GetPeopleRect(int &x1, int &y1, int &x2, int &y2);
+bool SetPeopleRectSeenFlag(bool status);
+bool GetPeopleRectSeenFlag();
 
 void SetPeopleCount(int count);
 int GetPeopleCount();
