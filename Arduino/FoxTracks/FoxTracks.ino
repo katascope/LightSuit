@@ -192,11 +192,10 @@ void loop()
     unsigned long t =  millis();
     if (t - lastTimeDisplay > 1000)//delay to let bluetooth get data
     {      
-      if (fxController.fxState != FxState_PlayingTrack)
-      {
+      if (fxController.fxState != FxState_PlayingTrack && GetMindState() != MIND_STATE_AUTONOMOUS)
+      {        
         PrintMindState();
         Serial.print(F(" "));
-        //if (GetMindState() == MIND_STATE_DIRECT) 
         FxDisplayStatus(fxController);            
         Serial.println();  
       }
