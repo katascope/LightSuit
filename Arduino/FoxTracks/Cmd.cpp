@@ -494,8 +494,8 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("auto")))
   {
-    const int POSE_AUTO_BACK[SERVO_NUM]  {-1,-1,-1,-1, 98,78,119,-1, -1,-1,-1,-1, 88,50,89,-1};
-    const int POSE_AUTO_FRONT[SERVO_NUM] {98,35,93,-1, 98,78,119,-1, 98,35,93,-1, 88,50,89,-1};
+    const int POSE_AUTO_BACK[SERVO_NUM]  {-1,-1,-1,-1, 98,78,119,-1, -1,-1,-1,-1, 88,50,79,-1};
+    const int POSE_AUTO_FRONT[SERVO_NUM] {98,35,93,-1, 98,78,119,-1, 98,35,93,-1, 88,50,79,-1};
     ServoPoseLerpTo(POSE_AUTO_BACK, 4);  
     ServoPoseLerpTo(POSE_AUTO_FRONT, 4); 
     SetMindState(MIND_STATE_AUTONOMOUS);
