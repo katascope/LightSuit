@@ -42,6 +42,11 @@ void ServosRest()
   }
 }
 
+int GetServoDegree(int servo)
+{
+  return servoInfo[servo].degree;
+}
+
 void ServosPrint()
 {
   Serial.print(F("{"));
@@ -105,7 +110,7 @@ void ServoSet(int servo, int degree)
     Serial.print(degree);
     Serial.print(F(",wait 1 sec"));
     Serial.println();*/
-  //delay(SERVO_DELAY);
+  delay(SERVO_DELAY);
 }
 
 void ServoSetAll(int degree)

@@ -134,38 +134,42 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
       pplRects.append(detection)
       numPeople = numPeople + 1
 
+  print("People:"+str(numPeople))
+
   if ((time.time()-1) > pplSendTime):
    pplRect = {0,0,0,0};
    minX = 11
    minY = 11
    maxX = -1
    maxY = -1
-   for rect in pplRects:
-    sx1 = int((rect.Left   / img.width)*9.9)
-    sx2 = int((rect.Right  / img.width)*9.9) 
-    sy1 = int((rect.Top    / img.height)*9.9)
-    sy2 = int((rect.Bottom / img.height)*9.9)
-    if (sx1 < minX):
-      minX = sx1
-    if (sx2 > maxX):
-      maxX = sx2
-    if (sy1 < minY):
-      minY = sy1
-    if (sy2 > maxY):
-      maxY = sy2 
-    pplSendTime = time.time()   
-    s="!"+str(minX)+str(minY)+str(maxX)+str(maxY);
-    print("RectStr="+s);
-    ser.write( str.encode(s) )
+   pplSendTime = time.time()      
+   if (len(pplRects) > 0):
+    for rect in pplRects:
+     sx1 = int((rect.Left   / img.width)*9.9)
+     sx2 = int((rect.Right  / img.width)*9.9) 
+     sy1 = int((rect.Top    / img.height)*9.9)
+     sy2 = int((rect.Bottom / img.height)*9.9)
+     if (sx1 < minX):
+       minX = sx1
+     if (sx2 > maxX):
+       maxX = sx2
+     if (sy1 < minY):
+       minY = sy1
+     if (sy2 > maxY):
+       maxY = sy2 
+    s="!"+str(minX)+str(minY)+str(maxX)+str(maxY)+"\r\n";
+   else:
+    s="!0000\r\n";
+   print("RectStr="+s);
+   ser.write( str.encode(s) )
 
-  print("People:"+str(numPeople))
-  if (numPeople != lastPpl):
-   lastPpl = numPeople
-   s="l"+str(numPeople)
-   ser.write( str.encode(s) )
-   time.sleep(0.5)
-   ser.write( str.encode(s) )
-   print("sending " + s)
+#   if (numPeople == 0):
+#   lastPpl = numPeople
+#   s="pl"+str(numPeople)
+#   ser.write( str.encode(s+"\n") )
+#   time.sleep(0.5)
+#   ser.write( str.encode(s) )
+#   print("sending ppl=" + s)
 
   # render the image
   output.Render(img)

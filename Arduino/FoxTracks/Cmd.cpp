@@ -93,6 +93,7 @@ void UserCommandExecute(FxController &fxc, int cmd)
     case Cmd_ColorCyanMagenta:  InstantEvent(fxc, fx_palette_cm,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorCyanBlue:     InstantEvent(fxc, fx_palette_cb,      FxPaletteUpdateType::Once); break;
     case Cmd_ColorBlueMagenta:  InstantEvent(fxc, fx_palette_bm,      FxPaletteUpdateType::Once); break;
+    case Cmd_ColorGreenMagenta: InstantEvent(fxc, fx_palette_gm,      FxPaletteUpdateType::Once); break;
 
     case Cmd_ColorPulseDark:     InstantEvent(fxc, fx_palette_pulse_dark,     FxPaletteUpdateType::Once); break;
     case Cmd_ColorPulseWhite:    InstantEvent(fxc, fx_palette_pulse_white,    FxPaletteUpdateType::Once); break;
@@ -375,7 +376,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     int y1 = ((int)data[2] - '0');
     int x2 = ((int)data[3] - '0');
     int y2 = ((int)data[4] - '0');
-    Serial.print(F("PplRect:"));
+    /*Serial.print(F("PplRect:"));
     Serial.print(x1);
     Serial.print(F(" "));
     Serial.print(y1);
@@ -383,7 +384,9 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.print(x2);
     Serial.print(F(" "));
     Serial.print(y2);
-    Serial.println();
+    Serial.println();*/
+    if (x1==0 && y1==0 && x2==0 && y2==0) SetPeopleCount(0);
+    else SetPeopleCount(1);
     SetPeopleRect(x1*10,y1*10,x2*10,y2*10);
     SetPeopleRectSeenFlag(false);
   }
@@ -472,6 +475,20 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     delay(250);
     Serial.println("SNerv");
   }
+  else if (data.equals(F("dn"))) { 
+    ServoPoseLerpTo(POSE_PAWSUP, 4); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 3); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
+    Serial.println("SPurr");//Time to call and get our poses
+    delay(250);
+  } 
+  else if (data.equals(F("up"))) { 
+    ServoPoseLerpTo(POSE_UP_BACK, 1); 
+    delay(250);
+    ServoPoseLerpTo(POSE_UP, 1); 
+    Serial.println("SThunder");
+    delay(250);
+  }  
   else if (data.equals(F("go")))
   {
     Serial.println(F("Primal.."));
@@ -490,20 +507,37 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   }
   else if (data.equals(F("auto")))
   {
-    const int POSE_AUTO_BACK[SERVO_NUM]  {-1,-1,-1,-1, 98,78,119,-1, -1,-1,-1,-1, 88,50,79,-1};
-    const int POSE_AUTO_FRONT[SERVO_NUM] {98,35,93,-1, 98,78,119,-1, 98,35,93,-1, 88,50,79,-1};
-    ServoPoseLerpTo(POSE_AUTO_BACK, 4);  
-    ServoPoseLerpTo(POSE_AUTO_FRONT, 4); 
+    const int POSE_AUTO_BACK[SERVO_NUM]  {98,35,93,-1, -1,-1,-1,-1,  98,35,93,-1, -1,-1,-1,-1};
+    const int POSE_AUTO_FRONT[SERVO_NUM] {98,35,93,-1, 98,78,119,-1, 98,35,93,-1, 98,78,119,-1};
+
+    UserCommandExecute(fxc, Cmd_ColorPulseRed);
+    UserCommandExecute(fxc, Cmd_SpeedPos);
+    UserCommandExecute(fxc, Cmd_Speed1);  
+
+//First definitely crouch
+    ServoPoseLerpTo(POSE_PAWSUP, 8); 
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 4); 
+    ServoPoseLerpTo(POSE_ELBOW_MIN, 4);
+//Then stand up properly
+    ServoPoseLerpTo(POSE_UP_BACK, 2);
+    delay(250);
+    ServoPoseLerpTo(POSE_UP, 2);
+    delay(250);
+//Then pose into camera mode    
+    ServoPoseLerpTo(POSE_AUTO_BACK, 2);
+    delay(250);
+    ServoPoseLerpTo(POSE_AUTO_FRONT, 2); 
+    delay(250);
     SetMindState(MIND_STATE_AUTONOMOUS);
   }
-  else if (data.indexOf("l0") != -1) { SetPeopleCount(0); }
+  /*else if (data.indexOf("l0") != -1) { SetPeopleCount(0); }
   else if (data.indexOf("l1") != -1) { SetPeopleCount(1); }
   else if (data.indexOf("l2") != -1) { SetPeopleCount(2); }
   else if (data.indexOf("l3") != -1) { SetPeopleCount(3); }
   else if (data.indexOf("l4") != -1) { SetPeopleCount(4); }
   else if (data.indexOf("l5") != -1) { SetPeopleCount(5); }
   else if (data.indexOf("l6") != -1) { SetPeopleCount(6); }
-  else if (data.indexOf("l7") != -1) { SetPeopleCount(7); }
+  else if (data.indexOf("l7") != -1) { SetPeopleCount(7); }*/
   else if (data.equals(F("??")))
   {
     Serial.println(F("Add u/d"));
@@ -522,20 +556,6 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     Serial.println(F(" (fr+h/e/w) front right hip/elbow/wirst"));
     Serial.println(F(" (bl+h/e/w) back left hip/elbow/wrist"));
     Serial.println(F(" (br+h/e/w) back right hip/elbow/wrist"));
-  }
-  else if (data.equals(F("dn"))) { 
-    ServoPoseLerpTo(POSE_PAWSUP, 4); 
-    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 3); 
-    ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
-    Serial.println("SPurr");//Time to call and get our poses
-    delay(250);
-  } 
-  else if (data.equals(F("up"))) { 
-    ServoPoseLerpTo(POSE_UP_BACK, 1); 
-    delay(250);
-    ServoPoseLerpTo(POSE_UP, 1); 
-    Serial.println("SThunder");
-    delay(250);
   }
   else if (data.equals(F("butt"))) { 
     ServoPoseLerpTo(POSE_UP_FRONT,4); 

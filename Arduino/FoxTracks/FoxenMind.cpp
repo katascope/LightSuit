@@ -121,9 +121,7 @@ void PrintMindState()
 #endif
 
 #define ColorAuto_0 Cmd_ColorPulseRed
-#define ColorAuto_1 Cmd_ColorPulseYellow
-#define ColorAuto_2 Cmd_ColorPulseGreen
-#define ColorAuto_N Cmd_ColorRainbow
+#define ColorAuto_1 Cmd_ColorGreenMagenta
 
 void PollMindState(struct FxController &fxController)
 {
@@ -167,21 +165,16 @@ void PollMindState(struct FxController &fxController)
   {
     switch (GetPeopleCount())
     {
-      case 0:  UserCommandExecute(fxController, ColorAuto_0); break;
-      case 1:  UserCommandExecute(fxController, ColorAuto_1); break;
-      case 2:  UserCommandExecute(fxController, ColorAuto_2); break;
-      default: UserCommandExecute(fxController, ColorAuto_N); break;
+      case 0 :  UserCommandExecute(fxController, ColorAuto_0); break;
+      default:  UserCommandExecute(fxController, ColorAuto_1); break;
     }
-    UserCommandExecute(fxController, Cmd_SpeedPos);
-    UserCommandExecute(fxController, Cmd_Speed1);  
 
-    if (GetPeopleRectSeenFlag() == false)
+    if (GetPeopleCount() > 0 && GetPeopleRectSeenFlag() == false)
     {
-      int x1,y1,x2,y2;
-      GetPeopleRect(x1,y1,x2,y2);
       int nudgeX = 0;
       int nudgeY = 0;
-
+      int x1,y1,x2,y2;
+      GetPeopleRect(x1,y1,x2,y2);
       int centerX = x1 + (x2-x1)/2;
       
       if (y1 > 88) nudgeY = -1;//prioritize looking at feet
@@ -190,28 +183,30 @@ void PollMindState(struct FxController &fxController)
       if (centerX < 30) nudgeX = -1; //try to keep centered horizontally
       else if (centerX > 60) nudgeX = 1;
   
-      if (nudgeY>0) ServoInc(SERVO_LEFT_FRONT_WRIST);
-      else if (nudgeY < 0) ServoDec(SERVO_LEFT_FRONT_WRIST);
+      if (nudgeY>0) 
+      {
+        ServoInc(SERVO_LEFT_FRONT_WRIST);
+        ServoDec(SERVO_RIGHT_FRONT_WRIST);
+      }
+      else if (nudgeY < 0) 
+      {
+        ServoDec(SERVO_LEFT_FRONT_WRIST);
+        ServoInc(SERVO_RIGHT_FRONT_WRIST);
+      }
 
-      if (nudgeX>0) ServoInc(SERVO_LEFT_FRONT_HIP);
-      else if (nudgeX < 0) ServoDec(SERVO_LEFT_FRONT_HIP);
+      if (nudgeX>0)
+      {
+        ServoInc(SERVO_LEFT_FRONT_HIP);
+        ServoDec(SERVO_RIGHT_FRONT_HIP);
+      }
+      else if (nudgeX < 0)      
+      {
+        ServoDec(SERVO_LEFT_FRONT_HIP);
+        ServoInc(SERVO_RIGHT_FRONT_HIP);
+      }
 
-      Serial.print(F("Rect:"));
-      Serial.print(x1);
-      Serial.print(F(" "));
-      Serial.print(y1);
-      Serial.print(F(" "));
-      Serial.print(x2);
-      Serial.print(F(" "));
-      Serial.print(y2);
-      Serial.print(F("="));
-      Serial.print(nudgeX);
-      Serial.print(F(","));
-      Serial.print(nudgeY);
-      Serial.println();
-
-      SetPeopleRectSeenFlag(true);
     }
+    SetPeopleRectSeenFlag(true);
   }
   else
   {

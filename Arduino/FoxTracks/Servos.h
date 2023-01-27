@@ -90,6 +90,7 @@ static int POSE_DB[NUM_DB_POSES][SERVO_NUM] = {};
 
 void ServosRest();
 void ServosPrint();
+int GetServoDegree(int servo);
 void ServoStartup();
 void ServoSet(int servo, int degree);
 void ServoInc(int servo);
