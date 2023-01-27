@@ -9,12 +9,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 enum FoxenMindState
 {
-  MIND_STATE_ASLEEP     = 0, //dark
-  MIND_STATE_WAKING     = 1, //green
-  MIND_STATE_READY      = 2, //blue/purple
-  MIND_STATE_TRACK      = 3, //yellow
-  MIND_STATE_AUTONOMOUS = 4, //orange
-  MIND_STATE_LAST       = 5
+  MIND_STATE_LAMP       = 0, //dark
+  MIND_STATE_READY      = 1, //blue/purple
+  MIND_STATE_TRACK      = 2, //yellow
+  MIND_STATE_AUTONOMOUS = 3, //orange
+  MIND_STATE_LAST       = 4
 };
 
 void SetPeopleRect(int x1, int y1, int x2, int y2);

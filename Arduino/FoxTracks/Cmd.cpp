@@ -277,10 +277,10 @@ void UserCommandInputDirect(FxController &fxc, int data)
     case 'Q': if (fxc.select) ComplexUserCommandInput(fxc, "*wu"); else ComplexUserCommandInput(fxc, "ff"); break;
     case 'R': if (fxc.select) ComplexUserCommandInput(fxc, "*wd"); else ComplexUserCommandInput(fxc, "fg"); break;
     case 'S': ComplexUserCommandInput(fxc, "auto"); break;
-    case 'T': ComplexUserCommandInput(fxc, "primal"); break;
-    case 'U': ComplexUserCommandInput(fxc, "waking"); break;    
+    case 'T': break;
+    case 'U': break;    
     case 'V': ComplexUserCommandInput(fxc, "ready"); break;
-    case 'W': ComplexUserCommandInput(fxc, "sleep"); break;
+    case 'W': ComplexUserCommandInput(fxc, "lamp"); break;
     case 'X': ComplexUserCommandInput(fxc, "hop"); break;
     case 'Y': ComplexUserCommandInput(fxc, "gg"); break;
     case 'Z': ComplexUserCommandInput(fxc, "select"); break;
@@ -402,10 +402,6 @@ void ComplexUserCommandInput(FxController &fxc, String data)
       Serial.println();
     }
   }
-  else if (data.equals(F("waking")))
-  {  
-    SetMindState(MIND_STATE_WAKING);
-  }
   else if (data.equals(F("ff")))
   {
     int SPEED = 100;   
@@ -485,10 +481,10 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     ServoPoseLerpTo(POSE_ELBOW_MIN, 1);
     SetMindState(MIND_STATE_READY);
   }
-  else if (data.equals(F("sleep")))
+  else if (data.equals(F("lamp")))
   {
     ComplexUserCommandInput(fxc,"dn");
-    SetMindState(MIND_STATE_ASLEEP);
+    SetMindState(MIND_STATE_LAMP);
     delay(250);
     Serial.println("SPurr");
   }
@@ -511,7 +507,7 @@ void ComplexUserCommandInput(FxController &fxc, String data)
   else if (data.equals(F("??")))
   {
     Serial.println(F("Add u/d"));
-    Serial.println(F(" sleep/waking/ready/go/auto"));
+    Serial.println(F(" lamp/ready/auto"));
     Serial.println(F(" dn/up/butt/grr"));
     Serial.println(F("--------------------------"));
     Serial.println(F("Combo:"));
@@ -597,12 +593,10 @@ void ComplexUserCommandInput(FxController &fxc, String data)
     FoxenMindState mindState = GetMindState();
     mindState = (FoxenMindState)((int)mindState + 1);
 
-    if (mindState == MIND_STATE_WAKING)
-      mindState = MIND_STATE_READY;
     if (mindState == MIND_STATE_TRACK)
       mindState = MIND_STATE_AUTONOMOUS;
     if (mindState == MIND_STATE_LAST)
-      mindState = MIND_STATE_ASLEEP;
+      mindState = MIND_STATE_LAMP;
 
     if (mindState == MIND_STATE_AUTONOMOUS)
     {

@@ -11,7 +11,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include "Servos.h"
 #include "Cmd.h"
 
-static FoxenMindState foxenMindState = MIND_STATE_ASLEEP;
+static FoxenMindState foxenMindState = MIND_STATE_LAMP;
 static EmotionalCore emotions;
 
 static int pplCount = 0;
@@ -93,8 +93,7 @@ void PrintMindState()
   Serial.print(DeviceName);  
   switch(foxenMindState)
   {
-    case MIND_STATE_ASLEEP:     Serial.print(F("=asleep"));break;
-    case MIND_STATE_WAKING:     Serial.print(F("=waking"));break;
+    case MIND_STATE_LAMP:       Serial.print(F("=lamp"));break;
     case MIND_STATE_READY:      Serial.print(F("=ready"));break;
     case MIND_STATE_TRACK:      Serial.print(F("=track"));break;
     case MIND_STATE_AUTONOMOUS: Serial.print(F("=auto"));break;
@@ -109,7 +108,6 @@ void PrintMindState()
 
 #if MREE
 #define ColorSleeping Cmd_ColorRainbow
-#define ColorWaking Cmd_ColorGreen
 #define ColorReady Cmd_ColorBlueMagenta
 #define ColorTrack  Cmd_ColorMagenta
 #define ColorAuto  Cmd_ColorOrange
@@ -117,7 +115,6 @@ void PrintMindState()
 
 #if PREE
 #define ColorSleeping Cmd_ColorRainbow
-#define ColorWaking Cmd_ColorGreen
 #define ColorReady Cmd_ColorCyanBlue
 #define ColorTrack  Cmd_ColorMagenta
 #define ColorAuto  Cmd_ColorOrange
@@ -142,17 +139,10 @@ void PollMindState(struct FxController &fxController)
   else if (fxController.fxState == FxState_PlayingTrack)
   {
   }  
-  else if (foxenMindState == MIND_STATE_ASLEEP)
+  else if (foxenMindState == MIND_STATE_LAMP)
   {
     UserCommandExecute(fxController, ColorSleeping);
     UserCommandExecute(fxController, Cmd_SpeedNeg);
-    UserCommandExecute(fxController, Cmd_Speed1);    
-    return;
-  }
-  else if (foxenMindState == MIND_STATE_WAKING)
-  {
-    UserCommandExecute(fxController, ColorWaking);
-    UserCommandExecute(fxController, Cmd_SpeedPos);
     UserCommandExecute(fxController, Cmd_Speed1);    
     return;
   }
