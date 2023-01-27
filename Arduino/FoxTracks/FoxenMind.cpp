@@ -181,12 +181,14 @@ void PollMindState(struct FxController &fxController)
       GetPeopleRect(x1,y1,x2,y2);
       int nudgeX = 0;
       int nudgeY = 0;
+
+      int centerX = x1 + (x2-x1)/2;
       
       if (y1 > 88) nudgeY = -1;//prioritize looking at feet
       else if (y2 < 10) nudgeY = 1; //try to get heads in picture otherwise
   
-      if (x1 > 20 && x2 > 79) nudgeX = 1; //try to keep centered horizontally
-      else if (x1 < 20 && x2 < 79) nudgeX = -1;
+      if (centerX < 30) nudgeX = -1; //try to keep centered horizontally
+      else if (centerX > 60) nudgeX = 1;
   
       if (nudgeY>0) ServoInc(SERVO_LEFT_FRONT_WRIST);
       else if (nudgeY < 0) ServoDec(SERVO_LEFT_FRONT_WRIST);

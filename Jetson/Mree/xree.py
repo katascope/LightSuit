@@ -53,12 +53,17 @@ output = jetson.utils.videoOutput(opt.output_URI, argv=sys.argv+is_headless)
 
 lastPpl = 0;
 
+pplSendTime = time.time()
+
 with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
- ser.write(str.encode('waking\r\n'))
+# ser.write(str.encode('waking\r\n'))
  playsound("RobofoxSounds/Purr.mp3",0);
  img = input.Capture()
- ser.write(str.encode('ready\r\n'))
+# ser.write(str.encode('ready\r\n'))
 #playsound("Sounds/growl.mp3");
+
+ ser.write(str.encode('auto\r\n'))
+
  while True:
   tick = tick + 1;
 
@@ -113,6 +118,7 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
   detections = net.Detect(img, overlay=opt.overlay)
   values = net.Detection()
 
+  
   # print the detections
   print("detected {:d} objects in image".format(len(detections)))
 
@@ -128,6 +134,30 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
       pplRects.append(detection)
       numPeople = numPeople + 1
 
+  if ((time.time()-1) > pplSendTime):
+   pplRect = {0,0,0,0};
+   minX = 11
+   minY = 11
+   maxX = -1
+   maxY = -1
+   for rect in pplRects:
+    sx1 = int((rect.Left   / img.width)*9.9)
+    sx2 = int((rect.Right  / img.width)*9.9) 
+    sy1 = int((rect.Top    / img.height)*9.9)
+    sy2 = int((rect.Bottom / img.height)*9.9)
+    if (sx1 < minX):
+      minX = sx1
+    if (sx2 > maxX):
+      maxX = sx2
+    if (sy1 < minY):
+      minY = sy1
+    if (sy2 > maxY):
+      maxY = sy2 
+    pplSendTime = time.time()   
+    s="!"+str(minX)+str(minY)+str(maxX)+str(maxY);
+    print("RectStr="+s);
+    ser.write( str.encode(s) )
+
   print("People:"+str(numPeople))
   if (numPeople != lastPpl):
    lastPpl = numPeople
@@ -136,6 +166,7 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
    time.sleep(0.5)
    ser.write( str.encode(s) )
    print("sending " + s)
+
   # render the image
   output.Render(img)
 
