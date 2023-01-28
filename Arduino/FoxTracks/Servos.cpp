@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include "Servos.h"
+#include "Config.h"
 #define MIN_PULSE_WIDTH       650
 #define MAX_PULSE_WIDTH       2350
 #define DEFAULT_PULSE_WIDTH   1500
@@ -36,10 +37,62 @@ struct ServoStatus servoInfo[SERVO_NUM] =
 
 void ServosRest()
 {
+#if ENABLE_SERVOS
   for (int servo = 0; servo < SERVO_NUM; servo++)
   {
     pwm.setPWM(servo, 0, 0 );
   }
+#endif  
+}
+
+int pulseWidth(int angle, bool reverse)
+{
+  int pulse_wide, analog_value;
+  if (reverse) angle = 180 - angle;
+  pulse_wide   = map(angle, 0, 180, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+  analog_value = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
+  return analog_value;
+}
+
+int lerpServo(float mux, int src, int dst) {
+  return (int)(src * (1.0 - mux) + dst * mux);
+}
+
+void ServoStartup()
+{
+#if ENABLE_SERVOS
+  pwm.begin();
+  pwm.setPWMFreq(FREQUENCY);  // Analog servos run at ~60 Hz updates
+
+  for (int p = 0; p < NUM_DB_POSES; p++)
+  {
+    for (int s = 0; s < SERVO_NUM; s++)
+    {
+      POSE_DB[p][s] = 90;
+    }
+  }
+#endif
+}
+
+void ServoSet(int servo, int degree)
+{
+#if ENABLE_SERVOS
+  //Enforce range limits
+  if (degree < servoInfo[servo].min) degree = servoInfo[servo].min;
+  if (degree > servoInfo[servo].max) degree = servoInfo[servo].max;
+  servoInfo[servo].degree = degree;
+  int pulse = pulseWidth(degree, servoInfo[servo].reverse);
+  pwm.setPWM(servo, 0, pulse);
+  /*  Serial.print(F("Servo"));
+    Serial.print(servo);
+    Serial.print(F(" "));
+    Serial.print(servoInfo[servo].name);
+    Serial.print(F("="));
+    Serial.print(degree);
+    Serial.print(F(",wait 1 sec"));
+    Serial.println();*/
+  delay(SERVO_DELAY);
+#endif
 }
 
 int GetServoDegree(int servo)
@@ -66,52 +119,6 @@ void ServosPrint()
   Serial.print(F("}"));
 }
 
-int pulseWidth(int angle, bool reverse)
-{
-  int pulse_wide, analog_value;
-  if (reverse) angle = 180 - angle;
-  pulse_wide   = map(angle, 0, 180, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
-  analog_value = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
-  return analog_value;
-}
-
-int lerpServo(float mux, int src, int dst) {
-  return (int)(src * (1.0 - mux) + dst * mux);
-}
-
-void ServoStartup()
-{
-  pwm.begin();
-  pwm.setPWMFreq(FREQUENCY);  // Analog servos run at ~60 Hz updates
-
-  for (int p = 0; p < NUM_DB_POSES; p++)
-  {
-    for (int s = 0; s < SERVO_NUM; s++)
-    {
-      POSE_DB[p][s] = 90;
-    }
-  }
-}
-
-void ServoSet(int servo, int degree)
-{
-  //Enforce range limits
-  if (degree < servoInfo[servo].min) degree = servoInfo[servo].min;
-  if (degree > servoInfo[servo].max) degree = servoInfo[servo].max;
-
-  servoInfo[servo].degree = degree;
-  int pulse = pulseWidth(degree, servoInfo[servo].reverse);
-  pwm.setPWM(servo, 0, pulse);
-  /*  Serial.print(F("Servo"));
-    Serial.print(servo);
-    Serial.print(F(" "));
-    Serial.print(servoInfo[servo].name);
-    Serial.print(F("="));
-    Serial.print(degree);
-    Serial.print(F(",wait 1 sec"));
-    Serial.println();*/
-  delay(SERVO_DELAY);
-}
 
 void ServoSetAll(int degree)
 {

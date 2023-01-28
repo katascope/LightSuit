@@ -173,8 +173,6 @@ void PollMindState(struct FxController &fxController)
         case 0 :  UserCommandExecute(fxController, ColorAuto_0); break;
         default:  UserCommandExecute(fxController, ColorAuto_1); break;
       }
-      Serial.print(F("pplc"));
-      Serial.println(GetPeopleCount());
       needsUpdate=true;
       lastPeopleCount = GetPeopleCount();
     }

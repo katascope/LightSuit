@@ -37,6 +37,8 @@ parser.add_argument("--threshold", type=float, default=0.5, help="minimum detect
 
 is_headless = ["--headless"] if sys.argv[0].find('console.py') != -1 else [""]
 
+slept = 0
+
 try:
   opt = parser.parse_known_args()[0]
 except:
@@ -106,7 +108,7 @@ with serial.Serial('/dev/ttyACM0', 115200, timeout=10) as ser:
 #     playsound("RobofoxSounds/Expression_6.mp3",0)
 
 # 1.0 = 1 second; The divisor is the desired updates (frames) per second
-  time.sleep(1.0/4)
+  time.sleep(1.0/5)
 
 # process frames until the user exits
 #while True:
@@ -137,8 +139,14 @@ with serial.Serial('/dev/ttyACM0', 115200, timeout=10) as ser:
 
   if (numPeople > 0):
    lastHadPeopleTime = time.time()
+   if (slept):
+     print("Waking");
+     ser.write(str.encode('S'+'\r\n'))
+     slept=0
+     time.sleep(1)
+ 
 
-  if (time.time() > (pplSendTime+0.9)):
+  if (time.time() > (pplSendTime+0.25)):
    pplRect = {0,0,0,0};
    minX = 11
    minY = 11
@@ -164,11 +172,12 @@ with serial.Serial('/dev/ttyACM0', 115200, timeout=10) as ser:
    ser.write( str.encode(s+'\r\n') )
    pplSendTime = time.time()      
 
-#  if (time.time() > lastHadPeopleTime+15): #i.e. after 10 seconds of not seeing people..
-#   ser.write(str.encode('lamp'+'\r\n'))
-#   time.sleep(2)
-#   print("No people, slept");
-#   lastHadPeopleTime = time.time()
+  if (time.time() > lastHadPeopleTime+10): #i.e. after 10 seconds of not seeing people..
+   ser.write(str.encode('W'+'\r\n'))
+   time.sleep(2)
+   print("No people, slept");
+   slept=1
+   lastHadPeopleTime = time.time()
 
   print(detected+", #People="+str(numPeople) + ", tsp="+str(int(time.time()-lastHadPeopleTime)) + ", rstr="+s )
 

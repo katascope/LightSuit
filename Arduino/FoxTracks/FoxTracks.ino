@@ -134,6 +134,7 @@ void setup() {
 UserCommandExecute(fxController, Cmd_Brightness_Half); 
 UserCommandExecute(fxController, Cmd_ColorDark); 
 
+Serial.setTimeout(1);
   Serial.println("Setup complete.");
 }
 
