@@ -121,10 +121,13 @@ void PrintMindState()
 #endif
 
 #define ColorAuto_0 Cmd_ColorPulseRed
-#define ColorAuto_1 Cmd_ColorGreenMagenta
+#define ColorAuto_1 Cmd_ColorCyanMagenta
+static int lastPeopleCount = 0;
 
 void PollMindState(struct FxController &fxController)
 {
+  bool needsUpdate = false;
+  
   if (fxController.select)
   {    
   }
@@ -163,14 +166,22 @@ void PollMindState(struct FxController &fxController)
   }
   else if (foxenMindState == MIND_STATE_AUTONOMOUS)
   {
-    switch (GetPeopleCount())
+    if (lastPeopleCount != GetPeopleCount())
     {
-      case 0 :  UserCommandExecute(fxController, ColorAuto_0); break;
-      default:  UserCommandExecute(fxController, ColorAuto_1); break;
+      switch (GetPeopleCount())
+      {
+        case 0 :  UserCommandExecute(fxController, ColorAuto_0); break;
+        default:  UserCommandExecute(fxController, ColorAuto_1); break;
+      }
+      Serial.print(F("pplc"));
+      Serial.println(GetPeopleCount());
+      needsUpdate=true;
+      lastPeopleCount = GetPeopleCount();
     }
 
     if (GetPeopleCount() > 0 && GetPeopleRectSeenFlag() == false)
     {
+      UserCommandExecute(fxController, ColorAuto_1); 
       int nudgeX = 0;
       int nudgeY = 0;
       int x1,y1,x2,y2;
@@ -214,7 +225,6 @@ void PollMindState(struct FxController &fxController)
   }
 
   State_Poll(fxController);
-  bool needsUpdate = false;
 
   if (fxController.select)
   {

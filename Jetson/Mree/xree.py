@@ -52,10 +52,11 @@ input = jetson.utils.videoSource(opt.input_URI, argv=sys.argv)
 output = jetson.utils.videoOutput(opt.output_URI, argv=sys.argv+is_headless)
 
 lastPpl = 0;
-
+lastHadPeopleTime = time.time()
 pplSendTime = time.time()
 
-with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
+with serial.Serial('/dev/ttyACM0', 115200, timeout=10) as ser:
+#with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
 # ser.write(str.encode('waking\r\n'))
  playsound("RobofoxSounds/Purr.mp3",0);
  img = input.Capture()
@@ -112,7 +113,7 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
   # capture the next image
   img = input.Capture()
 
-  os.system('clear')
+#  os.system('clear')
 
   # detect objects in the image (with overlay)
   detections = net.Detect(img, overlay=opt.overlay)
@@ -120,12 +121,11 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
 
   
   # print the detections
-  print("detected {:d} objects in image".format(len(detections)))
-
+  detected = "Detected="+str(len(detections));
   for detection in detections:
     name = net.GetClassDesc(detection.ClassID)
-    print("Detect:"+str(detection.ClassID)+ " - " + name)
-
+    detected = detected + " " + name;
+    
   numPeople = 0
   pplRects = []
   for detection in detections:
@@ -134,15 +134,16 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
       pplRects.append(detection)
       numPeople = numPeople + 1
 
-  print("People:"+str(numPeople))
 
-  if ((time.time()-1) > pplSendTime):
+  if (numPeople > 0):
+   lastHadPeopleTime = time.time()
+
+  if (time.time() > (pplSendTime+0.9)):
    pplRect = {0,0,0,0};
    minX = 11
    minY = 11
    maxX = -1
    maxY = -1
-   pplSendTime = time.time()      
    if (len(pplRects) > 0):
     for rect in pplRects:
      sx1 = int((rect.Left   / img.width)*9.9)
@@ -157,12 +158,21 @@ with serial.Serial('/dev/ttyACM0', 9600, timeout=10) as ser:
        minY = sy1
      if (sy2 > maxY):
        maxY = sy2 
-    s="!"+str(minX)+str(minY)+str(maxX)+str(maxY)+"\r\n";
+    s="!"+str(minX)+str(minY)+str(maxX)+str(maxY);
    else:
-    s="!0000\r\n";
-   print("RectStr="+s);
-   ser.write( str.encode(s) )
+    s="!0000";
+   ser.write( str.encode(s+'\r\n') )
+   pplSendTime = time.time()      
 
+#  if (time.time() > lastHadPeopleTime+15): #i.e. after 10 seconds of not seeing people..
+#   ser.write(str.encode('lamp'+'\r\n'))
+#   time.sleep(2)
+#   print("No people, slept");
+#   lastHadPeopleTime = time.time()
+
+  print(detected+", #People="+str(numPeople) + ", tsp="+str(int(time.time()-lastHadPeopleTime)) + ", rstr="+s )
+
+   
 #   if (numPeople == 0):
 #   lastPpl = numPeople
 #   s="pl"+str(numPeople)
