@@ -107,14 +107,14 @@ void PrintMindState()
 }
 
 #if MREE
-#define ColorSleeping Cmd_ColorRainbow
+#define ColorSleeping Cmd_ColorPulseMagenta
 #define ColorReady Cmd_ColorBlueMagenta
 #define ColorTrack  Cmd_ColorMagenta
 #define ColorAuto  Cmd_ColorOrange
 #endif
 
 #if PREE
-#define ColorSleeping Cmd_ColorRainbow
+#define ColorSleeping Cmd_ColorPulseBlue
 #define ColorReady Cmd_ColorCyanBlue
 #define ColorTrack  Cmd_ColorMagenta
 #define ColorAuto  Cmd_ColorOrange

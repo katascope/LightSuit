@@ -516,13 +516,16 @@ void ComplexUserCommandInput(FxController &fxc, String data)
 
 //First definitely crouch
     ServoPoseLerpTo(POSE_PAWSUP, 8); 
-    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 4); 
+    delay(250);
+    ServoPoseLerpTo(POSE_HIPS_ORIGIN, 8); 
+    delay(250);
     ServoPoseLerpTo(POSE_ELBOW_MIN, 4);
+    delay(1000);
 //Then stand up properly
-    ServoPoseLerpTo(POSE_UP_BACK, 2);
+    ServoPoseLerpTo(POSE_UP_BACK, 4);
     delay(250);
-    ServoPoseLerpTo(POSE_UP, 2);
-    delay(250);
+    ServoPoseLerpTo(POSE_UP, 4);
+    delay(1000);
 //Then pose into camera mode    
     ServoPoseLerpTo(POSE_AUTO_BACK, 2);
     delay(250);

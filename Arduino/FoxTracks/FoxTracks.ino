@@ -39,6 +39,7 @@ static unsigned long lastTimeDisplay = 0;
 
 void setup() {
   Serial.begin(SERIAL_BAUD_RATE);
+  Serial.setTimeout(50);
   Serial.print(DeviceName);
   Serial.print(F("Serial init: "));
   Serial.println(SERIAL_BAUD_RATE);
@@ -134,7 +135,6 @@ void setup() {
 UserCommandExecute(fxController, Cmd_Brightness_Half); 
 UserCommandExecute(fxController, Cmd_ColorDark); 
 
-Serial.setTimeout(1);
   Serial.println("Setup complete.");
 }
 

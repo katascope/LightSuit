@@ -37,8 +37,8 @@ parser.add_argument("--threshold", type=float, default=0.5, help="minimum detect
 
 is_headless = ["--headless"] if sys.argv[0].find('console.py') != -1 else [""]
 
-slept = 0
-auto = 1
+slept = 1
+auto = 0
 
 try:
   opt = parser.parse_known_args()[0]
@@ -144,8 +144,6 @@ with serial.Serial('/dev/ttyACM0', 115200, timeout=10) as ser:
      print("Waking");
      ser.write(str.encode('S'+'\r\n'))
      time.sleep(1)
-     ser.write(str.encode('S'+'\r\n'))
-     time.sleep(1)
      slept=0
      auto=1
      playsound("RobofoxSounds/Purr.mp3",0)
@@ -177,7 +175,7 @@ with serial.Serial('/dev/ttyACM0', 115200, timeout=10) as ser:
    ser.write( str.encode(s+'\r\n') )
    pplSendTime = time.time()      
 
-  if (time.time() > lastHadPeopleTime+10): #i.e. after 10 seconds of not seeing people..
+  if (time.time() > lastHadPeopleTime+15): #i.e. after 15 seconds of not seeing people..
    ser.write(str.encode('W'+'\r\n'))
    time.sleep(2)
    print("No people, slept")
